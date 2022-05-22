@@ -2,6 +2,8 @@ import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPrice,
 
 import { recupId, priceCumul } from "./funct.js"
 
+import { changeQuantity } from "../utils/funct_localstor.js"
+
 console.log(recupLocalStorage)
 
 
@@ -39,7 +41,7 @@ fetch(promise)
             let pos = item[3].colors.indexOf(item[1])
 
             cartItemsElt.innerHTML += `
-                <article class="cart__item" data-id="{${item[0]}}" data-color="{${item[1]}}">
+                <article class="cart__item" data-id="${item[0]}" data-color="${item[1]}">
                     <div class="cart__item__img">
                         <img src="${item[3].imageUrl[pos]}" alt="${item[3].altTxt[pos]}">
                     </div>
@@ -67,9 +69,39 @@ fetch(promise)
             totalPrice.innerText = total
         }
 
-        // inputQuantityElt.addEventListener("input", (e) => {
-            
-        // })
+        const inputQuantityElt = []
+        for (let i = 0; i < tabArticle.length; i++) {
+
+            let inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`)
+            let datasetId = document.querySelector(`#cart__items`).children[i].dataset.id
+            let datasetColor = document.querySelector(`#cart__items`).children[i].dataset.color
+
+            inputValue.addEventListener("input", () => {
+                if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
+                    changeQuantity(tabArticle[i], inputValue.value)
+                    console.log(tabArticle[i][2])
+                    priceCumul(inputValue.value, tabArticle[i][3].price)
+                    console.log(priceCumul(inputValue.value, tabArticle[i][3].price))
+                    
+                    
+                    let difference = inputValue.value - tabArticle[i][2]
+                    console.log(difference)
+                    // nouveau total d'articles
+                    totalQuantity = totalQuantity + difference
+                    console.log(totalQuantity)
+                    total =  total + (difference * tabArticle[i][3].price)
+                    console.log(total)
+                    
+                    totalQuantityElt.innerHTML = totalQuantity
+                    totalPrice.innerText = total
+                }
+            })
+
+
+
+        }
+
+
 
 
     })

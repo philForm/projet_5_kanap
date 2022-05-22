@@ -16,7 +16,10 @@ const totalQuantityElt = document.getElementById("totalQuantity")
 const totalPrice = document.getElementById("totalPrice")
 
 // Récupération de l'input de quantité
-const inputQuantityElt = document.querySelector("#cart__items > article:nth-child(1) input")
+
+const inputQuantityElt = document.querySelector("#cart__items article:nth-child(1)")
+
+console.log(inputQuantityElt)
 
 
 

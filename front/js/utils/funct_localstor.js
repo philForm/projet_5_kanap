@@ -44,11 +44,18 @@ const removeProduct = (product) => {
 }
 
 // Changer la quantité du produit
-const changeQuantity = (product, quantity) => {
+const changeQuantity = (product, quant) => {
+    // récupère le localstorage
     let cart = getCart("cart")
-    let foundProduct = cart.find((p => p.id == product.id) && (col => col.color == product.color))
+    // récupération du produit ciblé dans le localstorage
+    let foundProduct = cart.find((p => p.id == product[0]) && (col => col.color == product[1]))
+    console.log(product)
+    console.log(foundProduct)
+    console.log(quant)
     if (foundProduct != undefined) {
-        foundProduct.quantity += quantity
+        let quantity = parseInt(foundProduct.quantity)
+        console.log(quantity)
+        foundProduct.quantity = parseInt(quant)
         if (foundProduct.quantity <= 0)
             removeProduct(product)
     }
