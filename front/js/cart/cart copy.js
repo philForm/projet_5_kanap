@@ -2,7 +2,7 @@ import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceE
 
 import { recupId, priceCumul } from "./funct.js"
 
-import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js"
+import { changeQuantity } from "../utils/funct_localstor.js"
 
 console.log(recupLocalStorage)
 
@@ -77,36 +77,54 @@ fetch(promise)
 
             inputValue.addEventListener("input", () => {
 
+                let difference = 0
+                let newTotalQuantity = 0
+                let newTotalPrice = 0
+                let ancientCumul = 0
+                let newCumul = 0
 
                 if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
                     // Changement de quantité dans le localstorage
                     changeQuantity(tabArticle[i], inputValue.value)
                     console.log(`Quantité de l'élément au chargement de la page : ${tabArticle[i][2]}`)
 
+                    // ancientCumul = parseInt(priceCumul(tabArticle[i][2], tabArticle[i][3].price))
+                    // Mise à jour du total prix de l'article
+                    // newCumul = parseInt(priceCumul(inputValue.value, tabArticle[i][3].price))
+                    // console.log(priceCumul(inputValue.value, tabArticle[i][3].price))
+                    // Différence entre la nouvelle quantité et l'ancienne
+                    difference = inputValue.value - tabArticle[i][2]
+                    console.log(`difference entre la nouvelle et l'ancienne quantité : ${difference}`)
+                    console.log(inputValue.value - tabArticle[i][2])
                     // Affichage de la nouvelle quantité sur la page
                     document.querySelector(`#cart__items > article:nth-child(${i + 1}) div.cart__item__content__settings__quantity > p`).innerText =
                         `Qté : ${inputValue.value}`
 
-                    console.log(inputValue.value)
+                    console.log(`Quantité totale au chargement de la page : ${totalQuantity}`)
+                    console.log(`Quantité de l'élément au chargement de la page : ${tabArticle[i][2]}`)
+                    console.log(`Quantité actuelle de l'élément : ${inputValue.value}`)
+                    // nouveau total d'articles
+                    newTotalQuantity = (totalQuantity - tabArticle[i][2]) + parseInt(inputValue.value)
+                    
+                    if (inputValue.value > tabArticle[i][2]) {
+                        console.log("true")
+                        totalQuantity = totalQuantity + 1
+                    }else{
+                        console.log("false")
+                        totalQuantity = totalQuantity - 1
+                    }
 
-                    if (inputValue.value == 0)
-                        cartItemsElt.removeChild(cartItemsElt.children[i])
+                    console.log(`nouveau total de quantités : ${newTotalQuantity}`)
+                    // Nouveau total de prix
+                    // newTotalPrice = (total - ancientCumul) + newCumul
 
-                    document.querySelector(`#cart__items .deleteItem`).addEventListener("click", () => {
-                        cartItemsElt.removeChild(cartItemsElt.children[i])
-
-                    })
-
+                    totalQuantityElt.innerHTML = newTotalQuantity
+                    // totalPriceElt.innerText = newTotalPrice
                 }
-
-                console.log(changeQuantityTotal())
-                totalQuantityElt.innerHTML = changeQuantityTotal()
-
-                console.log(changeTotalPrice(tabArticle))
-                totalPriceElt.innerText = changeTotalPrice(tabArticle)
-
-
             })
         }
+
+
+
 
     })

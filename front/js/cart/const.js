@@ -13,7 +13,7 @@ const cartItemsElt = document.getElementById("cart__items")
 const totalQuantityElt = document.getElementById("totalQuantity")
 
 // Récupération de la span totalPrice
-const totalPrice = document.getElementById("totalPrice")
+const totalPriceElt = document.getElementById("totalPrice")
 
 // Récupération de l'input de quantité
 
@@ -23,4 +23,4 @@ console.log(inputQuantityElt)
 
 
 
-export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPrice, inputQuantityElt }
+export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt }
