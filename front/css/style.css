@@ -43,6 +43,7 @@ h2 {
 	--footer-main-color: #3d424f; 
 	--footer-secondary-color: #2d2f3e;
 	/*background-color: var(--main-color);*/
+	--shadow-primary: rgb(104 91 192 / 90%) 0 0 22px 6px;
 }
 
 
@@ -138,7 +139,7 @@ main {
 }
 .items a:hover article {
 	/* box-shadow: rgba(42, 18, 206, 0.9) 0 0 22px 6px; */
-	box-shadow: rgb(104 91 192 / 90%) 0 0 22px 6px;
+	box-shadow: var(--shadow-primary);
 	transform: scale(1.01);
 }
 .items article {

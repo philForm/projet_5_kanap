@@ -37,7 +37,7 @@ fetch(promise)
             total += cumul
             totalQuantity += parseInt(item[2])
 
-            // Récupération de l'index de position de la couleur séléctionnée dans le tableau colors provenant du backend. Le même index de position correspond aussi à l'image
+            // Récupération de l'index de position de la couleur sélectionnée dans le tableau colors provenant du backend. Le même index de position correspond aussi à l'image
             let pos = item[3].colors.indexOf(item[1])
 
             cartItemsElt.innerHTML += `
@@ -72,9 +72,11 @@ fetch(promise)
         for (let i = 0; i < tabArticle.length; i++) {
 
             let inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`)
-            let datasetId = document.querySelector(`#cart__items`).children[i].dataset.id
-            let datasetColor = document.querySelector(`#cart__items`).children[i].dataset.color
-
+            // let datasetId = document.querySelector(`#cart__items`).children[i].dataset.id
+            let datasetId = inputValue.closest(`.cart__item`).dataset.id
+            // let datasetColor = document.querySelector(`#cart__items`).children[i].dataset.color
+            let datasetColor = inputValue.closest(`.cart__item`).dataset.color
+            console.log(`${datasetId}, ${datasetColor}`)
             inputValue.addEventListener("input", () => {
 
 
@@ -92,11 +94,6 @@ fetch(promise)
                     if (inputValue.value == 0)
                         cartItemsElt.removeChild(cartItemsElt.children[i])
 
-                    document.querySelector(`#cart__items .deleteItem`).addEventListener("click", () => {
-                        cartItemsElt.removeChild(cartItemsElt.children[i])
-
-                    })
-
                 }
 
                 console.log(changeQuantityTotal())
@@ -107,6 +104,31 @@ fetch(promise)
 
 
             })
+
         }
+
+        for (let i = 0; i < tabArticle.length; i++) {
+            let deleteItem = document.querySelectorAll('p.deleteItem')[i]
+            console.log(tabArticle[i][0])
+            console.log(tabArticle[i][1])
+            let dataId = deleteItem.closest(`.cart__item`).dataset.id
+            let dataColor = deleteItem.closest(`.cart__item`).dataset.color
+            console.log(dataId)
+            console.log(dataColor)
+            deleteItem.addEventListener('click', function () {
+                if (tabArticle[i][0] == dataId && tabArticle[i][1] == dataColor) {
+                    removeProduct(tabArticle[i])
+                    cartItemsElt.removeChild(deleteItem.closest(`.cart__item`))
+                    console.log(deleteItem.closest(`.cart__item`))
+                    console.log(tabArticle[i][0])
+                    console.log(tabArticle[i][1])
+
+                    totalQuantityElt.innerHTML = changeQuantityTotal()
+                    totalPriceElt.innerText = changeTotalPrice(tabArticle)
+
+                }
+            })
+        }
+
 
     })

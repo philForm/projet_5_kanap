@@ -39,7 +39,7 @@ const addCart = (product) => {
 // Supprimer un produit du panier (localstorage)
 const removeProduct = (product) => {
     let cart = getCart("cart")
-    cart = cart.filter(prod => prod.id != product[0])
+    cart = cart.filter((prod => prod.id != product[0]) && (prod => prod.color != product[1]))
     saveCart(cart)
 }
 
