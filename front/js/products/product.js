@@ -14,14 +14,14 @@ fetch(promise)
 
         recupEltDom(article)
 
-
+        // Création d'un nouvet Objet contenant l'Id et le nom de l'article
         let cartObj = new Object
         cartObj.name = article.name
         cartObj.id = article._id
 
         console.log(getCart('cart'))
 
-
+        // Envoie l'article dans le localstorage
         buttonCartElt.addEventListener("click", () => {
             if (selectElt.value != "" && inputElt.value != 0) {
                 cartObj.color = selectElt.value

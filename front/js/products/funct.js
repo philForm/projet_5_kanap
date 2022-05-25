@@ -1,5 +1,6 @@
 import * as cons from "./const.js"
 import { colorsKanap } from "../utils/array_colors.js";
+import { displayImgIndex, displayImg, engNameColor, splitColors, splitUrl } from "../utils/funct_globale.js";
 
 
 // Récupération de l'id de l'article à partir de l'url
@@ -17,15 +18,12 @@ const recupId = (url, searchParams) => {
 const recupEltDom = (article) => {
     cons.titleHead.innerHTML = article.name
     cons.divImgElt.innerHTML = `
-            <img src="${article.imageUrl}" alt="${article.altTxt}">
-        `
-    // cons.divImgElt.innerHTML = `
-    //         <img src="${article.imageUrl[0]}" alt="${article.altTxt[0]}">
-    //     `
+            <img src="${displayImgIndex(article)}" alt="${article.altTxt}">
+            `
     cons.titleElt.innerText = article.name
     cons.priceElt.innerText = article.price
     cons.descriptElt.innerText = article.description
-    
+
     for (let color of article.colors) {
 
         let colorTab = color.split("/")
@@ -50,18 +48,26 @@ const recupEltDom = (article) => {
 
     // injection de la couleur choisie dans <select>
     cons.selectElt.addEventListener("input", (e) => {
-        // cons.selectElt.setAttribute("value", e.target.value)
         cons.selectElt.setAttribute("value", e.target.value)
-        // Récupère la valeur de la couleur
+
         let value = cons.selectElt.value
-        console.log(value)
+        value = splitColors(value, ' ')
+        // Récupère la valeur de la couleur
+        let colorEng = engNameColor(value.trim())
+        console.log(colorEng)
+        
+        let urlSplit = splitUrl(article)
+        console.log(urlSplit)
+        
+
+        // console.log(value)
         // Récupère l'index de position de la valeur de couleur dans le tableau
-        let pos = article.colors.indexOf(value)
-        console.log(pos)
-        if (pos < 0) { pos = 0 }
-        cons.divImgElt.innerHTML = `
-            <img src="${article.imageUrl}" alt="${article.altTxt}">
-        `
+        // let pos = article.colors.indexOf(value)
+        // console.log(pos)
+        // if (pos < 0) { pos = 0 }
+        // cons.divImgElt.innerHTML = `
+        //     <img src="${article.imageUrl}" alt="${article.altTxt}">
+        // `
         // cons.divImgElt.innerHTML = `
         //     <img src="${article.imageUrl[pos]}" alt="${article.altTxt[pos]}">
         // `

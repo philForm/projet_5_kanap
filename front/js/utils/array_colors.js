@@ -30,7 +30,7 @@ const colorsKanap = [
         "purple", "violet"
     ],
     [
-        "navy", "bleu marine"
+        "navy", "marine"
     ],
     [
         "silver", "argent"
