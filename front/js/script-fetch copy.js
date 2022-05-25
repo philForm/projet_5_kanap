@@ -1,7 +1,4 @@
-import { displayImgIndex } from "./utils/funct_globale.js"
-
 const promise = `http://localhost:3000/api/products`
-
 
 const sectionElt = document.getElementById("items")
 
@@ -14,7 +11,7 @@ fetch(promise)
             sectionElt.innerHTML += `
                 <a class="lien" href="./product.html?id=${article._id}">
                     <article>
-                        <img src="${displayImgIndex(article)}" alt="${article.altTxt}">
+                        <img src="${article.imageUrl[0]}" alt="${article.altTxt[0]}">
                         <h3 class="productName">${article.name}</h3>
                         <p class="productDescription">${article.description}</p>
                     </article>

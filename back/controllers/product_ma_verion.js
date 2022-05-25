@@ -1,13 +1,19 @@
 const uuid = require('uuid/v1');
 const Product = require('../models/Product');
+let imgUrlTab = []
 
 exports.getAllProducts = (req, res, next) => {
   Product.find().then(
     (products) => {
       const mappedProducts = products.map((product) => {
+        for (let i = 0; i < product.imageUrl.length; i++) {
 
-        product.imageUrl = req.protocol + '://' + req.get('host') + '/images/' + product.imageUrl;
+          imgUrlTab.push(req.protocol + '://' + req.get('host') + '/images/' + product.imageUrl[i]);
 
+        }
+        // product.imageUrl = req.protocol + '://' + req.get('host') + '/images/' + product.imageUrl[i];
+        product.imageUrl = imgUrlTab
+        imgUrlTab = []
         return product;
       });
       res.status(200).json(mappedProducts);
@@ -25,8 +31,14 @@ exports.getOneProduct = (req, res, next) => {
       if (!product) {
         return res.status(404).send(new Error('Product not found!'));
       }
+      for (let i = 0; i < product.imageUrl.length; i++) {
 
-      product.imageUrl = req.protocol + '://' + req.get('host') + '/images/' + product.imageUrl;
+        imgUrlTab.push(req.protocol + '://' + req.get('host') + '/images/' + product.imageUrl[i]);
+
+      }
+      product.imageUrl = imgUrlTab
+      imgUrlTab = []
+      // product.imageUrl = req.protocol + '://' + req.get('host') + '/images/' + product.imageUrl;
       res.status(200).json(product);
     }
   ).catch(

@@ -4,6 +4,10 @@ import { recupId, priceCumul } from "./funct.js"
 
 import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js"
 
+import {colorsKanap} from "../utils/array_colors.js"
+
+import {displayImg} from "../utils/funct_globale.js"
+
 console.log(recupLocalStorage)
 
 
@@ -33,17 +37,18 @@ fetch(promise)
         let totalQuantity = 0
         let total = 0
         for (let item of tabArticle) {
+            
+            console.log(displayImg(item))
+            
             let cumul = priceCumul(item[2], item[3].price)
             total += cumul
             totalQuantity += parseInt(item[2])
 
-            // Récupération de l'index de position de la couleur sélectionnée dans le tableau colors provenant du backend. Le même index de position correspond aussi à l'image
-            let pos = item[3].colors.indexOf(item[1])
 
             cartItemsElt.innerHTML += `
                 <article class="cart__item" data-id="${item[0]}" data-color="${item[1]}">
                     <div class="cart__item__img">
-                        <img src="${item[3].imageUrl[pos]}" alt="${item[3].altTxt[pos]}">
+                        <img src="${displayImg(item)[0]}" alt="${displayImg(item)[1]}">
                     </div>
                     <div class="cart__item__content">
                         <div class="cart__item__content__description">

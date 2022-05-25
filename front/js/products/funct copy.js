@@ -1,6 +1,4 @@
 import * as cons from "./const.js"
-import { colorsKanap } from "../utils/array_colors.js";
-
 
 // Récupération de l'id de l'article à partir de l'url
 const recupId = (url, searchParams) => {
@@ -17,37 +15,16 @@ const recupId = (url, searchParams) => {
 const recupEltDom = (article) => {
     cons.titleHead.innerHTML = article.name
     cons.divImgElt.innerHTML = `
-            <img src="${article.imageUrl}" alt="${article.altTxt}">
+            <img src="${article.imageUrl[0]}" alt="${article.altTxt[0]}">
         `
-    // cons.divImgElt.innerHTML = `
-    //         <img src="${article.imageUrl[0]}" alt="${article.altTxt[0]}">
-    //     `
     cons.titleElt.innerText = article.name
     cons.priceElt.innerText = article.price
     cons.descriptElt.innerText = article.description
     
-    for (let color of article.colors) {
-
-        let colorTab = color.split("/")
-        console.log(colorTab)
-        let colorHtml = ''
-        for (let color of colorTab) {
-
-            // cherche la couleur color dans colorsKanap
-            let color2 = (colorsKanap.find((col => col[0] == color.toLowerCase())))[1]
-            console.log(color2)
-            if (colorTab.indexOf(color) != colorTab.length - 1)
-                colorHtml += `${color2} et`
-            else
-                colorHtml += ` ${color2}`
-        }
-
+    for (let color of article.colors)
         cons.selectElt.innerHTML += `
-            <option value="${colorHtml}">${colorHtml}</option>
-            `
-    }
-
-
+                <option value="${color}">${color}</option>
+        `
     // injection de la couleur choisie dans <select>
     cons.selectElt.addEventListener("input", (e) => {
         // cons.selectElt.setAttribute("value", e.target.value)
@@ -60,11 +37,8 @@ const recupEltDom = (article) => {
         console.log(pos)
         if (pos < 0) { pos = 0 }
         cons.divImgElt.innerHTML = `
-            <img src="${article.imageUrl}" alt="${article.altTxt}">
+            <img src="${article.imageUrl[pos]}" alt="${article.altTxt[pos]}">
         `
-        // cons.divImgElt.innerHTML = `
-        //     <img src="${article.imageUrl[pos]}" alt="${article.altTxt[pos]}">
-        // `
 
 
 
