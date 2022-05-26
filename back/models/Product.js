@@ -33,7 +33,7 @@ const products = [
     "price": 1499,
     "imageUrl": "kanap04.jpg",
     "description": "Donec mattis nisl tortor, nec blandit sapien fermentum at. Proin hendrerit efficitur fringilla. Lorem ipsum dolor sit amet.",
-    "altTxt": "Photo d'un canapé rose, une à deux place"
+    "altTxt": "Photo d'un canapé rose, une à deux places"
   },
   {
     "colors": ["Grey", "Purple", "Blue"],

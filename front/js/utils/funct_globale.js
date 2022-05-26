@@ -25,13 +25,16 @@ const engNameColor = (colorImg)=>{
     return color
 }
 
-// Changement du nom de la couleur du texte alternatif de l'image
-const alternChangeColor = (art)=>{
-    
-    let altTab = art[3].altTxt.split(' ')
+// Coupe le texte alternatif de l'image
+const splitAlternText = (art)=>{
+    let altTab = art.altTxt.split(' ')
     console.log(altTab)
-    
-    let textAlt = `${altTab[0]} ${altTab[1]} ${altTab[2]} ${art[1].trim()} ${altTab[altTab.length - 2]} ${altTab[altTab.length - 1]}`
+    return altTab
+}
+
+// Changement du nom de la couleur du texte alternatif de l'image
+const alternChangeColor = (altTab, art)=>{
+    let textAlt = `${altTab[0]} ${altTab[1]} ${altTab[2]} ${art.trim()} ${altTab[altTab.length - 2]} ${altTab[altTab.length - 1]}`
     
     return textAlt
 }
@@ -58,11 +61,16 @@ const displayImg = (item) => {
     // Reconstitution de l'URL de l'image
     let imgUrl = urlImagRestitute(imgUrlTab, color2)
     console.log(imgUrl)
+    
+    // Coupe le texte alternatif de l'image
+    let splitText = splitAlternText(item[3])
+    console.log(splitText)
+    
     // Changement texte alternatif
-    let textAlt = alternChangeColor(item)
+    let textAlt = alternChangeColor(splitText, item[1])
     console.log(textAlt)
 
     return [imgUrl, textAlt]
 }
 
-export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl }
+export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl, urlImagRestitute, alternChangeColor, splitAlternText }

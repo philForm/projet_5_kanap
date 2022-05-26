@@ -1,6 +1,6 @@
 import * as cons from "./const.js"
 import { colorsKanap } from "../utils/array_colors.js";
-import { displayImgIndex, displayImg, engNameColor, splitColors, splitUrl } from "../utils/funct_globale.js";
+import { displayImgIndex, displayImg, engNameColor, splitColors, splitUrl, urlImagRestitute, alternChangeColor, splitAlternText } from "../utils/funct_globale.js";
 
 
 // Récupération de l'id de l'article à partir de l'url
@@ -50,29 +50,38 @@ const recupEltDom = (article) => {
     cons.selectElt.addEventListener("input", (e) => {
         cons.selectElt.setAttribute("value", e.target.value)
 
-        let value = cons.selectElt.value
-        value = splitColors(value, ' ')
+        let value = (cons.selectElt.value).trim()
+        value = value.split(' ')
+        console.log(typeof value)
+        console.log(value)
+
+
+        console.log(value)
+
         // Récupère la valeur de la couleur
-        let colorEng = engNameColor(value.trim())
+        let colorEng = engNameColor(value[value.length - 1])
         console.log(colorEng)
-        
+
         let urlSplit = splitUrl(article)
         console.log(urlSplit)
-        
 
-        // console.log(value)
-        // Récupère l'index de position de la valeur de couleur dans le tableau
-        // let pos = article.colors.indexOf(value)
-        // console.log(pos)
-        // if (pos < 0) { pos = 0 }
-        // cons.divImgElt.innerHTML = `
-        //     <img src="${article.imageUrl}" alt="${article.altTxt}">
-        // `
-        // cons.divImgElt.innerHTML = `
-        //     <img src="${article.imageUrl[pos]}" alt="${article.altTxt[pos]}">
-        // `
+        let imgURL = urlImagRestitute(urlSplit, colorEng)
+        console.log(imgURL)
 
+        let splitText = splitAlternText(article)
+        console.log(splitText)
 
+        let color = ''
+        for (let val of value) {
+            color += `${val} `
+        }
+
+        let textAlt = alternChangeColor(splitText, color)
+        console.log(textAlt)
+
+        cons.divImgElt.innerHTML = `
+            <img src="${imgURL}" alt="${textAlt}">
+        `
 
     })
     // Injection de la quantité choisie
@@ -80,9 +89,6 @@ const recupEltDom = (article) => {
         cons.inputElt.setAttribute("value", e.target.value)
     })
 }
-
-
-
 
 // =======================================
 export { recupId, recupEltDom }
