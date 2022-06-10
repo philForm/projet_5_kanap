@@ -1,6 +1,6 @@
 import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt } from "./const.js"
 
-import { recupId, priceCumul } from "./funct.js"
+import { recupId, priceCumul, recupForm } from "./funct.js"
 
 import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js"
 
@@ -12,6 +12,8 @@ console.log(recupLocalStorage)
 
 
 console.log(recupId(recupLocalStorage))
+
+console.log(recupForm().email)
 
 fetch(promise)
     .then(data => data.json())
@@ -82,8 +84,8 @@ fetch(promise)
             // let datasetColor = document.querySelector(`#cart__items`).children[i].dataset.color
             let datasetColor = inputValue.closest(`.cart__item`).dataset.color
             console.log(`${datasetId}, ${datasetColor}`)
-            inputValue.addEventListener("input", () => {
-
+            
+            inputValue.addEventListener("change", () => {
 
                 if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
                     // Changement de quantité dans le localstorage
