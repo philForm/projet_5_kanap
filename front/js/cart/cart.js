@@ -1,6 +1,6 @@
 import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt } from "./const.js"
 
-import { recupId, priceCumul, recupForm } from "./funct.js"
+import { recupId, priceCumul, funcTabArticle, recupForm } from "./funct.js"
 
 import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js"
 
@@ -10,30 +10,15 @@ import {displayImg} from "../utils/funct_globale.js"
 
 console.log(recupLocalStorage)
 
-
 console.log(recupId(recupLocalStorage))
-
-console.log(recupForm().email)
 
 fetch(promise)
     .then(data => data.json())
     .then(jsonArticle => {
         console.log(jsonArticle)
+        
         // Tableau d'articles du localstorage
-        const tabArticle = []
-        for (let article of jsonArticle) {
-            for (let loc of recupLocalStorage) {
-                if (loc.id == article._id) {
-                    let test = []
-                    test.push(loc.id)
-                    test.push(loc.color)
-                    test.push(loc.quantity)
-                    test.push(article)
-                    tabArticle.push(test)
-
-                }
-            }
-        }
+        const tabArticle = funcTabArticle(jsonArticle, recupLocalStorage)
         console.log(tabArticle)
 
         let totalQuantity = 0
@@ -70,7 +55,6 @@ fetch(promise)
                     </div>
                 </article>
             `
-
             totalQuantityElt.innerHTML = totalQuantity
 
             totalPriceElt.innerText = total
@@ -108,7 +92,6 @@ fetch(promise)
 
                 console.log(changeTotalPrice(tabArticle))
                 totalPriceElt.innerText = changeTotalPrice(tabArticle)
-
 
             })
 
