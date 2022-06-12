@@ -25,11 +25,18 @@ console.log(inputQuantityElt)
 // FORMULAIRE
 // =================================================================
 // Récupération des éléments du formulaire de validation.
-const firstNameForm = document.getElementById("firstName")
-const lastNameForm = document.getElementById("lastName")
-const addressForm = document.getElementById("address")
-const cityForm = document.getElementById("city")
-const emailForm = document.getElementById("email")
+const firstNameInput = document.getElementById("firstName")
+const firstNameError = document.getElementById("firstNameErrorMsg")
+const lastNameInput = document.getElementById("lastName")
+const lastNameError = document.getElementById("lastNameErrorMsg")
+const addressInput = document.getElementById("address")
+const addressError = document.getElementById("addressErrorMsg")
+const cityInput = document.getElementById("city")
+const cityError = document.getElementById("cityErrorMsg")
+const emailInput = document.getElementById("email")
+const emailError = document.getElementById("emailErrorMsg")
+
+// Bouton de validation
 const orderForm = document.getElementById("order")
 
 // Récupération du form
@@ -38,10 +45,12 @@ console.log(form)
 console.log(form.firstName.value)
 
 // Expressions régulières
-const validEmail = "^([\w\.\-] +)@([\w\-] +)((\.(\w) { 2, 3 }) +) $"
+const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+
+const regexName = /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+([-'\s][a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+)?/ ;
+
+const regexAdress = /^[a-z0-9\s,'-]*$/i ;
 
 
 
-
-
-export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameForm, lastNameForm, addressForm, cityForm, emailForm, orderForm, form }
+export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress }

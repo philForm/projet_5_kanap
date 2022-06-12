@@ -1,22 +1,27 @@
-import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt } from "./const.js"
+import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, regexName } from "./const.js"
+
 
 import { recupId, priceCumul, funcTabArticle, recupForm } from "./funct.js"
 
 import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js"
 
-import {colorsKanap} from "../utils/array_colors.js"
+import { colorsKanap } from "../utils/array_colors.js"
 
-import {displayImg} from "../utils/funct_globale.js"
+import { displayImg } from "../utils/funct_globale.js"
+
 
 console.log(recupLocalStorage)
 
 console.log(recupId(recupLocalStorage))
 
+console.log(regexName)
+
+
 fetch(promise)
     .then(data => data.json())
     .then(jsonArticle => {
         console.log(jsonArticle)
-        
+
         // Tableau d'articles du localstorage
         const tabArticle = funcTabArticle(jsonArticle, recupLocalStorage)
         console.log(tabArticle)
@@ -24,9 +29,9 @@ fetch(promise)
         let totalQuantity = 0
         let total = 0
         for (let item of tabArticle) {
-            
+
             console.log(displayImg(item))
-            
+
             let cumul = priceCumul(item[2], item[3].price)
             total += cumul
             totalQuantity += parseInt(item[2])
@@ -68,7 +73,7 @@ fetch(promise)
             // let datasetColor = document.querySelector(`#cart__items`).children[i].dataset.color
             let datasetColor = inputValue.closest(`.cart__item`).dataset.color
             console.log(`${datasetId}, ${datasetColor}`)
-            
+
             inputValue.addEventListener("change", () => {
 
                 if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
@@ -122,3 +127,4 @@ fetch(promise)
 
 
     })
+    

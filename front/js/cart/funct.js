@@ -1,6 +1,9 @@
-import { firstNameForm, lastNameForm, addressForm, cityForm, emailForm, orderForm, form } from "./const.js"
+import { nameValid } from "./formulaire.js"
+
+import { firstNameInput, firstNameError, lastNameInput, addressInput, addressError, cityInput, cityError, emailInput, orderForm, form, regexEmail, regexAdress, regexName, lastNameError, emailError } from "./const.js"
 
 import { getCart } from "../utils/funct_localstor.js"
+
 
 // Récupération de l'Id
 const recupId = (items) => {
@@ -75,11 +78,36 @@ orderForm.addEventListener("click", (e) => {
         email: form.email.value
 
     }
-    
+
     console.log(objValue)
     console.log(getCart("cart"))
 })
 
+const testReg = new RegExp("^[^0-9]+$")
+
+
+firstNameInput.addEventListener("change", () => {
+    nameValid(regexName, firstNameInput.value, firstNameError)
+
+})
+
+const test = lastNameInput.addEventListener("change", () => {
+    return nameValid(regexName, lastNameInput.value, lastNameError)
+
+})
+console.log(test)
+
+addressInput.addEventListener("change", () => {
+    console.log(nameValid(regexAdress, addressInput.value, addressError))
+})
+
+cityInput.addEventListener("change", () => {
+    console.log(nameValid(regexName, cityInput.value, cityError))
+})
+
+emailInput.addEventListener("change", () => {
+    console.log(nameValid(regexEmail, emailInput.value, emailError))
+})
 
 
 
