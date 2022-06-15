@@ -43,4 +43,9 @@ const colorsKanap = [
     ]
 ]
 
-export { colorsKanap }
+
+
+// const regexColors = /(?i)(\W|^)(bleu|jaune|vert|rose|gris|rouge)(\W|$)/
+const regexColors = /(bleu|jaune|vert|rose|gris|rouge)/ig
+
+export { colorsKanap, regexColors }

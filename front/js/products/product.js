@@ -14,7 +14,7 @@ fetch(promise)
 
         recupEltDom(article)
 
-        // Création d'un nouvet Objet contenant l'Id et le nom de l'article
+        // Création d'un nouvel Objet contenant l'Id et le nom de l'article
         let cartObj = new Object
         cartObj.name = article.name
         cartObj.id = article._id

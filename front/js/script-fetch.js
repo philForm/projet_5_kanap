@@ -14,7 +14,7 @@ fetch(promise)
             sectionElt.innerHTML += `
                 <a class="lien" href="./product.html?id=${article._id}">
                     <article>
-                        <img src="${displayImgIndex(article)}" alt="${article.altTxt}">
+                        <img src="${article.imageUrl}" alt="${article.altTxt}">
                         <h3 class="productName">${article.name}</h3>
                         <p class="productDescription">${article.description}</p>
                     </article>

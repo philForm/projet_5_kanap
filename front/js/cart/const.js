@@ -45,12 +45,18 @@ console.log(form)
 console.log(form.firstName.value)
 
 // Expressions régulières
-const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
 
-const regexName = /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+([-'\s][a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+)?/ ;
+const regexName =
+    /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+([\-'\.\s]+[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+)?$/;
+    
+// const regexCity = /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ\s,\.'\-]+$/ ;
+const regexCity = 
+    /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ]+([\s,\.'\-]+[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ])?$/ ;
 
-const regexAdress = /^[a-z0-9\s,'-]*$/i ;
+const regexAdress = /^[a-z0-9éèëêîïâàûüç\s,'\-]*$/i;
 
 
 
-export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress }
+
+export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity }

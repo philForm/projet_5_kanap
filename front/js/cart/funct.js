@@ -1,8 +1,10 @@
 import { nameValid } from "./formulaire.js"
 
-import { firstNameInput, firstNameError, lastNameInput, addressInput, addressError, cityInput, cityError, emailInput, orderForm, form, regexEmail, regexAdress, regexName, lastNameError, emailError } from "./const.js"
+import { firstNameInput, firstNameError, lastNameInput, addressInput, addressError, cityInput, cityError, emailInput, orderForm, form, regexEmail, regexAdress, regexName, lastNameError, emailError, regexCity } from "./const.js"
 
 import { getCart } from "../utils/funct_localstor.js"
+
+import { regexColors } from "../utils/array_colors.js"
 
 
 // Récupération de l'Id
@@ -87,27 +89,40 @@ const testReg = new RegExp("^[^0-9]+$")
 
 
 firstNameInput.addEventListener("change", () => {
-    nameValid(regexName, firstNameInput.value, firstNameError)
-
+    isValid = nameValid(regexName, firstNameInput.value, firstNameError)
 })
 
-const test = lastNameInput.addEventListener("change", () => {
-    return nameValid(regexName, lastNameInput.value, lastNameError)
+
+lastNameInput.addEventListener("change", () => {
+    nameValid(regexName, lastNameInput.value, lastNameError)
 
 })
-console.log(test)
 
 addressInput.addEventListener("change", () => {
     console.log(nameValid(regexAdress, addressInput.value, addressError))
 })
 
 cityInput.addEventListener("change", () => {
-    console.log(nameValid(regexName, cityInput.value, cityError))
+    console.log(nameValid(regexCity, cityInput.value, cityError))
 })
 
 emailInput.addEventListener("change", () => {
     console.log(nameValid(regexEmail, emailInput.value, emailError))
 })
+
+let color = "arlequin"
+const testColor = "je suis en rouge et en vert et en gris, et rouge aussi"
+// const replaceColor = (test, color, regex) => {
+//     const testRegex = test.match(regex)
+//     if (testRegex) {
+//         console.log(testRegex)
+//         for (let i = 0; i < testRegex.length; i++)
+//             test = test.replace(testRegex[i], color)
+//     }
+//     return test
+// }
+
+// console.log(replaceColor(testColor, color, regexColors))
 
 
 

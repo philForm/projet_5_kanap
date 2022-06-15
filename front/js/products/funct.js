@@ -1,6 +1,6 @@
 import * as cons from "./const.js"
-import { colorsKanap } from "../utils/array_colors.js";
-import { displayImgIndex, displayImg, engNameColor, splitColors, splitUrl, urlImagRestitute, alternChangeColor, splitAlternText } from "../utils/funct_globale.js";
+import { colorsKanap, regexColors } from "../utils/array_colors.js";
+import { displayImgIndex, displayImg, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor } from "../utils/funct_globale.js";
 
 
 // Récupération de l'id de l'article à partir de l'url
@@ -24,11 +24,13 @@ const recupEltDom = (article) => {
     cons.priceElt.innerText = article.price
     cons.descriptElt.innerText = article.description
 
+
+    let colorHtml = ""
     for (let color of article.colors) {
 
         let colorTab = color.split("/")
         console.log(colorTab)
-        let colorHtml = ''
+        colorHtml = ''
         for (let color of colorTab) {
 
             // cherche la couleur color dans colorsKanap
@@ -38,13 +40,15 @@ const recupEltDom = (article) => {
                 colorHtml += `${color2} et`
             else
                 colorHtml += ` ${color2}`
+
         }
 
-        cons.selectElt.innerHTML += `
-            <option value="${colorHtml}">${colorHtml}</option>
-            `
-    }
 
+        cons.selectElt.innerHTML += `
+        <option value="${colorHtml}">${colorHtml}</option>
+        
+        `
+    }
 
     // injection de la couleur choisie dans <select>
     cons.selectElt.addEventListener("input", (e) => {
@@ -56,8 +60,6 @@ const recupEltDom = (article) => {
         console.log(value)
 
 
-        console.log(value)
-
         // Récupère la valeur de la couleur
         let colorEng = engNameColor(value[value.length - 1])
         console.log(colorEng)
@@ -68,22 +70,26 @@ const recupEltDom = (article) => {
         let imgURL = urlImagRestitute(urlSplit, colorEng)
         console.log(imgURL)
 
-        let splitText = splitAlternText(article)
-        console.log(splitText)
 
         let color = ''
         for (let val of value) {
             color += `${val} `
         }
 
-        let textAlt = alternChangeColor(splitText, color)
-        console.log(textAlt)
+        if (value.length > 1) {
+            color = color.replace("noir", "")
+            color = color.replace("et", "")
+            console.log(color)
+        }
+
+        let textAlt2 = replaceColor(article.altTxt, color, regexColors)
+        console.log(textAlt2)
 
         cons.divImgElt.innerHTML = `
-            <img src="${imgURL}" alt="${textAlt}">
+            <img src="${imgURL}" alt="${textAlt2}">
         `
-
     })
+    
     // Injection de la quantité choisie
     cons.inputElt.addEventListener("input", (e) => {
         cons.inputElt.setAttribute("value", e.target.value)

@@ -1,5 +1,8 @@
 import { colorsKanap } from "./array_colors.js"
 
+import { regexColors } from "./array_colors.js"
+
+
 
 // Coupe l'URL de l'image au point de .jpg
 const splitUrl = (art) => {
@@ -15,29 +18,48 @@ const splitColors = (art, separ) => {
 
 // Reconstitution de l'URL de l'image
 const urlImagRestitute = (imgUrlTab, colorImg) => {
-    let imgUrl = `${imgUrlTab}_${colorImg}.jpg`
-    return imgUrl
+    if(colorImg){
+        let imgUrl = `${imgUrlTab}_${colorImg}.jpg`
+        return imgUrl    
+    }else{
+        let imgUrl = `${imgUrlTab}.jpg`
+        return imgUrl    
+    }
 }
 
 // Récupération du nom de la couleur en anglais
-const engNameColor = (colorImg)=>{
-    let color = (colorsKanap.find(col => col[1] == colorImg))[0]
-    return color
+const engNameColor = (colorImg) => {
+    if (colorImg) {
+        let color = (colorsKanap.find(col => col[1] == colorImg))[0]
+        return color
+    } else
+        console.log("La couleur n'existe pas !")
 }
 
 // Coupe le texte alternatif de l'image
-const splitAlternText = (art)=>{
-    let altTab = art.altTxt.split(' ')
-    console.log(altTab)
-    return altTab
+// const splitAlternText = (art) => {
+//     let altTab = art.altTxt.split(' ')
+//     console.log(altTab)
+//     return altTab
+// }
+
+// Remplacement de la couleur du texte alternatif de l'image
+const replaceColor = (test, color, regex) => {
+    const testRegex = test.match(regex)
+    if (testRegex) {
+        console.log(testRegex)
+        for (let i = 0; i < testRegex.length; i++)
+            test = test.replace(testRegex[i], color.trim())
+    }
+    return test
 }
 
 // Changement du nom de la couleur du texte alternatif de l'image
-const alternChangeColor = (altTab, art)=>{
-    let textAlt = `${altTab[0]} ${altTab[1]} ${altTab[2]} ${art.trim()} ${altTab[altTab.length - 2]} ${altTab[altTab.length - 1]}`
-    
-    return textAlt
-}
+// const alternChangeColor = (altTab, art) => {
+//     let textAlt = `${altTab[0]} ${altTab[1]} ${altTab[2]} ${art.trim()} ${altTab[altTab.length - 2]} ${altTab[altTab.length - 1]}`
+
+//     return textAlt
+// }
 
 // Affichage des images de base
 const displayImgIndex = (art) => {
@@ -61,16 +83,21 @@ const displayImg = (item) => {
     // Reconstitution de l'URL de l'image
     let imgUrl = urlImagRestitute(imgUrlTab, color2)
     console.log(imgUrl)
-    
-    // Coupe le texte alternatif de l'image
-    let splitText = splitAlternText(item[3])
-    console.log(splitText)
-    
-    // Changement texte alternatif
-    let textAlt = alternChangeColor(splitText, item[1])
-    console.log(textAlt)
 
-    return [imgUrl, textAlt]
+    // Coupe le texte alternatif de l'image
+    // let splitText = splitAlternText(item[3])
+    // console.log(splitText)
+
+    // Changement texte alternatif
+    // let textAlt = alternChangeColor(splitText, item[1])
+    // console.log(textAlt)
+
+    // Changement texte alternatif
+    let textAlt2 = replaceColor(item[3].altTxt, item[1], regexColors)
+    console.log(item[3].altTxt)
+    console.log(textAlt2)
+
+    return [imgUrl, textAlt2]
 }
 
-export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl, urlImagRestitute, alternChangeColor, splitAlternText }
+export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor }
