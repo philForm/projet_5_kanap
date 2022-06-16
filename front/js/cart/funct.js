@@ -44,18 +44,21 @@ const funcTabArticle = (jsonArticle, recupLocalStorage) => {
 // ======== FORMULAIRE ====================================
 // ========================================================
 
+// Désactivation du bouton submit
+// orderForm.disabled = true
+
 // Récupération des données du formulaire à partir de l'url
-const recupForm = () => {
-    const url = new URL(window.location.href);
-    console.log(url)
-    const searchParams = new URLSearchParams(url.search);
-    console.log(url.searchParams)
-    const map = new Map()
-    url.searchParams.forEach((value, key) => {
-        map.set(key, value)
-    })
-    return Object.fromEntries(map) // convertit un objet Map en Objet
-}
+// const recupForm = () => {
+//     const url = new URL(window.location.href);
+//     console.log(url)
+//     const searchParams = new URLSearchParams(url.search);
+//     console.log(url.searchParams)
+//     const map = new Map()
+//     url.searchParams.forEach((value, key) => {
+//         map.set(key, value)
+//     })
+//     return Object.fromEntries(map) // convertit un objet Map en Objet
+// }
 
 // Récupération des données du formulaire en direct !
 // orderForm.addEventListener("click", (e) => {
@@ -70,61 +73,81 @@ const recupForm = () => {
 
 let objValue = new Object
 
-orderForm.addEventListener("click", (e) => {
-    e.preventDefault();
-    objValue = {
-        firstName: form.firstName.value,
-        lastName: form.lastName.value,
-        address: form.address.value,
-        city: form.city.value,
-        email: form.email.value
+// orderForm.addEventListener("click", (e) => {
+//     e.preventDefault();
+//     objValue = {
+//         firstName: form.firstName.value,
+//         lastName: form.lastName.value,
+//         address: form.address.value,
+//         city: form.city.value,
+//         email: form.email.value
+//     }
 
-    }
+//     console.log(objValue)
+//     console.log(getCart("cart"))
+// })
 
-    console.log(objValue)
-    console.log(getCart("cart"))
+firstNameInput.addEventListener("input", () => {
+    nameValid(regexName, firstNameInput.value, firstNameError)
 })
 
-const testReg = new RegExp("^[^0-9]+$")
-
-
-firstNameInput.addEventListener("change", () => {
-    isValid = nameValid(regexName, firstNameInput.value, firstNameError)
-})
-
-
-lastNameInput.addEventListener("change", () => {
+lastNameInput.addEventListener("input", () => {
     nameValid(regexName, lastNameInput.value, lastNameError)
 
 })
 
-addressInput.addEventListener("change", () => {
-    console.log(nameValid(regexAdress, addressInput.value, addressError))
+addressInput.addEventListener("input", () => {
+    nameValid(regexAdress, addressInput.value, addressError)
 })
 
-cityInput.addEventListener("change", () => {
-    console.log(nameValid(regexCity, cityInput.value, cityError))
+cityInput.addEventListener("input", () => {
+    nameValid(regexCity, cityInput.value, cityError)
 })
 
-emailInput.addEventListener("change", () => {
-    console.log(nameValid(regexEmail, emailInput.value, emailError))
+emailInput.addEventListener("input", () => {
+    nameValid(regexEmail, emailInput.value, emailError)
 })
 
-let color = "arlequin"
-const testColor = "je suis en rouge et en vert et en gris, et rouge aussi"
-// const replaceColor = (test, color, regex) => {
-//     const testRegex = test.match(regex)
-//     if (testRegex) {
-//         console.log(testRegex)
-//         for (let i = 0; i < testRegex.length; i++)
-//             test = test.replace(testRegex[i], color)
-//     }
-//     return test
-// }
-
-// console.log(replaceColor(testColor, color, regexColors))
 
 
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formObjs = {
+        firstName: nameValid(regexName, firstNameInput.value, firstNameError),
+        lastName: nameValid(regexName, lastNameInput.value, lastNameError),
+        address: nameValid(regexAdress, addressInput.value, addressError),
+        city: nameValid(regexCity, cityInput.value, cityError),
+        email: nameValid(regexEmail, emailInput.value, emailError)
+    }
+    
+    let test = []
+    for (let item in formObjs) {
+        console.log(form.item)
+        if (!formObjs[item])
+            test.push(false)
+        console.log(test)
+    }
+    if (test.length === 0) {
+
+        for (let item in formObjs) {
+            console.log(formObjs[item])
+            formObjs[item] ?
+                objValue[item] = form[item].value :
+                objValue = {}
+
+        }
+
+    }
+
+    // objValue = {
+    //         lastName: form.lastName.value,
+    //         address: form.address.value,
+    //         city: form.city.value,
+    //         email: form.email.value
+    // }
+    console.log(objValue)
+    objValue = {}
+})
 
 
-export { recupId, priceCumul, funcTabArticle, recupForm }
+export { recupId, priceCumul, funcTabArticle }

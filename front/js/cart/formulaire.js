@@ -8,6 +8,10 @@ const nameValid = (regex, name, error) => {
         error.style.color = "#81ff81"
         regex.lastIndex = 0;
         return true
+    } else if (name === "") {
+
+        error.innerText = ""
+
     } else {
         console.log("nom invalide !")
         error.innerText = "pas valide !"

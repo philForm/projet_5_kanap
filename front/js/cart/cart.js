@@ -1,7 +1,7 @@
 import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, regexName } from "./const.js"
 
 
-import { recupId, priceCumul, funcTabArticle, recupForm } from "./funct.js"
+import { recupId, priceCumul, funcTabArticle } from "./funct.js"
 
 import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js"
 

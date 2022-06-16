@@ -40,21 +40,21 @@ const emailError = document.getElementById("emailErrorMsg")
 const orderForm = document.getElementById("order")
 
 // Récupération du form
-const form = document.querySelector(".cart__order__form").elements
-console.log(form)
-console.log(form.firstName.value)
+const form = document.querySelector(".cart__order__form")
+console.log(form.elements)
+// console.log(form.firstName.value)
 
 // Expressions régulières
 const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
 
 const regexName =
-    /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+([\-'\.\s]+[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+)?$/;
+    /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+([\-'\.\s]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+)?$/;
     
 // const regexCity = /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ\s,\.'\-]+$/ ;
 const regexCity = 
-    /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ]+([\s,\.'\-]+[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ])?$/ ;
+    /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+([\s,\.'\-]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ])?$/ ;
 
-const regexAdress = /^[a-z0-9éèëêîïâàûüç\s,'\-]*$/i;
+const regexAdress = /^[a-z0-9éèëêîïâàûüùç\s,'\-]*$/i;
 
 
 

@@ -1,6 +1,6 @@
 import * as cons from "./const.js"
 import { colorsKanap, regexColors } from "../utils/array_colors.js";
-import { displayImgIndex, displayImg, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor } from "../utils/funct_globale.js";
+import { displayImgIndex, displayImg, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor, valueReplace } from "../utils/funct_globale.js";
 
 
 // Récupération de l'id de l'article à partir de l'url
@@ -75,12 +75,8 @@ const recupEltDom = (article) => {
         for (let val of value) {
             color += `${val} `
         }
-
-        if (value.length > 1) {
-            color = color.replace("noir", "")
-            color = color.replace("et", "")
-            console.log(color)
-        }
+        
+        color = valueReplace(value, color)
 
         let textAlt2 = replaceColor(article.altTxt, color, regexColors)
         console.log(textAlt2)

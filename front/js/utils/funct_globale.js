@@ -54,6 +54,17 @@ const replaceColor = (test, color, regex) => {
     return test
 }
 
+// 
+const valueReplace = (value, color) => {
+
+    if (value.length > 1) {
+        color = color.replace("noir", "")
+        color = color.replace("et", "")
+        console.log(color)
+    }
+    return color
+}
+
 // Changement du nom de la couleur du texte alternatif de l'image
 // const alternChangeColor = (altTab, art) => {
 //     let textAlt = `${altTab[0]} ${altTab[1]} ${altTab[2]} ${art.trim()} ${altTab[altTab.length - 2]} ${altTab[altTab.length - 1]}`
@@ -91,13 +102,15 @@ const displayImg = (item) => {
     // Changement texte alternatif
     // let textAlt = alternChangeColor(splitText, item[1])
     // console.log(textAlt)
+    
+    const color = valueReplace(item[3].altTxt, item[1])
 
     // Changement texte alternatif
-    let textAlt2 = replaceColor(item[3].altTxt, item[1], regexColors)
+    let textAlt2 = replaceColor(item[3].altTxt, color, regexColors)
     console.log(item[3].altTxt)
     console.log(textAlt2)
 
     return [imgUrl, textAlt2]
 }
 
-export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor }
+export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor, valueReplace }
