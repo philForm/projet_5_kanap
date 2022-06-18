@@ -1,6 +1,6 @@
 import { nameValid } from "./formulaire.js"
 
-import { firstNameInput, firstNameError, lastNameInput, addressInput, addressError, cityInput, cityError, emailInput, orderForm, form, regexEmail, regexAdress, regexName, lastNameError, emailError, regexCity } from "./const.js"
+import { firstNameInput, firstNameError, lastNameInput, addressInput, addressError, cityInput, cityError, emailInput, orderForm, form, regexEmail, regexAdress, regexName, lastNameError, emailError, regexCity, recupLocalStorage } from "./const.js"
 
 import { getCart } from "../utils/funct_localstor.js"
 
@@ -73,6 +73,14 @@ const funcTabArticle = (jsonArticle, recupLocalStorage) => {
 
 let objValue = new Object
 
+objValue = {
+    contact: {},
+}
+
+console.log(getCart('cart'))
+const products = recupId(recupLocalStorage)
+console.log(products)
+
 // orderForm.addEventListener("click", (e) => {
 //     e.preventDefault();
 //     objValue = {
@@ -112,6 +120,7 @@ emailInput.addEventListener("input", () => {
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
+    // Objet contenant les vérification de validité des entrées
     const formObjs = {
         firstName: nameValid(regexName, firstNameInput.value, firstNameError),
         lastName: nameValid(regexName, lastNameInput.value, lastNameError),
@@ -119,7 +128,7 @@ form.addEventListener("submit", (e) => {
         city: nameValid(regexCity, cityInput.value, cityError),
         email: nameValid(regexEmail, emailInput.value, emailError)
     }
-    
+
     let test = []
     for (let item in formObjs) {
         console.log(form.item)
@@ -127,26 +136,55 @@ form.addEventListener("submit", (e) => {
             test.push(false)
         console.log(test)
     }
+    console.log(test)
     if (test.length === 0) {
 
+        let validForm = true
         for (let item in formObjs) {
             console.log(formObjs[item])
-            formObjs[item] ?
-                objValue[item] = form[item].value :
-                objValue = {}
-
+            if (!formObjs[item])
+                validForm = false
         }
+
+        for (let item in formObjs) {
+
+            validForm ? (
+                objValue.contact[item] = form[item].value,
+                form[item].value = ""
+                , console.log(form[item])
+            ) :
+                objValue = ""
+        }
+        validForm ? objValue.products = products :
+            objValue = ""
+
+        fetch(`http://localhost:3000/api/products/order`, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objValue)
+
+        }).then((res) => {
+            console.log(res)
+            console.log(res.ok)
+            if (res.ok) {
+                return res.json();
+            }
+
+        }).then((value) => {
+            console.log(value)
+            console.log(value.orderId)
+            let url = new URL(window.location.href);
+            let confirm = (`${url.origin}/front/html/confirmation.html?orderid=${value.orderId}`)
+            window.location.href = confirm
+        });
 
     }
 
-    // objValue = {
-    //         lastName: form.lastName.value,
-    //         address: form.address.value,
-    //         city: form.city.value,
-    //         email: form.email.value
-    // }
     console.log(objValue)
-    objValue = {}
+    // objValue = {}
 })
 
 
