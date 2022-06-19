@@ -4,17 +4,35 @@ import { displayImgIndex, displayImg, engNameColor, splitColors, splitUrl, urlIm
 
 
 // Récupération de l'id de l'article à partir de l'url
-const recupId = (url, searchParams) => {
+// const recupId = (url, searchParams) => {
+//     // return window.location.search.split("=")[1]
+//     url = new URL(window.location.href);
+//     console.log(url)
+//     searchParams = new URLSearchParams(url.search);
+//     console.log(searchParams)
+//     if (searchParams.has("id"))
+//         return url.searchParams.get("id")
+// }
+
+/**
+ * Récupère l'identifiant (id) dans l'url
+ * @param {String} id key of identifier
+ * @returns {String} identifiant passé dans l'url
+ */
+const recupId = (id) => {
     // return window.location.search.split("=")[1]
-    url = new URL(window.location.href);
+    let url = new URL(window.location.href);
     console.log(url)
-    searchParams = new URLSearchParams(url.search);
+    let searchParams = new URLSearchParams(url.search);
     console.log(searchParams)
-    if (searchParams.has("id"))
-        return url.searchParams.get("id")
+    if (searchParams.has(id))
+        return url.searchParams.get(id)
 }
 
-// Injection des éléments de l'api dans le DOM
+/**
+ * Injection des éléments de l'api dans le DOM
+ * @param {object} article 
+ */
 const recupEltDom = (article) => {
     cons.titleHead.innerHTML = article.name
     cons.divImgElt.innerHTML = `
@@ -50,7 +68,9 @@ const recupEltDom = (article) => {
         `
     }
 
-    // injection de la couleur choisie dans <select>
+    /**
+    * injection de la couleur choisie dans <select>
+    */
     cons.selectElt.addEventListener("input", (e) => {
         cons.selectElt.setAttribute("value", e.target.value)
 

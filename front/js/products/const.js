@@ -18,7 +18,7 @@ const inputElt = document.getElementById("quantity")
 const buttonCartElt = document.getElementById("addToCart")
 
 // URL de l'API
-const promise = `http://localhost:3000/api/products/${recupId()}`
+const promise = `http://localhost:3000/api/products/${recupId('id')}`
 
 export {
     titleHead,

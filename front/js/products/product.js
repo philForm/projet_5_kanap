@@ -4,7 +4,7 @@ import { recupId, recupEltDom } from "./funct.js"
 
 import { saveCart, getCart, addCart, removeProduct } from "../utils/funct_localstor.js"
 
-console.log(recupId())
+console.log(recupId('id'))
 console.log(promise)
 
 fetch(promise)

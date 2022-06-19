@@ -8,7 +8,7 @@ import { regexColors } from "../utils/array_colors.js"
 
 
 // Récupération de l'Id
-const recupId = (items) => {
+const recupIdLocalStorage = (items) => {
     let tabId = []
     for (let item of items)
         tabId.push(item.id)
@@ -78,7 +78,7 @@ objValue = {
 }
 
 console.log(getCart('cart'))
-const products = recupId(recupLocalStorage)
+const products = recupIdLocalStorage(recupLocalStorage)
 console.log(products)
 
 // orderForm.addEventListener("click", (e) => {
@@ -175,11 +175,14 @@ form.addEventListener("submit", (e) => {
 
         }).then((value) => {
             console.log(value)
-            console.log(value.orderId)
-            let url = new URL(window.location.href);
-            let confirm = (`${url.origin}/front/html/confirmation.html?orderid=${value.orderId}`)
-            window.location.href = confirm
-        });
+            let orderId = value.orderId
+            const url = new URL(window.location.href);
+            console.log(url.origin)
+            let route = '/front/html/confirmation.html'
+            let confirm = (`${url.origin}${route}?orderid=${orderId}`)
+            // window.location.href = confirm
+            console.log(confirm)
+        })
 
     }
 
@@ -188,4 +191,4 @@ form.addEventListener("submit", (e) => {
 })
 
 
-export { recupId, priceCumul, funcTabArticle }
+export { recupIdLocalStorage, priceCumul, funcTabArticle }
