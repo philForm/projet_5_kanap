@@ -1,8 +1,4 @@
-import { colorsKanap } from "./array_colors.js"
-
-import { regexColors } from "./array_colors.js"
-
-
+import { colorsKanap, regexColors } from "./array_colors.js"
 
 // Coupe l'URL de l'image au point de .jpg
 const splitUrl = (art) => {
@@ -36,13 +32,6 @@ const engNameColor = (colorImg) => {
         console.log("La couleur n'existe pas !")
 }
 
-// Coupe le texte alternatif de l'image
-// const splitAlternText = (art) => {
-//     let altTab = art.altTxt.split(' ')
-//     console.log(altTab)
-//     return altTab
-// }
-
 // Remplacement de la couleur du texte alternatif de l'image
 const replaceColor = (test, color, regex) => {
     const testRegex = test.match(regex)
@@ -65,12 +54,6 @@ const valueReplace = (value, color) => {
     return color
 }
 
-// Changement du nom de la couleur du texte alternatif de l'image
-// const alternChangeColor = (altTab, art) => {
-//     let textAlt = `${altTab[0]} ${altTab[1]} ${altTab[2]} ${art.trim()} ${altTab[altTab.length - 2]} ${altTab[altTab.length - 1]}`
-
-//     return textAlt
-// }
 
 // Affichage des images de base
 const displayImgIndex = (art) => {
@@ -94,14 +77,6 @@ const displayImg = (item) => {
     // Reconstitution de l'URL de l'image
     let imgUrl = urlImagRestitute(imgUrlTab, color2)
     console.log(imgUrl)
-
-    // Coupe le texte alternatif de l'image
-    // let splitText = splitAlternText(item[3])
-    // console.log(splitText)
-
-    // Changement texte alternatif
-    // let textAlt = alternChangeColor(splitText, item[1])
-    // console.log(textAlt)
     
     const color = valueReplace(item[3].altTxt, item[1])
 
@@ -113,4 +88,19 @@ const displayImg = (item) => {
     return [imgUrl, textAlt2]
 }
 
-export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor, valueReplace }
+/**
+ * Récupère l'identifiant (id) dans l'url
+ * @param {String} id key of identifier
+ * @param {object} url new URL(window.location.href)
+ * @returns {String} identifiant passé dans l'url
+ */
+const recupId = (id, url) => {
+    // return window.location.search.split("=")[1]
+    console.log(url)
+    let searchParams = new URLSearchParams(url.search);
+    console.log(searchParams)
+    if (searchParams.has(id))
+        return url.searchParams.get(id)
+}
+
+export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor, valueReplace, recupId }

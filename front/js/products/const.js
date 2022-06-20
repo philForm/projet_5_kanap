@@ -1,4 +1,5 @@
-import { recupId } from "./funct.js"
+// import { recupId } from "./funct.js"
+import { recupId } from "../utils/funct_globale.js"
 
 // sélection de la balise meta title
 const titleHead = document.querySelector("head > title")
@@ -17,8 +18,10 @@ const inputElt = document.getElementById("quantity")
 // Sélection button ajouter au panier
 const buttonCartElt = document.getElementById("addToCart")
 
+const url = new URL(window.location.href);
+
 // URL de l'API
-const promise = `http://localhost:3000/api/products/${recupId('id')}`
+const promise = `http://localhost:3000/api/products/${recupId('id', url)}`
 
 export {
     titleHead,
@@ -29,5 +32,6 @@ export {
     selectElt,
     inputElt,
     buttonCartElt,
+    url,
     promise
 }

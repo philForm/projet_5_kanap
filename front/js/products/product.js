@@ -1,10 +1,12 @@
-import { selectElt, inputElt, buttonCartElt, promise } from "./const.js"
+import { selectElt, inputElt, buttonCartElt, url, promise } from "./const.js"
 
-import { recupId, recupEltDom } from "./funct.js"
+import { recupEltDom, funCartObj } from "./funct.js"
+
+import { recupId } from "../utils/funct_globale.js"
 
 import { saveCart, getCart, addCart, removeProduct } from "../utils/funct_localstor.js"
 
-console.log(recupId('id'))
+console.log(recupId('id', url))
 console.log(promise)
 
 fetch(promise)
@@ -14,10 +16,7 @@ fetch(promise)
 
         recupEltDom(article)
 
-        // Création d'un nouvel Objet contenant l'Id et le nom de l'article
-        let cartObj = new Object
-        cartObj.name = article.name
-        cartObj.id = article._id
+        let cartObj = funCartObj(article)
 
         console.log(getCart('cart'))
 
@@ -33,4 +32,6 @@ fetch(promise)
 
         console.log(cartObj)
 
+    }).catch(err =>{
+        console.log(err)
     })

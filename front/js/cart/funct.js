@@ -1,4 +1,4 @@
-import { nameValid } from "./formulaire.js"
+import { nameValid, nameValid2 } from "./formulaire.js"
 
 import { firstNameInput, firstNameError, lastNameInput, addressInput, addressError, cityInput, cityError, emailInput, orderForm, form, regexEmail, regexAdress, regexName, lastNameError, emailError, regexCity, recupLocalStorage } from "./const.js"
 
@@ -121,19 +121,43 @@ emailInput.addEventListener("input", () => {
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     // Objet contenant les vérification de validité des entrées
+    // const formObjs = {
+    //     firstName: nameValid(regexName, firstNameInput.value, firstNameError),
+    //     lastName: nameValid(regexName, lastNameInput.value, lastNameError),
+    //     address: nameValid(regexAdress, addressInput.value, addressError),
+    //     city: nameValid(regexCity, cityInput.value, cityError),
+    //     email: nameValid(regexEmail, emailInput.value, emailError)
+    // }
     const formObjs = {
-        firstName: nameValid(regexName, firstNameInput.value, firstNameError),
-        lastName: nameValid(regexName, lastNameInput.value, lastNameError),
-        address: nameValid(regexAdress, addressInput.value, addressError),
-        city: nameValid(regexCity, cityInput.value, cityError),
-        email: nameValid(regexEmail, emailInput.value, emailError)
+        firstName: [
+            nameValid(regexName, firstNameInput.value, firstNameError),
+            firstNameError
+        ],
+        lastName: [
+            nameValid(regexName, lastNameInput.value, lastNameError),
+            lastNameError
+        ],
+        address: [
+            nameValid(regexAdress, addressInput.value, addressError),
+            addressError
+        ],
+        city: [
+            nameValid(regexCity, cityInput.value, cityError),
+            cityError
+        ],
+        email: [
+            nameValid(regexEmail, emailInput.value, emailError),
+            emailError
+        ]
     }
 
     let test = []
     for (let item in formObjs) {
         console.log(form.item)
-        if (!formObjs[item])
+        if (!formObjs[item][0]){
             test.push(false)
+            nameValid2(formObjs[item][1], item, form[item].value)
+        }
         console.log(test)
     }
     console.log(test)
@@ -141,9 +165,10 @@ form.addEventListener("submit", (e) => {
 
         let validForm = true
         for (let item in formObjs) {
-            console.log(formObjs[item])
-            if (!formObjs[item])
+            console.log(formObjs[item][0])
+            if (!formObjs[item][0]) {
                 validForm = false
+            }
         }
 
         for (let item in formObjs) {

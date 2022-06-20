@@ -20,14 +20,14 @@ fetch(promise)
                     </article>
                 </a>    `
         }
-        for (let i = 0; i < jsonArticle.length; i++) {
-            document.querySelector(`#items > a:nth-child(${i + 1})`).addEventListener("click", (e) => {
-                // e.stopPropagation()
-                // e.preventDefault()
-                // console.log(jsonArticle[i]._id)
-                // console.log(jsonArticle[i].name)
-            })
-        }
+        // for (let i = 0; i < jsonArticle.length; i++) {
+        //     document.querySelector(`#items > a:nth-child(${i + 1})`).addEventListener("click", (e) => {
+        //         // e.stopPropagation()
+        //         // e.preventDefault()
+        //         // console.log(jsonArticle[i]._id)
+        //         // console.log(jsonArticle[i].name)
+        //     })
+        // }
         
         
     })

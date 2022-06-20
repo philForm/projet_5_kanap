@@ -1,17 +1,5 @@
-/**
- * Récupère l'identifiant (id) dans l'url
- * @param {String} id key of identifier
- * @param {object} url 
- * @returns {String} identifiant de commande
- */
-const recupId = (id, url) => {
-    // let url = new URL(window.location.href);
-    console.log(url);
-    let searchParams = new URLSearchParams(url.search);
-    console.log(searchParams);
-    if (searchParams.has(id))
-        return url.searchParams.get(id);
-}
+import { recupId } from "./utils/funct_globale.js";
+
 
 /**
  * Charge l'url récupéré de l'url dans le DOM.
@@ -26,10 +14,11 @@ const confirmClearLocalStorage = (elt, url) => {
     // urlConfirm.search = ""
 }
 
+
 window.onload = () => {
-
+    
     const orderIdElt = document.getElementById("orderId");
-
+    
     const urlConfirm = new URL(window.location.href);
 
     const urlId = recupId('orderid', urlConfirm)

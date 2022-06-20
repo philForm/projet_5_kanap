@@ -3,32 +3,6 @@ import { colorsKanap, regexColors } from "../utils/array_colors.js";
 import { displayImgIndex, displayImg, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor, valueReplace } from "../utils/funct_globale.js";
 
 
-// Récupération de l'id de l'article à partir de l'url
-// const recupId = (url, searchParams) => {
-//     // return window.location.search.split("=")[1]
-//     url = new URL(window.location.href);
-//     console.log(url)
-//     searchParams = new URLSearchParams(url.search);
-//     console.log(searchParams)
-//     if (searchParams.has("id"))
-//         return url.searchParams.get("id")
-// }
-
-/**
- * Récupère l'identifiant (id) dans l'url
- * @param {String} id key of identifier
- * @returns {String} identifiant passé dans l'url
- */
-const recupId = (id) => {
-    // return window.location.search.split("=")[1]
-    let url = new URL(window.location.href);
-    console.log(url)
-    let searchParams = new URLSearchParams(url.search);
-    console.log(searchParams)
-    if (searchParams.has(id))
-        return url.searchParams.get(id)
-}
-
 /**
  * Injection des éléments de l'api dans le DOM
  * @param {object} article 
@@ -112,5 +86,20 @@ const recupEltDom = (article) => {
     })
 }
 
+
+/**
+ * Création d'un nouvel Objet contenant l'Id et le nom de l'article
+ * @param {object} art récupéré de l'api
+ * @returns {object} objet contenant name et id de l'article
+ */
+const funCartObj = (art) => {
+
+    let cartObj = new Object
+    cartObj.name = art.name
+    cartObj.id = art._id
+    return cartObj
+
+}
+
 // =======================================
-export { recupId, recupEltDom }
+export { recupEltDom, funCartObj }
