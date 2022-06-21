@@ -1,10 +1,11 @@
 import * as cons from "./const.js"
 import { colorsKanap, regexColors } from "../utils/array_colors.js";
-import { displayImgIndex, displayImg, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor, valueReplace } from "../utils/funct_globale.js";
+import { displayImgIndex, displayImg, engNameColor, splitUrl, urlImagRestitute, replaceColor, valueReplace } from "../utils/funct_globale.js";
+import { addCart } from "../utils/funct_localstor.js";
 
 
 /**
- * Injection des éléments de l'api dans le DOM
+ * Injection des éléments de l'article récupéré de l'api dans le DOM
  * @param {object} article 
  */
 const recupEltDom = (article) => {
@@ -60,6 +61,7 @@ const recupEltDom = (article) => {
 
         let urlSplit = splitUrl(article)
         console.log(urlSplit)
+        console.log(typeof urlSplit)
 
         let imgURL = urlImagRestitute(urlSplit, colorEng)
         console.log(imgURL)
@@ -101,5 +103,15 @@ const funCartObj = (art) => {
 
 }
 
+// Envoie l'article dans le localstorage
+function sendArticleToCart(select, input, cart) {
+    if (select.value != "" && input.value != 0) {
+        cart.color = select.value
+        cart.quantity = input.value
+        console.log(cart)
+        addCart(cart)
+    }
+}
+
 // =======================================
-export { recupEltDom, funCartObj }
+export { recupEltDom, funCartObj, sendArticleToCart }

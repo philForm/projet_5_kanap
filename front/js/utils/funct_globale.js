@@ -1,38 +1,61 @@
 import { colorsKanap, regexColors } from "./array_colors.js"
 
-// Coupe l'URL de l'image au point de .jpg
+
+/**
+ * Coupe l'URL de l'image au point de .jpg
+ * @param {(URL|String)} art Url de l'image de l'article
+ * @returns {(URL|String)} exemple : http:\/\/localhost:3000/images/kanap08
+ */
 const splitUrl = (art) => {
-    let imgUrlTab = art.imageUrl.split('.')[0]
-    return imgUrlTab
+    let imgUrl = art.imageUrl.split('.')[0]
+    return imgUrl
 }
 
-// Coupe les couleurs multiples
+/**
+ * Coupe les couleurs multiples : exemple : noir et jaune
+ * @param {String} art : Couleur à scinder 
+ * @param {String} separ : Séparateur 
+ * @returns {String} le dernier élément du tableau créé, dans l'exemple : jaune
+ */
 const splitColors = (art, separ) => {
     let colorImg = art.split(separ).pop()
     return colorImg
 }
 
-// Reconstitution de l'URL de l'image
-const urlImagRestitute = (imgUrlTab, colorImg) => {
-    if(colorImg){
-        let imgUrl = `${imgUrlTab}_${colorImg}.jpg`
-        return imgUrl    
-    }else{
-        let imgUrl = `${imgUrlTab}.jpg`
-        return imgUrl    
-    }
+//
+/**
+ * Reconstitution de l'URL de l'image
+ * @param {(URL|String)} imgUrl URL de l'image coupée, exemple : http:\/\/localhost:3000/images/kanap08
+ * @param {String} colorImg Couleur de l'image, exemple : pink
+ * @returns {(URL|String)} URL de l'image, exemple : http:\/\/localhost:3000/images/kanap08_pink.jpg
+ */
+const urlImagRestitute = (imgUrl, colorImg) => {
+    if (colorImg)
+        return `${imgUrl}_${colorImg}.jpg`;
+    else
+        return `${imgUrl}.jpg`;
+
 }
 
-// Récupération du nom de la couleur en anglais
+/**
+ * Récupération du nom de la couleur en anglais, à partir du nom en français
+ * @param {String} colorImg Couleur en français
+ * @returns {String} Nom de la couleur en anglais
+ */
 const engNameColor = (colorImg) => {
     if (colorImg) {
-        let color = (colorsKanap.find(col => col[1] == colorImg))[0]
-        return color
+        return (colorsKanap.find(col => col[1] == colorImg))[0]
     } else
-        console.log("La couleur n'existe pas !")
+        console.error("La couleur n'existe pas !")
 }
 
-// Remplacement de la couleur du texte alternatif de l'image
+/**
+ * Remplacement de la couleur du texte alternatif de l'image
+ * @param {String} test texte alternatif de l'image dans lequel on recherche une couleur de "regex"
+ * @param {String} color couleur de remplacement
+ * @param {RegExp} regex expression régulière contenant toutes les couleurs à tester sur "test"
+ * @returns {String} texte alternatif après remplacement de la couleur
+ */
 const replaceColor = (test, color, regex) => {
     const testRegex = test.match(regex)
     if (testRegex) {
@@ -43,10 +66,15 @@ const replaceColor = (test, color, regex) => {
     return test
 }
 
-// 
-const valueReplace = (value, color) => {
+/**
+ * Cas particulier où "altTxt" contient "noir" et "et"
+ * @param {String} altTxt 
+ * @param {String} color 
+ * @returns {String} couleur unique
+ */ 
+const valueReplace = (altTxt, color) => {
 
-    if (value.length > 1) {
+    if (color.length > 1) {
         color = color.replace("noir", "")
         color = color.replace("et", "")
         console.log(color)
@@ -77,7 +105,7 @@ const displayImg = (item) => {
     // Reconstitution de l'URL de l'image
     let imgUrl = urlImagRestitute(imgUrlTab, color2)
     console.log(imgUrl)
-    
+
     const color = valueReplace(item[3].altTxt, item[1])
 
     // Changement texte alternatif

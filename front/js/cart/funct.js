@@ -7,7 +7,12 @@ import { getCart } from "../utils/funct_localstor.js"
 import { regexColors } from "../utils/array_colors.js"
 
 
-// Récupération de l'Id
+//
+/**
+ * Récupération des Ids lu localStorage
+ * @param {object} items Articles du localStorage
+ * @returns {object[]} tabId : Tableau des Ids du localStorage
+ */
 const recupIdLocalStorage = (items) => {
     let tabId = []
     for (let item of items)
@@ -16,12 +21,28 @@ const recupIdLocalStorage = (items) => {
     return tabId
 }
 
-// Multiplication du prix par le nombre d'article
+/**
+ * Multiplication du prix par le nombre d'article
+ * @param {Number} nbArticle 
+ * @param {Number} price 
+ * @returns {Number}
+ */
 let priceCumul = (nbArticle, price) => {
     return nbArticle * price
 }
 
-// Tableau d'articles du localstorage
+/**
+ * Tableau d'articles du localstorage
+ * @param {object} jsonArticle
+ * Objet contenant tous les articles de la base de données 
+ * @param {object} recupLocalStorage
+ *  Objet contenant tous les articles du localStorage
+ * @returns {object[]} tabArticle : tableau de tableaux contenant :
+ * @property {(number|string)} id article du localStorage
+ * @property {String} couleur article du localStorage
+ * @property {(number|string)} quantité article du localStorage
+ * @property {Object} article de la base de données
+ */
 const funcTabArticle = (jsonArticle, recupLocalStorage) => {
     const tabArticle = []
     for (let article of jsonArticle) {
@@ -120,14 +141,7 @@ emailInput.addEventListener("input", () => {
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    // Objet contenant les vérification de validité des entrées
-    // const formObjs = {
-    //     firstName: nameValid(regexName, firstNameInput.value, firstNameError),
-    //     lastName: nameValid(regexName, lastNameInput.value, lastNameError),
-    //     address: nameValid(regexAdress, addressInput.value, addressError),
-    //     city: nameValid(regexCity, cityInput.value, cityError),
-    //     email: nameValid(regexEmail, emailInput.value, emailError)
-    // }
+    
     const formObjs = {
         firstName: [
             nameValid(regexName, firstNameInput.value, firstNameError),
