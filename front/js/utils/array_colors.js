@@ -1,5 +1,8 @@
 /**
- * @type {object} Array of string
+ * Tableaux de tableaux contenant chaqu'un deux éléments : 
+ * @property la couleur en anglais
+ * @property la couleur en français
+ * @type {object[]} Array of string
  */
 const colorsKanap = [
     [
@@ -49,8 +52,10 @@ const colorsKanap = [
 
 
 // const regexColors = /(?i)(\W|^)(bleu|jaune|vert|rose|gris|rouge)(\W|$)/
+
 /**
- * @type {Regex}
+ * Teste la présence de différents noms de couleur dans un string
+ * @type {RegExp}
  */
 const regexColors = /(bleu|jaune|vert|rose|gris|rouge)/ig
 

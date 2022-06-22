@@ -56,7 +56,36 @@ const regexCity =
 
 const regexAdress = /^[a-z0-9éèëêîïâàûüùç\s,'\-]*$/i;
 
+let firstNameMsg = [
+    "Votre prénom n'est pas valide !",
+    "Prénom valide."
+]
+let lastNameMsg = [
+    "Votre nom n'est pas valide !",
+    "Nom valide."
+]
+let addressMsg = [
+    "Votre adresse n'est pas valide !",
+    "Adresse valide."
+]
+let cityMsg = [
+    "Cette ville n'existe pas !",
+    "Ville valide."
+]
+let emmaiMsg = [
+    "Cette adresse email n'est pas valide !",
+    "Email valide"
+]
+
+const formInputTab = [
+    [firstNameInput, regexName, firstNameError, firstNameMsg],
+    [lastNameInput, regexName, lastNameError, lastNameMsg],
+    [addressInput, regexAdress, addressError, addressMsg],
+    [cityInput, regexCity, cityError, cityMsg],
+    [emailInput, regexEmail, emailError, emmaiMsg]
+]
 
 
 
-export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity }
+
+export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab }

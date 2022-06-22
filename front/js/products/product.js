@@ -19,6 +19,7 @@ window.onload = () => {
             recupEltDom(article)
 
             let cartObj = funCartObj(article)
+            console.log(cartObj)
 
             console.log(getCart('cart'))
 

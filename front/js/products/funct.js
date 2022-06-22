@@ -103,7 +103,15 @@ const funCartObj = (art) => {
 
 }
 
-// Envoie l'article dans le localstorage
+
+/**
+ * Envoie l'Objet cart dans le localStorage après lui avoir rajouter la couleur et la quantité
+ * @param {HTMLSelectElement} select 
+ * @param {HTMLInputElement} input 
+ * @param {object} cart === funCartObj(article), Objet contenant :
+ * @property {String} name : nom de l'article
+ * @property {String} id : id de l'article
+  */
 function sendArticleToCart(select, input, cart) {
     if (select.value != "" && input.value != 0) {
         cart.color = select.value

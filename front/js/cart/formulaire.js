@@ -1,10 +1,11 @@
 
 // Validation des noms du formulaire en direct
-const nameValid = (regex, name, error) => {
+const nameValid = (regex, name, error, msg) => {
 
     if (regex.test(name)) {
         console.log("nom valide !")
-        error.innerText = "valide !"
+        if (msg)
+            error.innerText = msg[1]
         error.style.color = "#81ff81"
         regex.lastIndex = 0;
         return true
@@ -14,12 +15,26 @@ const nameValid = (regex, name, error) => {
 
     } else {
         console.log("nom invalide !")
-        error.innerText = "pas valide !"
+        if (msg)
+            error.innerText = msg[0]
         error.style.color = "red"
         regex.lastIndex = 0;
         return false
     }
 }
+
+// Active ou désactive le bouton de validation
+const activeButton = (formInput, orderForm) => {
+    !formInput ? (
+        orderForm.disabled = true,
+        orderForm.classList.add("disabled")
+    ) : (
+        orderForm.disabled = false,
+        orderForm.classList.remove("disabled")
+    )
+}
+
+
 
 const nameValid2 = (errorElt, objKey, formValue) => {
     let regex = [
@@ -56,7 +71,7 @@ const nameValid2 = (errorElt, objKey, formValue) => {
     ];
 
     console.log(regex)
-    
+
     errorElt.style.color = "#ffed4d";
 
     if (objKey == "firstName") {
@@ -76,20 +91,20 @@ const nameValid2 = (errorElt, objKey, formValue) => {
     if (objKey == "address") {
         errorElt.innerText = "Tu es sûr d'habiter là !"
     }
-    if (objKey == "city"){
+    if (objKey == "city") {
         errorElt.innerText = regex[2][Math.floor(Math.random() * regex[2].length)]
-        
+
     }
-    if(objKey == "email"){
+    if (objKey == "email") {
         if ((!regex[3][0].test(formValue)))
             errorElt.innerText = regex[3][1][Math.floor(Math.random() * regex[3][1].length)]
         else
             errorElt.innerText = regex[3][2][Math.floor(Math.random() * regex[3][2].length)]
-        
+
     }
 
 }
 
 
 
-export { nameValid, nameValid2 }
+export { nameValid, nameValid2, activeButton }

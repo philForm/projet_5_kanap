@@ -16,6 +16,8 @@ console.log(recupIdLocalStorage(recupLocalStorage))
 
 console.log(regexName)
 
+console.log(name)
+
 
 fetch(promise)
     .then(data => data.json())
@@ -127,4 +129,3 @@ fetch(promise)
 
 
     })
-    
