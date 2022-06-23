@@ -49,10 +49,10 @@ const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
 
 const regexName =
     /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+([\-'\.\s]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+)?$/;
-    
+
 // const regexCity = /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ\s,\.'\-]+$/ ;
-const regexCity = 
-    /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+([\s,\.'\-]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ])?$/ ;
+const regexCity =
+    /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+([\s,\.'\-]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ])?$/;
 
 const regexAdress = /^[a-z0-9éèëêîïâàûüùç\s,'\-]*$/i;
 
@@ -78,14 +78,41 @@ let emmaiMsg = [
 ]
 
 const formInputTab = [
-    [firstNameInput, regexName, firstNameError, firstNameMsg],
-    [lastNameInput, regexName, lastNameError, lastNameMsg],
-    [addressInput, regexAdress, addressError, addressMsg],
-    [cityInput, regexCity, cityError, cityMsg],
-    [emailInput, regexEmail, emailError, emmaiMsg]
+    [firstNameInput, regexName, firstNameError, firstNameMsg, "firstName"],
+    [lastNameInput, regexName, lastNameError, lastNameMsg, "lastName"],
+    [addressInput, regexAdress, addressError, addressMsg, "address"],
+    [cityInput, regexCity, cityError, cityMsg, "city"],
+    [emailInput, regexEmail, emailError, emmaiMsg, "email"]
 ]
 
+const objValue = {
+    contact: {},
+};
+
+const formObjs = {
+    firstName: [
+        [regexName, firstNameInput.value, firstNameError],
+        firstNameError
+    ],
+    lastName: [
+        [regexName, lastNameInput.value, lastNameError],
+        lastNameError
+    ],
+    address: [
+        [regexAdress, addressInput.value, addressError],
+        addressError
+    ],
+    city: [
+        [regexCity, cityInput.value, cityError],
+        cityError
+    ],
+    email: [
+        [regexEmail, emailInput.value, emailError],
+        emailError
+    ]
+};
 
 
 
-export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab }
+
+export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, objValue, formObjs }

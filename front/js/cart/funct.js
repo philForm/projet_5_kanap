@@ -1,10 +1,10 @@
-import { activeButton, nameValid, nameValid2 } from "./formulaire.js"
+import { activeButton, nameValid, nameValid2 } from "./formulaire.js";
 
-import { firstNameInput, firstNameError, lastNameInput, addressInput, addressError, cityInput, cityError, emailInput, orderForm, form, regexEmail, regexAdress, regexName, lastNameError, emailError, regexCity, recupLocalStorage, formInputTab } from "./const.js"
+import { firstNameInput, firstNameError, lastNameInput, addressInput, addressError, cityInput, cityError, emailInput, orderForm, form, regexEmail, regexAdress, regexName, lastNameError, emailError, regexCity, recupLocalStorage, formInputTab, objValue, formObjs } from "./const.js";
 
-import { getCart } from "../utils/funct_localstor.js"
+import { getCart } from "../utils/funct_localstor.js";
 
-import { regexColors } from "../utils/array_colors.js"
+import { regexColors } from "../utils/array_colors.js";
 
 
 //
@@ -14,11 +14,11 @@ import { regexColors } from "../utils/array_colors.js"
  * @returns {object[]} tabId : Tableau des Ids du localStorage
  */
 const recupIdLocalStorage = (items) => {
-    let tabId = []
+    let tabId = [];
     for (let item of items)
-        tabId.push(item.id)
+        tabId.push(item.id);
 
-    return tabId
+    return tabId;
 }
 
 /**
@@ -28,7 +28,7 @@ const recupIdLocalStorage = (items) => {
  * @returns {Number}
  */
 let priceCumul = (nbArticle, price) => {
-    return nbArticle * price
+    return nbArticle * price;
 }
 
 /**
@@ -44,20 +44,20 @@ let priceCumul = (nbArticle, price) => {
  * @property {Object} article de la base de données
  */
 const funcTabArticle = (jsonArticle, recupLocalStorage) => {
-    const tabArticle = []
+    const tabArticle = [];
     for (let article of jsonArticle) {
         for (let loc of recupLocalStorage) {
             if (loc.id == article._id) {
-                let test = []
-                test.push(loc.id)
-                test.push(loc.color)
-                test.push(loc.quantity)
-                test.push(article)
-                tabArticle.push(test)
+                let test = [];
+                test.push(loc.id);
+                test.push(loc.color);
+                test.push(loc.quantity);
+                test.push(article);
+                tabArticle.push(test);
             }
         }
     }
-    return tabArticle
+    return tabArticle;
 }
 
 
@@ -92,15 +92,11 @@ const funcTabArticle = (jsonArticle, recupLocalStorage) => {
 //     console.log(objValue)
 // })
 
-let objValue = new Object
 
-objValue = {
-    contact: {},
-}
 
-console.log(getCart('cart'))
-const products = recupIdLocalStorage(recupLocalStorage)
-console.log(products)
+console.log(getCart('cart'));
+const products = recupIdLocalStorage(recupLocalStorage);
+console.log(products);
 
 
 
@@ -109,8 +105,8 @@ console.log(products)
 for (let item of formInputTab) {
 
     item[0].addEventListener("input", () => {
-        let name = nameValid(item[1], item[0].value, item[2], item[3])
-        activeButton(name, orderForm)
+        let name = nameValid(item[1], item[0].value, item[2], item[3]);
+        activeButton(name, orderForm);
     })
 
 }
@@ -119,48 +115,41 @@ for (let item of formInputTab) {
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const formObjs = {
-        firstName: [
-            nameValid(regexName, firstNameInput.value, firstNameError),
-            firstNameError
-        ],
-        lastName: [
-            nameValid(regexName, lastNameInput.value, lastNameError),
-            lastNameError
-        ],
-        address: [
-            nameValid(regexAdress, addressInput.value, addressError),
-            addressError
-        ],
-        city: [
-            nameValid(regexCity, cityInput.value, cityError),
-            cityError
-        ],
-        email: [
-            nameValid(regexEmail, emailInput.value, emailError),
-            emailError
-        ]
-    }
-
-    let test = []
-    for (let item in formObjs) {
-        console.log(form.item)
-        if (!formObjs[item][0]) {
-            test.push(false)
-            nameValid2(formObjs[item][1], item, form[item].value)
+    let tests = [];
+    for (let item of formInputTab) {
+        let boolValue = nameValid(item[1], item[0].value, item[2], item[3]);
+        item.push(boolValue)
+        console.log(boolValue)
+        console.log(form[item[4]].value)
+        if (!boolValue) {
+            tests.push(false);
+            nameValid2(item[2], item[0], form[item[4]].value);
         }
-        console.log(test)
+        console.log(tests);
     }
-    console.log(test)
-    if (test.length === 0) {
 
-        let validForm = true
-        for (let item in formObjs) {
-            console.log(formObjs[item][0])
-            if (!formObjs[item][0]) {
-                validForm = false
+    console.log(formInputTab)
+
+
+    console.log(tests);
+    if (tests.length === 0) {
+
+        // let validForm = true;
+        // for (let item in formObjs) {
+        //     console.log(formObjs[item][0])
+        //     if (!formObjs[item][0]) {
+        //         validForm = false;
+        //     }
+        // }
+        let validForm = true;
+        for (let item of formInputTab) {
+            console.log(item[item.length - 1])
+            if (!item[item.length - 1]) {
+                validForm = false;
             }
         }
+        
+        console.log("validForm" + validForm)
 
         for (let item in formObjs) {
 
@@ -169,10 +158,10 @@ form.addEventListener("submit", (e) => {
                 form[item].value = ""
                 , console.log(form[item])
             ) :
-                objValue = ""
-        }
+                objValue = "";
+        };
         validForm ? objValue.products = products :
-            objValue = ""
+            objValue = "";
 
         fetch(`http://localhost:3000/api/products/order`, {
             method: "POST",
@@ -187,24 +176,24 @@ form.addEventListener("submit", (e) => {
             console.log(res.ok)
             if (res.ok) {
                 return res.json();
-            }
+            };
 
         }).then((value) => {
-            console.log(value)
-            let orderId = value.orderId
+            console.log(value);
+            let orderId = value.orderId;
             const url = new URL(window.location.href);
-            console.log(url.origin)
-            let route = '/front/html/confirmation.html'
-            let confirm = (`${url.origin}${route}?orderid=${orderId}`)
-            // window.location.href = confirm
-            console.log(confirm)
-        })
+            console.log(url.origin);
+            let route = '/front/html/confirmation.html';
+            let confirm = (`${url.origin}${route}?orderid=${orderId}`);
+            // window.location.href = confirm ;
+            console.log(confirm);
+        });
 
     }
 
-    console.log(objValue)
-    // objValue = {}
+    console.log(objValue);
+    // objValue = {} ;
 })
 
 
-export { recupIdLocalStorage, priceCumul, funcTabArticle }
+export { recupIdLocalStorage, priceCumul, funcTabArticle };
