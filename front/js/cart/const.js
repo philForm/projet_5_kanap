@@ -85,9 +85,6 @@ const formInputTab = [
     [emailInput, regexEmail, emailError, emmaiMsg, "email"]
 ]
 
-const objValue = {
-    contact: {},
-};
 
 const formObjs = {
     firstName: [
@@ -115,4 +112,4 @@ const formObjs = {
 
 
 
-export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, objValue, formObjs }
+export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, formObjs }

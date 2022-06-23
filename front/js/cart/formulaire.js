@@ -72,7 +72,9 @@ const nameValid2 = (errorElt, objKey, formValue) => {
 
     console.log(regex)
 
-    errorElt.style.color = "#ffed4d";
+    // errorElt.style.color = "#ffed4d";
+    errorElt.style.color = "orange";
+    console.log(`objKey == "firstName" : ${objKey == "firstName"}`)
 
     if (objKey == "firstName") {
         if (regex[0][0].test(formValue))
@@ -104,7 +106,6 @@ const nameValid2 = (errorElt, objKey, formValue) => {
     }
 
 }
-
 
 
 export { nameValid, nameValid2, activeButton }

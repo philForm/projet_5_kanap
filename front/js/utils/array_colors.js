@@ -1,5 +1,5 @@
 /**
- * Tableaux de tableaux contenant chaqu'un deux éléments : 
+ * Tableaux de tableaux contenant chacun deux éléments : 
  * @property la couleur en anglais
  * @property la couleur en français
  * @type {object[]} Array of string
