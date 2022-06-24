@@ -3,6 +3,8 @@ import { getCart } from "../utils/funct_localstor.js"
 // Appel API
 const promise = `http://localhost:3000/api/products`
 
+const promiseOrder = `http://localhost:3000/api/products/order`
+
 // Articles du localstorage
 const recupLocalStorage = getCart("cart")
 
@@ -110,6 +112,4 @@ const formObjs = {
 };
 
 
-
-
-export { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, formObjs }
+export { promise, promiseOrder, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, formObjs }

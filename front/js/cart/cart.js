@@ -1,7 +1,6 @@
-import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, regexName } from "./const.js"
+import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, regexName, formInputTab, form } from "./const.js"
 
-
-import { recupIdLocalStorage, priceCumul, funcTabArticle } from "./funct.js"
+import { recupIdLocalStorage, priceCumul, funcTabArticle, displayArticlesOnPage } from "./funct.js"
 
 import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js"
 
@@ -9,14 +8,16 @@ import { colorsKanap } from "../utils/array_colors.js"
 
 import { displayImg } from "../utils/funct_globale.js"
 
+import { formSubmit } from "./formulaire.js"
+
+import { listenValuesInputOfForm } from "./formulaire_funct.js"
+
 
 console.log(recupLocalStorage)
 
 console.log(recupIdLocalStorage(recupLocalStorage))
 
 console.log(regexName)
-
-console.log(name)
 
 
 fetch(promise)
@@ -28,44 +29,48 @@ fetch(promise)
         const tabArticle = funcTabArticle(jsonArticle, recupLocalStorage)
         console.log(tabArticle)
 
-        let totalQuantity = 0
-        let total = 0
-        for (let item of tabArticle) {
+        // const displayArticlesOnPage = (tab, cartItem, total, totalPrice ) => {
 
-            console.log(displayImg(item))
+        //     let totalQuantity = 0
+        //     let total = 0
+        //     for (let item of tab) {
 
-            let cumul = priceCumul(item[2], item[3].price)
-            total += cumul
-            totalQuantity += parseInt(item[2])
+        //         console.log(displayImg(item))
 
+        //         let cumul = priceCumul(item[2], item[3].price)
+        //         total += cumul
+        //         totalQuantity += parseInt(item[2])
 
-            cartItemsElt.innerHTML += `
-                <article class="cart__item" data-id="${item[0]}" data-color="${item[1]}">
-                    <div class="cart__item__img">
-                        <img src="${displayImg(item)[0]}" alt="${displayImg(item)[1]}">
-                    </div>
-                    <div class="cart__item__content">
-                        <div class="cart__item__content__description">
-                            <h2>${item[3].name}</h2>
-                            <p>${item[1]}</p>
-                            <p>${item[3].price},00 €</p>
-                        </div>
-                        <div class="cart__item__content__settings">
-                            <div class="cart__item__content__settings__quantity">
-                                <p>Qté : ${item[2]}</p>
-                                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item[2]}">
-                            </div>
-                            <div class="cart__item__content__settings__delete">
-                                <p class="deleteItem">Supprimer</p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            `
-            totalQuantityElt.innerHTML = totalQuantity
+        //         cartItem.innerHTML += `
+        //             <article class="cart__item" data-id="${item[0]}" data-color="${item[1]}">
+        //                 <div class="cart__item__img">
+        //                     <img src="${displayImg(item)[0]}" alt="${displayImg(item)[1]}">
+        //                 </div>
+        //                 <div class="cart__item__content">
+        //                     <div class="cart__item__content__description">
+        //                         <h2>${item[3].name}</h2>
+        //                         <p>${item[1]}</p>
+        //                         <p>${item[3].price},00 €</p>
+        //                     </div>
+        //                     <div class="cart__item__content__settings">
+        //                         <div class="cart__item__content__settings__quantity">
+        //                             <p>Qté : ${item[2]}</p>
+        //                             <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item[2]}">
+        //                         </div>
+        //                         <div class="cart__item__content__settings__delete">
+        //                             <p class="deleteItem">Supprimer</p>
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //             </article>
+        //         `
+        //         total.innerHTML = totalQuantity
 
-            totalPriceElt.innerText = total
-        }
+        //         totalPrice.innerText = total
+        //     }
+        // }
+        
+        displayArticlesOnPage(tabArticle, cartItemsElt, totalQuantityElt, totalPriceElt)
 
         for (let i = 0; i < tabArticle.length; i++) {
 
@@ -129,3 +134,11 @@ fetch(promise)
 
 
     })
+
+listenValuesInputOfForm(formInputTab);
+
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    formSubmit();
+
+})
