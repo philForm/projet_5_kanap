@@ -139,6 +139,8 @@ function validityOfFormOnSubmit(tab, form) {
     let tests = [];
     for (let item of tab) {
         let boolValue = nameValid(item[1], item[0].value, item[2], item[3]);
+        if (typeof item[item.length - 1] === 'boolean')
+            item.pop();
         item.push(boolValue);
         console.log(boolValue);
         console.log(form[item[4]].value);
@@ -146,8 +148,6 @@ function validityOfFormOnSubmit(tab, form) {
             tests.push(false);
             nameValid2(item[2], item[4], form[item[4]].value);
         }
-        // if (typeof item[item.length - 1] === 'boolean')
-        //     item.pop()
     }
     console.log(tests);
     return tests;
@@ -158,12 +158,12 @@ function validityOfFormOnSubmit(tab, form) {
  * Création de l'Objet envoyé par la méthode POST au backend
  * @param {boolean}  validForm 
  * @param {object} tab 
- * @param {object} products : Tableau d'Ids des produits du localStorage
+ * @param {object[]} products : Tableau d'Ids des produits du localStorage
  * @returns {object} Contient les informations provenant du formulaire de validation, et les produits du localStorage 
  */
 function objectSend(validForm, tab, products, form) {
     const objValue = {
-        contact: {},
+        contact: {}
     };
 
     for (let item of tab) {

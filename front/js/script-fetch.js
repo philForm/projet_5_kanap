@@ -2,22 +2,22 @@
  * URL des produits de l'api
  * @type {(URL|String)}
  */
-const promise = `http://localhost:3000/api/products`
+const promise = `http://localhost:3000/api/products`;
 
 /**
  * @type {HTMLElement} \<section class="items" id="items"\>
  */
-const sectionElt = document.getElementById("items")
+const sectionElt = document.getElementById("items");
 
 window.onload = () => {
 
     fetch(promise)
         .then(data => data.json())
         .then(jsonArticle => {
-            console.log(jsonArticle)
+            console.log(jsonArticle);
             
             for (let article of jsonArticle) {
-                console.log(article.name)
+                console.log(article.name);
                 sectionElt.innerHTML += `
                     <a class="lien" href="./product.html?id=${article._id}">
                         <article>
@@ -25,8 +25,8 @@ window.onload = () => {
                             <h3 class="productName">${article.name}</h3>
                             <p class="productDescription">${article.description}</p>
                         </article>
-                    </a>    `
-            }
+                    </a>    `;
+            };
             // for (let i = 0; i < jsonArticle.length; i++) {
             //     document.querySelector(`#items > a:nth-child(${i + 1})`).addEventListener("click", (e) => {
             //         // e.stopPropagation()
@@ -37,7 +37,7 @@ window.onload = () => {
             // }
 
 
-        })
+        });
 
-}
+};
 

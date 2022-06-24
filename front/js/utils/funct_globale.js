@@ -1,4 +1,4 @@
-import { colorsKanap, regexColors } from "./array_colors.js"
+import { colorsKanap, regexColors } from "./array_colors.js";
 
 
 /**
@@ -7,8 +7,8 @@ import { colorsKanap, regexColors } from "./array_colors.js"
  * @returns {(URL|String)} exemple : http:\/\/localhost:3000/images/kanap08
  */
 const splitUrl = (art) => {
-    let imgUrl = art.imageUrl.split('.')[0]
-    return imgUrl
+    let imgUrl = art.imageUrl.split('.')[0];
+    return imgUrl;
 }
 
 /**
@@ -18,8 +18,8 @@ const splitUrl = (art) => {
  * @returns {String} le dernier élément du tableau créé, dans l'exemple : jaune
  */
 const splitColors = (art, separ) => {
-    let colorImg = art.split(separ).pop()
-    return colorImg
+    let colorImg = art.split(separ).pop();
+    return colorImg;
 }
 
 //
@@ -44,9 +44,9 @@ const urlImagRestitute = (imgUrl, colorImg) => {
  */
 const engNameColor = (colorImg) => {
     if (colorImg) {
-        return (colorsKanap.find(col => col[1] == colorImg))[0]
+        return (colorsKanap.find(col => col[1] == colorImg))[0];
     } else
-        console.error("La couleur n'existe pas !")
+        console.error("La couleur n'existe pas !");
 }
 
 /**
@@ -59,34 +59,34 @@ const engNameColor = (colorImg) => {
 const replaceColor = (test, color, regex) => {
     const testRegex = test.match(regex)
     if (testRegex) {
-        console.log(testRegex)
+        console.log(testRegex);
         for (let i = 0; i < testRegex.length; i++)
-            test = test.replace(testRegex[i], color.trim())
+            test = test.replace(testRegex[i], color.trim());
     }
-    return test
+    return test;
 }
 
 /**
  * Cas particulier où "altTxt" contient "noir" et "et"
- * @param {String} altTxt 
+ * @param {String} altTxt
  * @param {String} color 
- * @returns {String} couleur unique
+ * @returns {String} couleur unique (définie par un mot simple)
  */ 
 const valueReplace = (altTxt, color) => {
 
     if (color.length > 1) {
-        color = color.replace("noir", "")
-        color = color.replace("et", "")
-        console.log(color)
+        color = color.replace("noir", "");
+        color = color.replace("et", "");
+        console.log(color);
     }
-    return color
+    return color;
 }
 
 
 // Affichage des images de base
 const displayImgIndex = (art) => {
 
-    return urlImagRestitute(splitUrl(art), splitColors(art.colors[0], '/'))
+    return urlImagRestitute(splitUrl(art), splitColors(art.colors[0], '/'));
 
 }
 
@@ -94,26 +94,26 @@ const displayImgIndex = (art) => {
 const displayImg = (item) => {
 
     // Coupe l'URL de l'image au point de .jpg
-    let imgUrlTab = splitUrl(item[3])
-    console.log(imgUrlTab)
+    let imgUrlTab = splitUrl(item[3]);
+    console.log(imgUrlTab);
     // Coupe les couleurs multiples
-    let colorImg = splitColors(item[1], ' ')
-    console.log(colorImg)
+    let colorImg = splitColors(item[1], ' ');
+    console.log(colorImg);
     // Récupération du nom de la couleur en anglais
-    let color2 = engNameColor(colorImg)
-    console.log(color2)
+    let color2 = engNameColor(colorImg);
+    console.log(color2);
     // Reconstitution de l'URL de l'image
-    let imgUrl = urlImagRestitute(imgUrlTab, color2)
-    console.log(imgUrl)
+    let imgUrl = urlImagRestitute(imgUrlTab, color2);
+    console.log(imgUrl);
 
     const color = valueReplace(item[3].altTxt, item[1])
 
     // Changement texte alternatif
-    let textAlt2 = replaceColor(item[3].altTxt, color, regexColors)
-    console.log(item[3].altTxt)
-    console.log(textAlt2)
+    let textAlt = replaceColor(item[3].altTxt, color, regexColors);
+    console.log(item[3].altTxt);
+    console.log(textAlt);
 
-    return [imgUrl, textAlt2]
+    return [imgUrl, textAlt];
 }
 
 /**
@@ -124,11 +124,11 @@ const displayImg = (item) => {
  */
 const recupId = (id, url) => {
     // return window.location.search.split("=")[1]
-    console.log(url)
+    console.log(url);
     let searchParams = new URLSearchParams(url.search);
-    console.log(searchParams)
+    console.log(searchParams);
     if (searchParams.has(id))
-        return url.searchParams.get(id)
+        return url.searchParams.get(id);
 }
 
-export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor, valueReplace, recupId }
+export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor, valueReplace, recupId };

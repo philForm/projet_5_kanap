@@ -1,49 +1,49 @@
-import { getCart } from "../utils/funct_localstor.js"
+import { getCart } from "../utils/funct_localstor.js";
 
 // Appel API
-const promise = `http://localhost:3000/api/products`
+const promise = `http://localhost:3000/api/products`;
 
-const promiseOrder = `http://localhost:3000/api/products/order`
+const promiseOrder = `http://localhost:3000/api/products/order`;
 
 // Articles du localstorage
-const recupLocalStorage = getCart("cart")
+const recupLocalStorage = getCart("cart");
 
 // Récupération de section id="cart__items"
-const cartItemsElt = document.getElementById("cart__items")
+const cartItemsElt = document.getElementById("cart__items");
 
 // Récupération de la span totalQuantity
-const totalQuantityElt = document.getElementById("totalQuantity")
+const totalQuantityElt = document.getElementById("totalQuantity");
 
 // Récupération de la span totalPrice
-const totalPriceElt = document.getElementById("totalPrice")
+const totalPriceElt = document.getElementById("totalPrice");
 
 // Récupération de l'input de quantité
-const inputQuantityElt = document.querySelector("#cart__items article:nth-child(1)")
+const inputQuantityElt = document.querySelector("#cart__items article:nth-child(1)");
 
-console.log(inputQuantityElt)
+console.log(inputQuantityElt);
 
 
 // =================================================================
 // FORMULAIRE
 // =================================================================
 // Récupération des éléments du formulaire de validation.
-const firstNameInput = document.getElementById("firstName")
-const firstNameError = document.getElementById("firstNameErrorMsg")
-const lastNameInput = document.getElementById("lastName")
-const lastNameError = document.getElementById("lastNameErrorMsg")
-const addressInput = document.getElementById("address")
-const addressError = document.getElementById("addressErrorMsg")
-const cityInput = document.getElementById("city")
-const cityError = document.getElementById("cityErrorMsg")
-const emailInput = document.getElementById("email")
-const emailError = document.getElementById("emailErrorMsg")
+const firstNameInput = document.getElementById("firstName");
+const firstNameError = document.getElementById("firstNameErrorMsg");
+const lastNameInput = document.getElementById("lastName");
+const lastNameError = document.getElementById("lastNameErrorMsg");
+const addressInput = document.getElementById("address");
+const addressError = document.getElementById("addressErrorMsg");
+const cityInput = document.getElementById("city");
+const cityError = document.getElementById("cityErrorMsg");
+const emailInput = document.getElementById("email");
+const emailError = document.getElementById("emailErrorMsg");
 
 // Bouton de validation
-const orderForm = document.getElementById("order")
+const orderForm = document.getElementById("order");
 
 // Récupération du form
-const form = document.querySelector(".cart__order__form")
-console.log(form.elements)
+const form = document.querySelector(".cart__order__form");
+console.log(form.elements);
 // console.log(form.firstName.value)
 
 // Expressions régulières
@@ -61,23 +61,23 @@ const regexAdress = /^[a-z0-9éèëêîïâàûüùç\s,'\-]*$/i;
 let firstNameMsg = [
     "Votre prénom n'est pas valide !",
     "Prénom valide."
-]
+];
 let lastNameMsg = [
     "Votre nom n'est pas valide !",
     "Nom valide."
-]
+];
 let addressMsg = [
     "Votre adresse n'est pas valide !",
     "Adresse valide."
-]
+];
 let cityMsg = [
     "Cette ville n'existe pas !",
     "Ville valide."
-]
+];
 let emmaiMsg = [
     "Cette adresse email n'est pas valide !",
     "Email valide"
-]
+];
 
 const formInputTab = [
     [firstNameInput, regexName, firstNameError, firstNameMsg, "firstName"],
@@ -85,7 +85,7 @@ const formInputTab = [
     [addressInput, regexAdress, addressError, addressMsg, "address"],
     [cityInput, regexCity, cityError, cityMsg, "city"],
     [emailInput, regexEmail, emailError, emmaiMsg, "email"]
-]
+];
 
 
 const formObjs = {
@@ -112,4 +112,6 @@ const formObjs = {
 };
 
 
-export { promise, promiseOrder, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, formObjs }
+export {
+    promise, promiseOrder, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, formObjs
+};

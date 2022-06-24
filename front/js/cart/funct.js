@@ -61,15 +61,15 @@ function funcTabArticle(jsonArticle, recupLocalStorage) {
 
 const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
 
-    let totalQuantity = 0
-    let total = 0
+    let totalQuantity = 0;
+    let total = 0;
     for (let item of tab) {
 
-        console.log(displayImg(item))
+        console.log(displayImg(item));
 
-        let cumul = priceCumul(item[2], item[3].price)
-        total += cumul
-        totalQuantity += parseInt(item[2])
+        let cumul = priceCumul(item[2], item[3].price);
+        total += cumul;
+        totalQuantity += parseInt(item[2]);
 
         cartItem.innerHTML += `
                     <article class="cart__item" data-id="${item[0]}" data-color="${item[1]}">
@@ -93,10 +93,9 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
                             </div>
                         </div>
                     </article>
-                `
-        totalElt.innerHTML = totalQuantity
-
-        totalPriceElt.innerText = total
+                `;
+        totalElt.innerHTML = totalQuantity;
+        totalPriceElt.innerText = total;
     }
 }
 

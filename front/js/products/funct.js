@@ -1,6 +1,6 @@
-import * as cons from "./const.js"
+import * as cons from "./const.js";
 import { colorsKanap, regexColors } from "../utils/array_colors.js";
-import { displayImgIndex, displayImg, engNameColor, splitUrl, urlImagRestitute, replaceColor, valueReplace } from "../utils/funct_globale.js";
+import { displayImgIndex, engNameColor, splitUrl, urlImagRestitute, replaceColor, valueReplace } from "../utils/funct_globale.js";
 import { addCart } from "../utils/funct_localstor.js";
 
 
@@ -9,84 +9,84 @@ import { addCart } from "../utils/funct_localstor.js";
  * @param {object} article 
  */
 const recupEltDom = (article) => {
-    cons.titleHead.innerHTML = article.name
+    cons.titleHead.innerHTML = article.name;
     cons.divImgElt.innerHTML = `
             <img src="${displayImgIndex(article)}" alt="${article.altTxt}">
-            `
-    cons.titleElt.innerText = article.name
-    cons.priceElt.innerText = article.price
-    cons.descriptElt.innerText = article.description
+            `;
+    cons.titleElt.innerText = article.name;
+    cons.priceElt.innerText = article.price;
+    cons.descriptElt.innerText = article.description;
 
 
     let colorHtml = ""
     for (let color of article.colors) {
 
         let colorTab = color.split("/")
-        console.log(colorTab)
-        colorHtml = ''
+        console.log(colorTab);
+        colorHtml = '';
         for (let color of colorTab) {
 
             // cherche la couleur color dans colorsKanap
-            let color2 = (colorsKanap.find((col => col[0] == color.toLowerCase())))[1]
-            console.log(color2)
+            let color2 = (colorsKanap.find((col => col[0] == color.toLowerCase())))[1];
+            console.log(color2);
             if (colorTab.indexOf(color) != colorTab.length - 1)
-                colorHtml += `${color2} et`
+                colorHtml += `${color2} et`;
             else
-                colorHtml += ` ${color2}`
+                colorHtml += ` ${color2}`;
 
-        }
+        };
 
 
         cons.selectElt.innerHTML += `
         <option value="${colorHtml}">${colorHtml}</option>
         
-        `
-    }
+        `;
+    };
 
     /**
     * injection de la couleur choisie dans <select>
     */
     cons.selectElt.addEventListener("input", (e) => {
-        cons.selectElt.setAttribute("value", e.target.value)
+        cons.selectElt.setAttribute("value", e.target.value);
 
-        let value = (cons.selectElt.value).trim()
-        value = value.split(' ')
-        console.log(typeof value)
-        console.log(value)
+        let value = (cons.selectElt.value).trim();
+        value = value.split(' ');
+        console.log(typeof value);
+        console.log(value);
 
 
         // Récupère la valeur de la couleur
-        let colorEng = engNameColor(value[value.length - 1])
-        console.log(colorEng)
+        let colorEng = engNameColor(value[value.length - 1]);
+        console.log(colorEng);
 
-        let urlSplit = splitUrl(article)
-        console.log(urlSplit)
-        console.log(typeof urlSplit)
+        let urlSplit = splitUrl(article);
+        console.log(urlSplit);
+        console.log(typeof urlSplit);
 
-        let imgURL = urlImagRestitute(urlSplit, colorEng)
-        console.log(imgURL)
+        let imgURL = urlImagRestitute(urlSplit, colorEng);
+        console.log(imgURL);
 
 
-        let color = ''
+        let color = '';
         for (let val of value) {
-            color += `${val} `
+            color += `${val} `;
         }
         
-        color = valueReplace(value, color)
+        color = valueReplace(value, color);
 
-        let textAlt2 = replaceColor(article.altTxt, color, regexColors)
-        console.log(textAlt2)
+        let textAlt2 = replaceColor(article.altTxt, color, regexColors);
+        console.log(textAlt2);
 
-        cons.divImgElt.innerHTML = `
+        cons.divImgElt.innerHTML = `;
             <img src="${imgURL}" alt="${textAlt2}">
-        `
-    })
+        `;
+    });
     
     // Injection de la quantité choisie
     cons.inputElt.addEventListener("input", (e) => {
-        cons.inputElt.setAttribute("value", e.target.value)
-    })
-}
+        cons.inputElt.setAttribute("value", e.target.value);
+    });
+};
 
 
 /**
@@ -96,10 +96,10 @@ const recupEltDom = (article) => {
  */
 const funCartObj = (art) => {
 
-    let cartObj = new Object
-    cartObj.name = art.name
-    cartObj.id = art._id
-    return cartObj
+    let cartObj = new Object;
+    cartObj.name = art.name;
+    cartObj.id = art._id;
+    return cartObj;
 
 }
 
@@ -114,12 +114,12 @@ const funCartObj = (art) => {
   */
 function sendArticleToCart(select, input, cart) {
     if (select.value != "" && input.value != 0) {
-        cart.color = select.value
-        cart.quantity = input.value
-        console.log(cart)
-        addCart(cart)
-    }
-}
+        cart.color = select.value;
+        cart.quantity = input.value;
+        console.log(cart);
+        addCart(cart);
+    };
+};
 
 // =======================================
-export { recupEltDom, funCartObj, sendArticleToCart }
+export { recupEltDom, funCartObj, sendArticleToCart };

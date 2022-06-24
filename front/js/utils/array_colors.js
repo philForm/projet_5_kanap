@@ -47,16 +47,16 @@ const colorsKanap = [
     [
         "brown", "marron"
     ]
-]
+];
 
 
 
-// const regexColors = /(?i)(\W|^)(bleu|jaune|vert|rose|gris|rouge)(\W|$)/
+// const regexColors = /(?i)(\W|^)(bleu|jaune|vert|rose|gris|rouge)(\W|$)/;
 
 /**
  * Teste la présence de différents noms de couleur dans un string
  * @type {RegExp}
  */
-const regexColors = /(bleu|jaune|vert|rose|gris|rouge)/ig
+const regexColors = /(bleu|jaune|vert|rose|gris|rouge)/ig;
 
-export { colorsKanap, regexColors }
+export { colorsKanap, regexColors };

@@ -1,10 +1,10 @@
-import { recupIdLocalStorage } from  "./funct.js"
+import { recupIdLocalStorage } from  "./funct.js";
 
-import { recupLocalStorage, formInputTab, promiseOrder, form } from "./const.js"
+import { recupLocalStorage, formInputTab, promiseOrder, form } from "./const.js";
 
-import { validityOfFormOnSubmit, validFormBool, objectSend } from "./formulaire_funct.js"
+import { validityOfFormOnSubmit, validFormBool, objectSend } from "./formulaire_funct.js";
 
-import { getCart } from "../utils/funct_localstor.js"
+import { getCart } from "../utils/funct_localstor.js";
 
 console.log(getCart('cart'));
 const productsId = recupIdLocalStorage(recupLocalStorage);
@@ -20,8 +20,8 @@ const formSubmit = () => {
 
         const validForm = validFormBool(formInputTab)
 
-        console.log("validForm" + validForm)
-        console.log(formInputTab)
+        console.log("validForm" + validForm);
+        console.log(formInputTab);
 
         const objValue = objectSend(validForm, formInputTab, productsId, form)
 
@@ -34,8 +34,7 @@ const formSubmit = () => {
             body: JSON.stringify(objValue)
 
         }).then((res) => {
-            console.log(res)
-            console.log(res.ok)
+            console.log(res);
             if (res.ok) {
                 return res.json();
             };
@@ -54,5 +53,4 @@ const formSubmit = () => {
     }
 }
 
-
-export { formSubmit }
+export { formSubmit };
