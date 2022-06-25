@@ -23,11 +23,13 @@ window.onload = () => {
 
             console.log(getCart('cart'));
 
-            buttonCartElt.dataset.confirm = "0"
+            buttonCartElt.dataset.confirm = "0";
+            buttonCartElt.dataset.color = "";
+            buttonCartElt.dataset.quantity = "";
 
             buttonCartElt.addEventListener("click", () => {
 
-                orderedVerifications(cartObj)
+                orderedVerifications(cartObj);
             });
 
             console.log(cartObj);

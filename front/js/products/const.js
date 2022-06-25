@@ -40,6 +40,8 @@ const inputElt = document.getElementById("quantity");
  * @type {HTMLButtonElement} \<button id="addToCart"\>Ajouter au panier\</button\>
  */
 const buttonCartElt = document.getElementById("addToCart");
+const dataColor = buttonCartElt.dataset.color;
+const dataQuantity = buttonCartElt.dataset.quantity;
 /**
  * Instance de l'Objet : URL
  * @type {(object|URL)}
@@ -53,5 +55,5 @@ const url = new URL(window.location.href);
 const promise = `http://localhost:3000/api/products/${recupId('id', url)}`;
 
 export {
-    titleHead, divImgElt, titleElt, priceElt, descriptElt, selectElt, inputElt, buttonCartElt, url, promise
+    titleHead, divImgElt, titleElt, priceElt, descriptElt, selectElt, inputElt, buttonCartElt, url, promise, dataColor, dataQuantity
 };

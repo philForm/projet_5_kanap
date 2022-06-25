@@ -128,32 +128,58 @@ function sendArticleToCart(select, input, cart) {
  */
 const orderedVerifications = (cartObj) => {
 
-    let confirmation = false
+    let confirmation = false;
     // récupère la valeur de data-confirm
-    let dataConfirm = parseInt(cons.buttonCartElt.dataset.confirm)
+    let dataConfirm = parseInt(cons.buttonCartElt.dataset.confirm);
+    let pluralArt = "";
     
-    if (dataConfirm == 0) dataConfirm = 1
+    // Si les valeurs de dataset et les valeurs entrées sont differentes, on réinitialise dataConfirm
+    if (cons.buttonCartElt.dataset.color != (cons.selectElt.value).trim() ||
+    cons.buttonCartElt.dataset.quantity != (cons.inputElt.value).trim()) {
+        dataConfirm = 0
+        console.log(dataConfirm)
+    }
+    
+    // Si dataconfirm = 0, la couleur et la quantité choisie sont enregistrées dans les dataset
+    if (dataConfirm == 0) {
+        cons.buttonCartElt.dataset.color = (cons.selectElt.value).trim()
+        cons.buttonCartElt.dataset.quantity = (cons.inputElt.value).trim()
+        console.log(cons.buttonCartElt.dataset.color = (cons.selectElt.value).trim())
+        console.log(cons.buttonCartElt.dataset.quantity = (cons.inputElt.value).trim())
+    }
 
-    if (cons.selectElt.value == "" && cons.inputElt.value == 0) {
-        alert("choisir une couleur et une quantité")
-    }
-    else if (cons.selectElt.value == "") {
-        alert("choisir une couleur")
-    }
-    else if (cons.inputElt.value == 0) {
-        alert("choisir une quantité")
-    }
+    if (dataConfirm == 0) dataConfirm = 1;
+
+    if (cons.inputElt.value == 1)
+        pluralArt = "cet article";
+    else
+        pluralArt = "ces articles";
+
+    if (cons.selectElt.value == "" && cons.inputElt.value == 0)
+        alert(
+            "Veuillez choisir une couleur de canapé et la quantité désirée !"
+        );
+    else if (cons.selectElt.value == "")
+        alert(
+            "Veuillez choisir une couleur de canapé !"
+        );
+    else if (cons.inputElt.value == 0)
+        alert(
+            "Veuillez choisir le nombre de canapé(s) que vous souhaitez !"
+        );
     else {
         if (dataConfirm <= 1) {
-            confirmation = confirm(`Confirmez votre commande !`)
+            confirmation = confirm(`Confirmez-vous l'ajout de ${pluralArt} à votre panier !`);
         } else {
-            confirmation = confirm(`Voulez vous réellement passer la commande une ${dataConfirm}ème fois !!`)
+            confirmation = confirm(
+                `Voulez vous réellement ajouter ${pluralArt} à votre panier une ${dataConfirm}ème fois !!`
+            );
         }
     }
     // Si le message de confirmation est validé, la commande est envoyée.
     if (confirmation) {
-        dataConfirm += 1
-        cons.buttonCartElt.dataset.confirm = dataConfirm
+        dataConfirm += 1;
+        cons.buttonCartElt.dataset.confirm = dataConfirm;
         sendArticleToCart(cons.selectElt, cons.inputElt, cartObj);
     }
 }
