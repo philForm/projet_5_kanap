@@ -1,6 +1,6 @@
 import { selectElt, inputElt, buttonCartElt, url, promise } from "./const.js";
 
-import { recupEltDom, funCartObj, sendArticleToCart } from "./funct.js";
+import { recupEltDom, funCartObj, orderedVerifications } from "./funct.js";
 
 import { recupId } from "../utils/funct_globale.js";
 
@@ -23,11 +23,11 @@ window.onload = () => {
 
             console.log(getCart('cart'));
 
+            buttonCartElt.dataset.confirm = "0"
 
             buttonCartElt.addEventListener("click", () => {
 
-                sendArticleToCart(selectElt, inputElt, cartObj);
-
+                orderedVerifications(cartObj)
             });
 
             console.log(cartObj);

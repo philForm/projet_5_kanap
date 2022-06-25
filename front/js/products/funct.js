@@ -71,7 +71,7 @@ const recupEltDom = (article) => {
         for (let val of value) {
             color += `${val} `;
         }
-        
+
         color = valueReplace(value, color);
 
         let textAlt2 = replaceColor(article.altTxt, color, regexColors);
@@ -81,7 +81,7 @@ const recupEltDom = (article) => {
             <img src="${imgURL}" alt="${textAlt2}">
         `;
     });
-    
+
     // Injection de la quantité choisie
     cons.inputElt.addEventListener("input", (e) => {
         cons.inputElt.setAttribute("value", e.target.value);
@@ -121,5 +121,44 @@ function sendArticleToCart(select, input, cart) {
     };
 };
 
+
+/**
+ * Empêche grâce à des messages d'alerte et de confirmation l'envoi par inadvertance de commandes multiples !
+ * @param {object} cartObj contient le nom et l'Id de l'article
+ */
+const orderedVerifications = (cartObj) => {
+
+    let confirmation = false
+    // récupère la valeur de data-confirm
+    let dataConfirm = parseInt(cons.buttonCartElt.dataset.confirm)
+    
+    if (dataConfirm == 0) dataConfirm = 1
+
+    if (cons.selectElt.value == "" && cons.inputElt.value == 0) {
+        alert("choisir une couleur et une quantité")
+    }
+    else if (cons.selectElt.value == "") {
+        alert("choisir une couleur")
+    }
+    else if (cons.inputElt.value == 0) {
+        alert("choisir une quantité")
+    }
+    else {
+        if (dataConfirm <= 1) {
+            confirmation = confirm(`Confirmez votre commande !`)
+        } else {
+            confirmation = confirm(`Voulez vous réellement passer la commande une ${dataConfirm}ème fois !!`)
+        }
+    }
+    // Si le message de confirmation est validé, la commande est envoyée.
+    if (confirmation) {
+        dataConfirm += 1
+        cons.buttonCartElt.dataset.confirm = dataConfirm
+        sendArticleToCart(cons.selectElt, cons.inputElt, cartObj);
+    }
+}
+
 // =======================================
-export { recupEltDom, funCartObj, sendArticleToCart };
+export {
+    recupEltDom, funCartObj, sendArticleToCart, orderedVerifications
+};
