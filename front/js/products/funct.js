@@ -131,29 +131,34 @@ const orderedVerifications = (cartObj) => {
     let confirmation = false;
     // récupère la valeur de data-confirm
     let dataConfirm = parseInt(cons.buttonCartElt.dataset.confirm);
+    let dataColor = cons.buttonCartElt.dataset.color;
+    let dataQuantity = cons.buttonCartElt.dataset.quantity;
+    let dataBool = cons.buttonCartElt.dataset.bool;
+    console.log(dataBool);
     let pluralArt = "";
-    
+
+
     // Si les valeurs de dataset et les valeurs entrées sont differentes, on réinitialise dataConfirm
-    if (cons.buttonCartElt.dataset.color != (cons.selectElt.value).trim() ||
-    cons.buttonCartElt.dataset.quantity != (cons.inputElt.value).trim()) {
-        dataConfirm = 0
-        console.log(dataConfirm)
+    if (dataColor != (cons.selectElt.value).trim() ||
+        dataQuantity != (cons.inputElt.value).trim()) {
+        if (dataConfirm != 0) {
+            cons.buttonCartElt.dataset.bool = "true";
+            dataBool = cons.buttonCartElt.dataset.bool;
+            cons.buttonCartElt.dataset.confirm = 0;
+        }
+        dataConfirm = 0;
+        console.log(dataConfirm);
     }
-    
-    // Si dataconfirm = 0, la couleur et la quantité choisie sont enregistrées dans les dataset
+
+    // Si dataconfirm = 0, la couleur et la quantité choisies sont enregistrées dans les dataset
     if (dataConfirm == 0) {
-        cons.buttonCartElt.dataset.color = (cons.selectElt.value).trim()
-        cons.buttonCartElt.dataset.quantity = (cons.inputElt.value).trim()
-        console.log(cons.buttonCartElt.dataset.color = (cons.selectElt.value).trim())
-        console.log(cons.buttonCartElt.dataset.quantity = (cons.inputElt.value).trim())
+        cons.buttonCartElt.dataset.color = (cons.selectElt.value).trim();
+        cons.buttonCartElt.dataset.quantity = (cons.inputElt.value).trim();
+        dataConfirm = 1;
     }
 
-    if (dataConfirm == 0) dataConfirm = 1;
 
-    if (cons.inputElt.value == 1)
-        pluralArt = "cet article";
-    else
-        pluralArt = "ces articles";
+    cons.inputElt.value == 1 ? pluralArt = "cet article" : pluralArt = "ces articles";
 
     if (cons.selectElt.value == "" && cons.inputElt.value == 0)
         alert(
@@ -167,7 +172,7 @@ const orderedVerifications = (cartObj) => {
         alert(
             "Veuillez choisir le nombre de canapé(s) que vous souhaitez !"
         );
-    else {
+    else if (dataBool == "false") {
         if (dataConfirm <= 1) {
             confirmation = confirm(`Confirmez-vous l'ajout de ${pluralArt} à votre panier !`);
         } else {
@@ -176,7 +181,20 @@ const orderedVerifications = (cartObj) => {
             );
         }
     }
-    // Si le message de confirmation est validé, la commande est envoyée.
+    else if (dataBool == "true") {
+
+        if (dataConfirm <= 1) {
+            confirmation = confirm(
+                `Souhaitez-vous vraiment ajouter cette nouvelle commande à votre panier !`
+            );
+        } else {
+            confirmation = confirm(
+                `Souhaitez-vous vraiment ajouter cette nouvelle commande à votre panier une ${dataConfirm}ème fois !!`
+            );
+        }
+    }
+
+    // Si le message de confirmation est validé, la commande est envoyée au panier.
     if (confirmation) {
         dataConfirm += 1;
         cons.buttonCartElt.dataset.confirm = dataConfirm;
