@@ -77,7 +77,7 @@ const recupEltDom = (article) => {
         let textAlt2 = replaceColor(article.altTxt, color, regexColors);
         console.log(textAlt2);
 
-        cons.divImgElt.innerHTML = `;
+        cons.divImgElt.innerHTML = `
             <img src="${imgURL}" alt="${textAlt2}">
         `;
     });
@@ -126,7 +126,7 @@ function sendArticleToCart(select, input, cart) {
  * Empêche grâce à des messages d'alerte et de confirmation l'envoi par inadvertance de commandes multiples !
  * @param {object} cartObj contient le nom et l'Id de l'article
  */
-const orderedVerifications = (cartObj) => {
+const orderedVerifications = (cartObj, article) => {
 
     let confirmation = false;
     // récupère la valeur de data-confirm
@@ -136,6 +136,7 @@ const orderedVerifications = (cartObj) => {
     let dataBool = cons.buttonCartElt.dataset.bool;
     console.log(dataBool);
     let pluralArt = "";
+    let pluralCanap = "";
 
 
     // Si les valeurs de dataset et les valeurs entrées sont differentes, on réinitialise dataConfirm
@@ -157,27 +158,35 @@ const orderedVerifications = (cartObj) => {
         dataConfirm = 1;
     }
 
-
-    cons.inputElt.value == 1 ? pluralArt = "cet article" : pluralArt = "ces articles";
+    // Singulier ou pluriel
+    cons.inputElt.value == 1 ? (
+        pluralArt = "cet article",
+        pluralCanap = "canapé"
+    ) : (
+        pluralArt = "ces articles",
+        pluralCanap = "canapés"
+    );
 
     if (cons.selectElt.value == "" && cons.inputElt.value == 0)
         alert(
-            "Veuillez choisir une couleur de canapé et la quantité désirée !"
+            `Veuillez choisir la couleur du canapé ${article.name} et la quantité désirée !`
         );
     else if (cons.selectElt.value == "")
         alert(
-            "Veuillez choisir une couleur de canapé !"
+            `Veuillez choisir la couleur du canapé ${article.name} !`
         );
     else if (cons.inputElt.value == 0)
         alert(
-            "Veuillez choisir le nombre de canapé(s) que vous souhaitez !"
+            `Veuillez choisir le nombre de canapé(s) ${article.name} que vous souhaitez !`
         );
     else if (dataBool == "false") {
         if (dataConfirm <= 1) {
-            confirmation = confirm(`Confirmez-vous l'ajout de ${pluralArt} à votre panier !`);
+            confirmation = confirm(
+                `${cons.inputElt.value} ${pluralCanap} ${article.name} en ${cons.selectElt.value}.\n Confirmez-vous l'ajout de ${pluralArt} à votre panier !`
+            );
         } else {
             confirmation = confirm(
-                `Voulez vous réellement ajouter ${pluralArt} à votre panier une ${dataConfirm}ème fois !!`
+                `${cons.inputElt.value} ${pluralCanap} ${article.name} en ${cons.selectElt.value}.\n Voulez vous réellement ajouter ${pluralArt} à votre panier une ${dataConfirm}ème fois !!`
             );
         }
     }
@@ -185,11 +194,11 @@ const orderedVerifications = (cartObj) => {
 
         if (dataConfirm <= 1) {
             confirmation = confirm(
-                `Souhaitez-vous vraiment ajouter cette nouvelle commande à votre panier !`
+                `${cons.inputElt.value} ${pluralCanap} ${article.name} en ${cons.selectElt.value}.\n Souhaitez-vous vraiment ajouter cette nouvelle commande à votre panier !`
             );
         } else {
             confirmation = confirm(
-                `Souhaitez-vous vraiment ajouter cette nouvelle commande à votre panier une ${dataConfirm}ème fois !!`
+                `${cons.inputElt.value} ${pluralCanap} ${article.name} en ${cons.selectElt.value}.\n Souhaitez-vous vraiment ajouter cette nouvelle commande à votre panier une ${dataConfirm}ème fois !!`
             );
         }
     }

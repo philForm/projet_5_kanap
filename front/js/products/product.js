@@ -31,7 +31,7 @@ window.onload = () => {
 
             buttonCartElt.addEventListener("click", () => {
 
-                orderedVerifications(cartObj);
+                orderedVerifications(cartObj, article);
             });
 
             console.log(cartObj);
