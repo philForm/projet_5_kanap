@@ -1,8 +1,8 @@
-import { recupIdLocalStorage } from  "./funct.js";
+import { recupIdLocalStorage } from "./funct.js";
 
-import { recupLocalStorage, formInputTab, promiseOrder, form } from "./const.js";
+import { recupLocalStorage, formInputTab, promiseOrder, totalQuantityElt,totalPriceElt, form } from "./const.js";
 
-import { validityOfFormOnSubmit, validFormBool, objectSend } from "./formulaire_funct.js";
+import { validityOfFormOnSubmit, validFormBool, objectSend, sendOrderConfirm } from "./formulaire_funct.js";
 
 import { getCart } from "../utils/funct_localstor.js";
 
@@ -24,31 +24,37 @@ const formSubmit = () => {
         console.log(formInputTab);
 
         const objValue = objectSend(validForm, formInputTab, productsId, form)
+        
+        let confirmation = sendOrderConfirm(objValue, totalQuantityElt, totalPriceElt);
 
-        fetch( promiseOrder, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(objValue)
+        if (confirmation) {
 
-        }).then((res) => {
-            console.log(res);
-            if (res.ok) {
-                return res.json();
-            };
+            fetch(promiseOrder, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(objValue)
 
-        }).then((value) => {
-            console.log(value);
-            let orderId = value.orderId;
-            const url = new URL(window.location.href);
-            console.log(url.origin);
-            let route = '/front/html/confirmation.html';
-            let confirm = (`${url.origin}${route}?orderid=${orderId}`);
-            // window.location.href = confirm ;
-            console.log(confirm);
-        });
+            }).then((res) => {
+                console.log(res);
+                if (res.ok) {
+                    return res.json();
+                };
+
+            }).then((value) => {
+                console.log(value);
+                let orderId = value.orderId;
+                const url = new URL(window.location.href);
+                console.log(url.origin);
+                let route = '/front/html/confirmation.html';
+                let confirm = (`${url.origin}${route}?orderid=${orderId}`);
+                window.location.href = confirm ;
+                console.log(confirm);
+            });
+
+        }
 
     }
 }

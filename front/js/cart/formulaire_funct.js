@@ -129,7 +129,7 @@ function listenValuesInputOfForm(tab) {
  * @param {object[]} tab tableau de tableaux contenant chacun :
  * @type {HTMLInputElement} exemple : \<input type="text" name="firstName" id="firstName" required=""\>
  * @type {RegExp}
- * @type {HTMLParagraphElement} exemple : <p id="firstNameErrorMsg">
+ * @type {HTMLParagraphElement} exemple : \<p id="firstNameErrorMsg"\>
  * @type {object[]} contient deux strings : textes de validation
  * @type {String} correspond à la valeur de l'Id de l'\<input\>
  * @returns {object[]} Vide si le formulaire est valide
@@ -201,8 +201,20 @@ function validFormBool(tab) {
     return validForm;
 }
 
+// Message d'alerte de confirmation de la commande !
+const sendOrderConfirm = (objValue, quantity, price) => {
+    let confirmation = false;
+    let article = "";
+    quantity.innerText == 1 ? article = 'article' : article = 'articles';
+    confirmation = confirm(
+        `Vos informations : \n${objValue.contact.firstName} ${objValue.contact.lastName},\nvotre adresse : ${objValue.contact.address} ${objValue.contact.city},\nvotre email : ${objValue.contact.email}\n\nVotre commande est de ${quantity.innerText} ${article} pour un montant de ${price.innerText} €.`
+    );
+    return confirmation;
+
+};
+
 
 export {
     nameValid, nameValid2, activeButton, listenValuesInputOfForm,
-    validityOfFormOnSubmit, objectSend, validFormBool
+    validityOfFormOnSubmit, objectSend, validFormBool, sendOrderConfirm
 }
