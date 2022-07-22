@@ -1,6 +1,13 @@
 import { orderForm } from "./const.js"
 
-// Validation des noms du formulaire en direct
+/**
+ * Validation des noms du formulaire en direct
+ * @param { RegExp } regex 
+ * @param {String} name 
+ * @param {HTMLParagraphElement} error 
+ * @param {object[]} msg 
+ * @returns {boolean}
+ */
 const nameValid = (regex, name, error, msg) => {
 
     if (regex.test(name)) {
@@ -24,7 +31,11 @@ const nameValid = (regex, name, error, msg) => {
     }
 }
 
-// Active ou désactive le bouton de validation
+/**
+ * Active ou désactive le bouton de validation
+ * @param {boolean} formInput 
+ * @param {HTMLButtonElement} orderForm 
+ */
 const activeButton = (formInput, orderForm) => {
     !formInput ? (
         orderForm.disabled = true,
@@ -35,6 +46,12 @@ const activeButton = (formInput, orderForm) => {
     )
 }
 
+/**
+ * Seconde validation des champs du formulaire lors de la tentative d'envoi !
+ * @param {HTMLParagraphElement} errorElt 
+ * @param {String} objKey 
+ * @param {String} formValue 
+ */
 const nameValid2 = (errorElt, objKey, formValue) => {
     let regex = [
         [
@@ -130,8 +147,9 @@ function listenValuesInputOfForm(tab) {
  * @type {HTMLInputElement} exemple : \<input type="text" name="firstName" id="firstName" required=""\>
  * @type {RegExp}
  * @type {HTMLParagraphElement} exemple : \<p id="firstNameErrorMsg"\>
- * @type {object[]} contient deux strings : textes de validation
+ * @type {[String]} contient deux strings : textes de validation
  * @type {String} correspond à la valeur de l'Id de l'\<input\>
+ * @param {HTMLFormElement} form tableau de tableaux contenant chacun :
  * @returns {object[]} Vide si le formulaire est valide
  */
 function validityOfFormOnSubmit(tab, form) {
@@ -157,7 +175,7 @@ function validityOfFormOnSubmit(tab, form) {
 /**
  * Création de l'Objet envoyé par la méthode POST au backend
  * @param {boolean}  validForm 
- * @param {object} tab 
+ * @param {object[]} tab 
  * @param {object[]} products : Tableau d'Ids des produits du localStorage
  * @returns {object} Contient les informations provenant du formulaire de validation, et les produits du localStorage 
  */

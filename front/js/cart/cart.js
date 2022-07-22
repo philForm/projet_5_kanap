@@ -19,7 +19,10 @@ window.onload = () => {
         .then(jsonArticle => {
             console.log(jsonArticle);
 
-            // Tableau d'articles du localstorage
+            /**
+             * Tableau d'articles du localstorage
+             * @type {object[]}
+             */
             const tabArticle = funcTabArticle(jsonArticle, recupLocalStorage);
             console.log(tabArticle);
             return tabArticle;
@@ -91,6 +94,8 @@ window.onload = () => {
                     }
                 })
             }
+        }).catch((err)=>{
+            console.error(err);
         })
 
     listenValuesInputOfForm(formInputTab);

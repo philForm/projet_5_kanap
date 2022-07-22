@@ -4,12 +4,19 @@ import * as cons from "../products/const.js";
 // LOCALSTORAGE
 // =======================================
 
-// Enregistrement dans le panier (localstorage)
+/**
+ * Enregistrement dans le panier (localstorage)
+ * @param {object[]} cart 
+ */
 const saveCart = (cart) => {
     localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// Récupération du panier (localstorage)
+/**
+ * Récupération du panier (localstorage)
+ * @param {String} loc : clé de l'Objet enregistré dans le localstorage
+ * @returns {object[]}
+ */
 const getCart = (loc) => {
     let cart = localStorage.getItem(loc);
     if (cart == null)
@@ -18,7 +25,10 @@ const getCart = (loc) => {
         return JSON.parse(cart);
 }
 
-// Ajouter les produit dans le panier (localstorage)
+/**
+ * Ajouter les produit dans le panier (localstorage)
+ * @param {object} product 
+ */
 const addCart = (product) => {
     let cart = getCart("cart");
     console.log(product);
@@ -36,14 +46,21 @@ const addCart = (product) => {
     saveCart(cart);
 }
 
-// Supprimer un produit du panier (localstorage)
+/**
+ * Supprimer un produit du panier (localstorage)
+ * @param {object} product 
+ */
 const removeProduct = (product) => {
     let cart = getCart("cart");
     cart = cart.filter((prod => prod.id != product[0]) && (prod => prod.color != product[1]));
     saveCart(cart);
 }
 
-// Changer la quantité du produit
+/**
+ * Change la quantité du produit dans le localstorage.
+ * @param {object} product 
+ * @param {String} quant : valeur de l'input de l'article
+ */
 const changeQuantity = (product, quant) => {
     // récupère le localstorage
     let cart = getCart("cart");
@@ -61,7 +78,11 @@ const changeQuantity = (product, quant) => {
     }
 }
 
-// Calcule la quantité totale
+//
+/**
+ * Calcule la quantité totale d'articles contenus dans le localstorage
+ * @returns {Number}
+ */
 const changeQuantityTotal = () => {
     let cart = getCart("cart");
     let total = 0;
@@ -72,6 +93,11 @@ const changeQuantityTotal = () => {
 }
 
 // Calcule le prix total
+/**
+ * Calcule le prix total
+ * @param {object[]} tab 
+ * @returns {Number}
+ */
 const changeTotalPrice = (tab) => {
     let cart = getCart("cart");
     let total = 0;

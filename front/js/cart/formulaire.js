@@ -52,6 +52,9 @@ const formSubmit = () => {
                 let confirm = (`${url.origin}${route}?orderid=${orderId}`);
                 window.location.href = confirm ;
                 console.log(confirm);
+                
+            }).catch((err)=>{
+                console.error(err);
             });
 
         }

@@ -28,6 +28,8 @@ window.onload = () => {
                     </a>    `;
             };
 
+        }).catch((err) => {
+            console.error(err);
         });
 
 };
