@@ -27,17 +27,21 @@ window.onload = () => {
             buttonCartElt.dataset.color = "";
             buttonCartElt.dataset.quantity = "";
             buttonCartElt.dataset.bool = false;
-            
+
 
             buttonCartElt.addEventListener("click", () => {
-
-                orderedVerifications(cartObj, article);
+                // Impossibilité d'envoyer les articles dans le localstorage si la quantité dépasse 100
+                if (inputElt.value <= 100)
+                    orderedVerifications(cartObj, article);
+                else
+                    alert("Veuillez indiquer une quantité comprise entre 1 et 100 !")
             });
 
             console.log(cartObj);
 
         }).catch((err) => {
             console.error(err);
+            alert("Les details du produit que vous avez choisi ne peuvent être affichés !")
         });
 
 };

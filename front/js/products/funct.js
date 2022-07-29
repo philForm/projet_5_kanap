@@ -84,7 +84,10 @@ const recupEltDom = (article) => {
 
     // Injection de la quantité choisie
     cons.inputElt.addEventListener("input", (e) => {
-        cons.inputElt.setAttribute("value", e.target.value);
+        if (e.target.value > 0 && e.target.value <= 100)
+            cons.inputElt.setAttribute("value", e.target.value);
+        else 
+            alert("La quantité doit être comprise entre 1 et 100 !")
     });
 };
 
@@ -125,6 +128,7 @@ function sendArticleToCart(select, input, cart) {
 /**
  * Empêche grâce à des messages d'alerte et de confirmation l'envoi par inadvertance de commandes multiples !
  * @param {object} cartObj contient le nom et l'Id de l'article
+ * @param {object} article article récupéré de l'API
  */
 const orderedVerifications = (cartObj, article) => {
 

@@ -30,6 +30,7 @@ window.onload = () => {
 
         }).catch((err) => {
             console.error(err);
+            alert("La page des produits ne peut pas être affichée !")
         });
 
 };
