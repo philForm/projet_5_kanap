@@ -27,6 +27,9 @@ window.onload = () => {
             console.log(tabArticle);
             return tabArticle;
 
+        }).catch((err) => {
+            console.error(err);
+            alert("Les details de votre panier ne peuvent être affichés !")
         }).then(tabArticle => {
 
             displayArticlesOnPage(tabArticle, cartItemsElt, totalQuantityElt, totalPriceElt);
@@ -53,9 +56,22 @@ window.onload = () => {
                             `Qté : ${inputValue.value}`;
 
                         console.log(inputValue.value);
+                        let confirmation
+                        if (inputValue.value == 0) {
 
-                        if (inputValue.value == 0)
-                            cartItemsElt.removeChild(cartItemsElt.children[i]);
+                            confirmation = confirm(
+                                "Voulez-vous vraiment supprimer ce produit ?"
+                            )
+                            if (confirmation) {
+                                removeProduct(tabArticle[i]);
+                                cartItemsElt.removeChild(cartItemsElt.children[i]);
+
+                            }
+                            else {
+                                inputValue.value = "1"
+                                changeQuantity(tabArticle[i], inputValue.value);
+                            }
+                        }
 
                     }
 
@@ -94,7 +110,7 @@ window.onload = () => {
                     }
                 })
             }
-        }).catch((err)=>{
+        }).catch((err) => {
             console.error(err);
         })
 

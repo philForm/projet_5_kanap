@@ -41,7 +41,7 @@ window.onload = () => {
 
         }).catch((err) => {
             console.error(err);
-            alert("Les details du produit que vous avez choisi ne peuvent être affichés !")
+            alert("Les details des produits que vous avez choisis ne peuvent être affichés !")
         });
 
 };

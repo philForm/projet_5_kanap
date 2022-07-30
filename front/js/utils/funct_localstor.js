@@ -69,13 +69,18 @@ const changeQuantity = (product, quant) => {
     console.log(product);
     console.log(foundProduct);
     console.log(quant);
-    if (foundProduct != undefined) {
+    if (foundProduct != undefined && quant <= 100) {
         foundProduct.quantity = parseInt(quant);
         console.log(typeof foundProduct.quantity);
         saveCart(cart);
-        if (foundProduct.quantity <= 0)
-            removeProduct(product);
+        // if (foundProduct.quantity <= 0) {
+            // removeProduct(product);
+
+        // }
+
     }
+    if (quant > 100)
+        alert("La quantité de cet article ne peut excéder 100 !")
 }
 
 //
