@@ -2,7 +2,7 @@ import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceE
 
 import { recupIdLocalStorage, funcTabArticle, displayArticlesOnPage } from "./funct.js";
 
-import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js";
+import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice, confirmRemoveProduct } from "../utils/funct_localstor.js";
 
 import { formSubmit } from "./formulaire.js";
 
@@ -36,10 +36,12 @@ window.onload = () => {
             return tabArticle;
 
         }).then(tabArticle => {
+            
+            let inputValue
 
             for (let i = 0; i < tabArticle.length; i++) {
 
-                let inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
+                inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
                 let datasetId = inputValue.closest(`.cart__item`).dataset.id;
                 let datasetColor = inputValue.closest(`.cart__item`).dataset.color;
                 console.log(`${datasetId}, ${datasetColor}`);
@@ -52,25 +54,35 @@ window.onload = () => {
                         console.log(`Quantité de l'élément au chargement de la page : ${tabArticle[i][2]}`);
 
                         // Affichage de la nouvelle quantité sur la page
-                        document.querySelector(`#cart__items > article:nth-child(${i + 1}) div.cart__item__content__settings__quantity > p`).innerText =
-                            `Qté : ${inputValue.value}`;
+                        const displayValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) div.cart__item__content__settings__quantity > p`)
+                            
+                        displayValue.innerText = `Qté : ${inputValue.value}`;
 
                         console.log(inputValue.value);
                         let confirmation
                         if (inputValue.value == 0) {
 
-                            confirmation = confirm(
-                                "Voulez-vous vraiment supprimer ce produit ?"
-                            )
-                            if (confirmation) {
-                                removeProduct(tabArticle[i]);
-                                cartItemsElt.removeChild(cartItemsElt.children[i]);
+                            // confirmation = confirm(
+                            //     "Voulez-vous vraiment supprimer ce produit ?"
+                            // )
+                            // if (confirmation) {
+                            //     removeProduct(tabArticle[i]);
+                            //     cartItemsElt.removeChild(cartItemsElt.children[i]);
 
-                            }
-                            else {
-                                inputValue.value = "1"
-                                changeQuantity(tabArticle[i], inputValue.value);
-                            }
+                            // }
+                            // else {
+                            //     inputValue.value = "1";
+                            //     changeQuantity(tabArticle[i], inputValue.value);
+                            // }
+                            
+                            confirmRemoveProduct(tabArticle[i], cartItemsElt.children[i], inputValue, cartItemsElt);
+                            displayValue.innerText = `Qté : ${inputValue.value}`;
+
+                        }
+                        if(inputValue.value > 100){
+                            inputValue.value = "100"
+                            displayValue.innerText = `Qté : ${inputValue.value}`; 
+                            changeQuantity(tabArticle[i], inputValue.value);
                         }
 
                     }
@@ -84,9 +96,9 @@ window.onload = () => {
                 })
 
             }
-            return tabArticle;
+            return [tabArticle, inputValue];
 
-        }).then(tabArticle => {
+        }).then(([tabArticle, inputValue]) => {
 
             for (let i = 0; i < tabArticle.length; i++) {
                 let deleteItem = document.querySelectorAll('p.deleteItem')[i];
@@ -98,8 +110,9 @@ window.onload = () => {
                 console.log(dataColor);
                 deleteItem.addEventListener('click', function () {
                     if (tabArticle[i][0] == dataId && tabArticle[i][1] == dataColor) {
-                        removeProduct(tabArticle[i]);
-                        cartItemsElt.removeChild(deleteItem.closest(`.cart__item`));
+                        confirmRemoveProduct(tabArticle[i], deleteItem.closest(`.cart__item`), inputValue, cartItemsElt)
+                        // removeProduct(tabArticle[i]);
+                        // cartItemsElt.removeChild(deleteItem.closest(`.cart__item`));
                         console.log(deleteItem.closest(`.cart__item`));
                         console.log(tabArticle[i][0]);
                         console.log(tabArticle[i][1]);

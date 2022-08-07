@@ -79,8 +79,9 @@ const changeQuantity = (product, quant) => {
         // }
 
     }
-    if (quant > 100)
-        alert("La quantité de cet article ne peut excéder 100 !")
+    if (quant > 100){
+        alert("La quantité de cet article ne peut excéder 100 !");
+    }
 }
 
 //
@@ -114,5 +115,21 @@ const changeTotalPrice = (tab) => {
     return total;
 }
 
+const confirmRemoveProduct = (product, children, inputValue, cartItemsElt)=>{
+    let confirmation
+    confirmation = confirm(
+        "Voulez-vous vraiment supprimer ce produit ?"
+    )
+    if (confirmation) {
+        removeProduct(product);
+        cartItemsElt.removeChild(children);
 
-export { saveCart, getCart, addCart, removeProduct, changeQuantity, changeQuantityTotal, changeTotalPrice };
+    }
+    else if (inputValue.value == 0){
+        inputValue.value = "1"
+        changeQuantity(product, inputValue.value);
+    }
+}
+
+
+export { saveCart, getCart, addCart, removeProduct, changeQuantity, changeQuantityTotal, changeTotalPrice, confirmRemoveProduct };
