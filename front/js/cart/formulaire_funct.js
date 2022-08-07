@@ -1,5 +1,7 @@
 import { orderForm } from "./const.js"
 
+import { getCart } from "../utils/funct_localstor.js"
+
 /**
  * Validation des noms du formulaire en direct
  * @param { RegExp } regex 
@@ -136,7 +138,7 @@ function listenValuesInputOfForm(tab) {
     for (let item of tab) {
         item[0].addEventListener("input", () => {
             let name = nameValid(item[1], item[0].value, item[2], item[3]);
-            activeButton(name, orderForm);
+            // activeButton(name, orderForm);
         });
     }
 }
@@ -221,6 +223,11 @@ function validFormBool(tab) {
 
 // Message d'alerte de confirmation de la commande !
 const sendOrderConfirm = (objValue, quantity, price) => {
+    let cart = getCart("cart")
+    console.log(cart)
+    if (cart.length == 0)
+        return alert("Vous n'avez aucun article dans le panier !")
+
     let confirmation = false;
     let article = "";
     quantity.innerText == 1 ? article = 'article' : article = 'articles';
