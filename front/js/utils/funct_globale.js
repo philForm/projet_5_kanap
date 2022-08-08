@@ -32,8 +32,8 @@ const splitColors = (art, separ) => {
 const urlImagRestitute = (imgUrl, colorImg) => {
     if (colorImg)
         return `${imgUrl}_${colorImg}.jpg`;
-    else
-        return `${imgUrl}.jpg`;
+
+    return `${imgUrl}.jpeg`;
 
 }
 
@@ -43,10 +43,10 @@ const urlImagRestitute = (imgUrl, colorImg) => {
  * @returns {String} Nom de la couleur en anglais
  */
 const engNameColor = (colorImg) => {
-    if (colorImg) {
+    if (colorImg)
         return (colorsKanap.find(col => col[1] == colorImg))[0];
-    } else
-        console.error("La couleur n'existe pas !");
+        
+    console.error("La couleur n'existe pas !");
 }
 
 /**
@@ -71,7 +71,7 @@ const replaceColor = (test, color, regex) => {
  * @param {String} altTxt
  * @param {String} color 
  * @returns {String} couleur unique (définie par un mot simple)
- */ 
+ */
 const valueReplace = (altTxt, color) => {
 
     if (color.length > 1) {
