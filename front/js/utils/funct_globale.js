@@ -68,13 +68,15 @@ const replaceColor = (test, color, regex) => {
 
 /**
  * Cas particulier où "altTxt" contient "noir" et "et"
- * @param {String} altTxt
+ * @param {object[]} altTxt
  * @param {String} color 
  * @returns {String} couleur unique (définie par un mot simple)
  */
 const valueReplace = (altTxt, color) => {
-
-    if (color.length > 1) {
+    console.log(color);
+    console.log(altTxt)
+    console.log(altTxt.length);
+    if (altTxt.length > 1 && altTxt.includes("noir") && altTxt.includes("et")) {
         color = color.replace("noir", "");
         color = color.replace("et", "");
         console.log(color);
@@ -83,14 +85,22 @@ const valueReplace = (altTxt, color) => {
 }
 
 
-// Affichage des images de base
+/**
+ * Affichage des images de base
+ * @param {object} art 
+ * @returns {URL|string} URL de l'image.
+ */
 const displayImgIndex = (art) => {
 
     return urlImagRestitute(splitUrl(art), splitColors(art.colors[0], '/'));
 
 }
 
-// Affichage des images selon la couleur
+/**
+ * Affichage des images selon la couleur
+ * @param {object[]} item 
+ * @returns {[String]} contient deux valeurs : l'URL de l'image, et le texte alternatif.
+ */
 const displayImg = (item) => {
 
     // Coupe l'URL de l'image au point de .jpg

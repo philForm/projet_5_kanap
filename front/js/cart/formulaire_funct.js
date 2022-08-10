@@ -179,7 +179,7 @@ function validityOfFormOnSubmit(tab, form) {
  * @param {boolean}  validForm 
  * @param {object[]} tab 
  * @param {object[]} products : Tableau d'Ids des produits du localStorage
- * @returns {object} Contient les informations provenant du formulaire de validation, et les produits du localStorage 
+ * @returns {object} objValue : Contient les informations provenant du formulaire de validation, et les produits du localStorage 
  */
 function objectSend(validForm, tab, products, form) {
     const objValue = {
@@ -221,7 +221,13 @@ function validFormBool(tab) {
     return validForm;
 }
 
-// Message d'alerte de confirmation de la commande !
+/**
+ * Message d'alerte de confirmation de la commande !
+ * @param {object} objValue : objet devant être envoyé au backend
+ * @param {HTMLSpanElement} quantity 
+ * @param {HTMLSpanElement} price 
+ * @returns {String} alert ou message de confirmation de l'envoi.
+ */
 const sendOrderConfirm = (objValue, quantity, price) => {
     let cart = getCart("cart")
     console.log(cart)

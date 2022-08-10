@@ -8,10 +8,10 @@ import { recupId } from "./utils/funct_globale.js";
  * @param {HTMLElement} elt 
  * @param {String} url 
  */
-const confirmClearLocalStorage = (elt, url) => {
+const confirmClearLocalStorage = (elt, url, urlConfirm) => {
     elt.innerText = url;
     // localStorage.clear();
-    // urlConfirm.search = ""
+    urlConfirm.search = ""
 }
 
 
@@ -23,7 +23,7 @@ window.onload = () => {
 
     const urlId = recupId('orderid', urlConfirm)
 
-    confirmClearLocalStorage(orderIdElt, urlId)
+    confirmClearLocalStorage(orderIdElt, urlId, urlConfirm)
 
 }
 

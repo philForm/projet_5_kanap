@@ -2,7 +2,7 @@ import { activeButton, nameValid, nameValid2 } from "./formulaire_funct.js";
 
 import { form, recupLocalStorage, formInputTab } from "./const.js";
 
-import { getCart } from "../utils/funct_localstor.js";
+import { getCart, removeProduct, changeQuantity } from "../utils/funct_localstor.js";
 
 import { regexColors } from "../utils/array_colors.js";
 
@@ -59,12 +59,20 @@ function funcTabArticle(jsonArticle, recupLocalStorage) {
     return tabArticle;
 }
 
+/**
+ * Affiche les articles provenant de l'API sur la page cart
+ * @param {object[]} tab 
+ * @param {HTMLElement} cartItem : section contenant tous les catégories d'articles.
+ * @param {HTMLSpanElement} totalElt : span contenant le nombre total d'articles
+ * @param {HTMLSpanElement} totalPriceElt : span contenant le prix total
+ */
 const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
 
     let totalQuantity = 0;
     let total = 0;
     for (let item of tab) {
-
+        
+        console.log(item)
         console.log(displayImg(item));
 
         let cumul = priceCumul(item[2], item[3].price);
@@ -99,5 +107,27 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
     }
 }
 
+/**
+ * Confirmation de suppression d'un article.
+ * @param {object[]} product 
+ * @param {HTMLElement} children : enfant de cartItemsElt
+ * @param {HTMLInputElement} inputValue : choix de la quantité de produit
+ * @param {HTML} cartItemsElt : section contenant les articles
+ */
+const confirmRemoveProduct = (product, children, inputValue, cartItemsElt) => {
+    let confirmation = false;
+    confirmation = confirm(
+        "Voulez-vous vraiment supprimer ce produit du panier ?"
+    );
+    if (confirmation) {
+        removeProduct(product);
+        cartItemsElt.removeChild(children);
 
-export { recupIdLocalStorage, priceCumul, funcTabArticle, displayArticlesOnPage };
+    }
+    else if (inputValue.value == 0) {
+        inputValue.value = "1"
+        changeQuantity(product, inputValue.value);
+    }
+}
+
+export { recupIdLocalStorage, priceCumul, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct };

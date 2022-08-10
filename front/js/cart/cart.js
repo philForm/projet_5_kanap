@@ -1,8 +1,8 @@
 import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, regexName, formInputTab, form } from "./const.js";
 
-import { recupIdLocalStorage, funcTabArticle, displayArticlesOnPage } from "./funct.js";
+import { recupIdLocalStorage, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct } from "./funct.js";
 
-import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice, confirmRemoveProduct } from "../utils/funct_localstor.js";
+import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js";
 
 import { formSubmit } from "./formulaire.js";
 
@@ -49,6 +49,8 @@ window.onload = () => {
                 inputValue.addEventListener("change", () => {
 
                     if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
+                        
+                        console.log(tabArticle[i])
                         // Changement de quantité dans le localstorage
                         changeQuantity(tabArticle[i], inputValue.value);
                         console.log(`Quantité de l'élément au chargement de la page : ${tabArticle[i][2]}`);
@@ -62,19 +64,6 @@ window.onload = () => {
                         let confirmation
                         if (inputValue.value == 0) {
 
-                            // confirmation = confirm(
-                            //     "Voulez-vous vraiment supprimer ce produit ?"
-                            // )
-                            // if (confirmation) {
-                            //     removeProduct(tabArticle[i]);
-                            //     cartItemsElt.removeChild(cartItemsElt.children[i]);
-
-                            // }
-                            // else {
-                            //     inputValue.value = "1";
-                            //     changeQuantity(tabArticle[i], inputValue.value);
-                            // }
-                            
                             confirmRemoveProduct(tabArticle[i], cartItemsElt.children[i], inputValue, cartItemsElt);
                             displayValue.innerText = `Qté : ${inputValue.value}`;
 
@@ -111,8 +100,6 @@ window.onload = () => {
                 deleteItem.addEventListener('click', function () {
                     if (tabArticle[i][0] == dataId && tabArticle[i][1] == dataColor) {
                         confirmRemoveProduct(tabArticle[i], deleteItem.closest(`.cart__item`), inputValue, cartItemsElt)
-                        // removeProduct(tabArticle[i]);
-                        // cartItemsElt.removeChild(deleteItem.closest(`.cart__item`));
                         console.log(deleteItem.closest(`.cart__item`));
                         console.log(tabArticle[i][0]);
                         console.log(tabArticle[i][1]);

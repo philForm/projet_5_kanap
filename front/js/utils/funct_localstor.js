@@ -98,7 +98,6 @@ const changeQuantityTotal = () => {
     return total;
 }
 
-// Calcule le prix total
 /**
  * Calcule le prix total
  * @param {object[]} tab 
@@ -115,21 +114,4 @@ const changeTotalPrice = (tab) => {
     return total;
 }
 
-const confirmRemoveProduct = (product, children, inputValue, cartItemsElt)=>{
-    let confirmation
-    confirmation = confirm(
-        "Voulez-vous vraiment supprimer ce produit ?"
-    )
-    if (confirmation) {
-        removeProduct(product);
-        cartItemsElt.removeChild(children);
-
-    }
-    else if (inputValue.value == 0){
-        inputValue.value = "1"
-        changeQuantity(product, inputValue.value);
-    }
-}
-
-
-export { saveCart, getCart, addCart, removeProduct, changeQuantity, changeQuantityTotal, changeTotalPrice, confirmRemoveProduct };
+export { saveCart, getCart, addCart, removeProduct, changeQuantity, changeQuantityTotal, changeTotalPrice };
