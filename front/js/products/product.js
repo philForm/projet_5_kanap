@@ -19,9 +19,10 @@ window.onload = () => {
             recupEltDom(article);
 
             let cartObj = funCartObj(article);
+            let cart = getCart('cart');
+            
             console.log(cartObj);
-
-            console.log(getCart('cart'));
+            console.log(cart);
 
             buttonCartElt.dataset.confirm = "0";
             buttonCartElt.dataset.color = "";
@@ -43,7 +44,7 @@ window.onload = () => {
 
         }).catch((err) => {
             console.error(err);
-            alert("Les details des produits que vous avez choisis ne peuvent être affichés !")
+            alert("Les détails des produits que vous avez choisis ne peuvent être affichés !")
         });
 
 };
