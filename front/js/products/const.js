@@ -30,11 +30,18 @@ const descriptElt = document.getElementById("description");
  * @type {HTMLSelectElement} \<select name="color-select" id="colors"\>
  */
 const selectElt = document.getElementById("colors");
+
+/**
+ * @type {HTMLLabelElement} \<label for="itemQuantity" id="quantityLabel">Nombre d'article(s) (1-100) :
+ */
+const quantityLabel = document.getElementById("quantityLabel");
+
 /**
  * Sélection de input contenant la quantité choisie
  * @type {HTMLInputElement} \<input type="number" name="itemQuantity" min="1" max="100" value="0" id="quantity"\>
  */
 const inputElt = document.getElementById("quantity");
+
 /**
  * Sélection button : ajouter au panier
  * @type {HTMLButtonElement} \<button id="addToCart"\>Ajouter au panier\</button\>
@@ -54,5 +61,5 @@ const url = new URL(window.location.href);
 const promise = `http://localhost:3000/api/products/${recupId('id', url)}`;
 
 export {
-    titleHead, divImgElt, titleElt, priceElt, descriptElt, selectElt, inputElt, buttonCartElt, url, promise
+    titleHead, divImgElt, titleElt, priceElt, descriptElt, selectElt, quantityLabel, inputElt, buttonCartElt, url, promise
 };

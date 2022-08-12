@@ -1,7 +1,7 @@
 import * as cons from "./const.js";
 import { colorsKanap, regexColors } from "../utils/array_colors.js";
 import { displayImgIndex, engNameColor, splitUrl, urlImagRestitute, replaceColor, valueReplace } from "../utils/funct_globale.js";
-import { addCart } from "../utils/funct_localstor.js";
+import { addCart, getCart } from "../utils/funct_localstor.js";
 
 
 /**
@@ -81,14 +81,14 @@ const recupEltDom = (article) => {
             <img src="${imgURL}" alt="${textAlt2}">
         `;
     });
-
-    // Injection de la quantité choisie
-    cons.inputElt.addEventListener("input", (e) => {
-        if (e.target.value > 0 && e.target.value <= 100)
-            cons.inputElt.setAttribute("value", e.target.value);
-        else 
-            alert("La quantité doit être comprise entre 1 et 100 !")
-    });
+    
+    // // Injection de la quantité choisie
+    // cons.inputElt.addEventListener("input", (e) => {
+    //     if (e.target.value > 0 && e.target.value <= 100)
+    //         cons.inputElt.setAttribute("value", e.target.value);
+    //     else 
+    //         alert("La quantité doit être comprise entre 1 et 100 !")
+    // });
 };
 
 
