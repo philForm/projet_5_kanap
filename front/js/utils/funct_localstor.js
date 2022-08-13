@@ -1,5 +1,6 @@
 import * as cons from "../products/const.js";
 
+
 // =======================================
 // LOCALSTORAGE
 // =======================================
@@ -39,11 +40,29 @@ const addCart = (product) => {
     if (foundProduct != undefined) {
         let quantity = parseInt(foundProduct.quantity);
         foundProduct.quantity = quantity + parseInt(cons.inputElt.value);
+        if (foundProduct.quantity < 100) {
+            cons.quantityLabel.innerText = `Nombre d'article(s) (1-${100 - foundProduct.quantity}) :`;
+            cons.inputElt.setAttribute("max", 100 - foundProduct.quantity);
+            saveCart(cart);
+
+        } else {
+            alert("Pas assez de stock !")
+        }
+
     }
     else {
-        cart.push(product);
+        if (product.quantity < 100) {
+
+            cons.quantityLabel.innerText = `Nombre d'article(s) (1-${100 - product.quantity}) :`;
+            cons.inputElt.setAttribute("max", 100 - product.quantity);
+            cart.push(product);
+            saveCart(cart);
+        } else {
+            alert("Pas assez de stock !")
+
+        }
+
     }
-    saveCart(cart);
 }
 
 /**
@@ -65,21 +84,21 @@ const changeQuantity = (product, quant) => {
     // récupère le localstorage
     let cart = getCart("cart");
     // récupération du produit ciblé dans le localstorage
-    let foundProduct = cart.find((p => p.id == product[0]) && (col => col.color == product[1]));
+    let foundProduct = cart.find((p => p.id == product[0]) && (col => col.color === product[1]));
     console.log(product);
     console.log(foundProduct);
     console.log(quant);
-    if (foundProduct != undefined && quant <= 100) {
+    if (foundProduct != undefined && quant <= 100 - foundProduct.quantity) {
         foundProduct.quantity = parseInt(quant);
         console.log(typeof foundProduct.quantity);
         saveCart(cart);
         // if (foundProduct.quantity <= 0) {
-            // removeProduct(product);
+        // removeProduct(product);
 
         // }
 
     }
-    if (quant > 100){
+    if (quant > 100) {
         alert("La quantité de cet article ne peut excéder 100 !");
     }
 }

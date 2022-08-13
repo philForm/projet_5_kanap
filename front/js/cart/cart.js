@@ -68,8 +68,8 @@ window.onload = () => {
                             displayValue.innerText = `Qté : ${inputValue.value}`;
 
                         }
-                        if(inputValue.value > 100){
-                            inputValue.value = "100"
+                        if(inputValue.value > 100 - tabArticle[i][2]){
+                            inputValue.value = 100;
                             displayValue.innerText = `Qté : ${inputValue.value}`; 
                             changeQuantity(tabArticle[i], inputValue.value);
                         }

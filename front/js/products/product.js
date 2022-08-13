@@ -29,16 +29,19 @@ window.onload = () => {
             buttonCartElt.dataset.quantity = "";
             buttonCartElt.dataset.bool = false;
 
+            let foundProduct
+            let quantityMax
+
             // /////////////////////////////////////////////////
-            selectElt.addEventListener("change", () => {
+            selectElt.addEventListener("input", () => {
 
                 console.log(article._id);
                 console.log(article.name);
                 console.log(selectElt.value);
 
-                let foundProduct = cart.find((p => p.id == article._id) && (col => col.color == selectElt.value));
+                foundProduct = cart.find((p => p.id == article._id) && (col => col.color === selectElt.value));
                 console.log(foundProduct)
-                let quantityMax
+                // let quantityMax
 
                 if (foundProduct != undefined) {
                     console.log("je suis dans le if")
@@ -56,7 +59,8 @@ window.onload = () => {
                     //         alert(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
                     //     }
                     // })
-                } else if (foundProduct == undefined) {
+                }
+                if (foundProduct == undefined) {
                     console.log("je suis dans le else")
                     quantityMax = 100;
                     quantityLabel.innerText = `Nombre d'article(s) (1-${quantityMax}) :`;
@@ -103,21 +107,35 @@ window.onload = () => {
                 //     }
                 // });
 
-                inputElt.addEventListener("change", (e) => {
+                inputElt.addEventListener("input", (e) => {
                     console.log(foundProduct)
                     if (foundProduct == undefined) {
                         quantityMax = 100;
                         console.log(quantityMax)
-                        inputElt.setAttribute("value", e.target.value);
+                        if (e.target.value > quantityMax) {
 
-                        alert(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
-                        console.log(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
-                        console.log(quantityMax)
+
+                            alert(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
+                            console.log(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
+                            console.log(quantityMax)
+                            inputElt.value = 0;
+                        }
+                        else {
+                            // inputElt.value = e.target.value
+                            inputElt.setAttribute("value", e.target.value);
+                        }
                     }
-                    else if(foundProduct != undefined){
-                        inputElt.setAttribute("value", e.target.value);
-                        console.log(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
-                        alert(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
+                    if (foundProduct != undefined) {
+                        if (e.target.value > quantityMax) {
+                            console.log(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
+                            alert(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
+                            inputElt.value = 0;
+
+                        } else {
+                            // inputElt.value = e.target.value
+                            inputElt.setAttribute("value", e.target.value);
+
+                        }
 
                     }
                 })
