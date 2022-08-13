@@ -36,7 +36,7 @@ window.onload = () => {
             return tabArticle;
 
         }).then(tabArticle => {
-            
+
             let inputValue
 
             for (let i = 0; i < tabArticle.length; i++) {
@@ -47,9 +47,9 @@ window.onload = () => {
                 console.log(`${datasetId}, ${datasetColor}`);
 
                 inputValue.addEventListener("change", () => {
-
                     if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
                         
+                        console.log("je suis dans le if !")
                         console.log(tabArticle[i])
                         // Changement de quantité dans le localstorage
                         changeQuantity(tabArticle[i], inputValue.value);
@@ -57,7 +57,7 @@ window.onload = () => {
 
                         // Affichage de la nouvelle quantité sur la page
                         const displayValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) div.cart__item__content__settings__quantity > p`)
-                            
+
                         displayValue.innerText = `Qté : ${inputValue.value}`;
 
                         console.log(inputValue.value);
@@ -68,9 +68,9 @@ window.onload = () => {
                             displayValue.innerText = `Qté : ${inputValue.value}`;
 
                         }
-                        if(inputValue.value > 100 - tabArticle[i][2]){
+                        if (inputValue.value > 100) {
                             inputValue.value = 100;
-                            displayValue.innerText = `Qté : ${inputValue.value}`; 
+                            displayValue.innerText = `Qté : ${inputValue.value}`;
                             changeQuantity(tabArticle[i], inputValue.value);
                         }
 

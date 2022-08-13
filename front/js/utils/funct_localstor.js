@@ -88,7 +88,8 @@ const changeQuantity = (product, quant) => {
     console.log(product);
     console.log(foundProduct);
     console.log(quant);
-    if (foundProduct != undefined && quant <= 100 - foundProduct.quantity) {
+    if (foundProduct != undefined && quant <= 100 - parseInt(foundProduct.quantity)) {
+    // if (foundProduct != undefined && quant <= 100) {
         foundProduct.quantity = parseInt(quant);
         console.log(typeof foundProduct.quantity);
         saveCart(cart);
