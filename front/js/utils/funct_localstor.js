@@ -40,7 +40,7 @@ const addCart = (product) => {
     if (foundProduct != undefined) {
         let quantity = parseInt(foundProduct.quantity);
         foundProduct.quantity = quantity + parseInt(cons.inputElt.value);
-        if (foundProduct.quantity < 100) {
+        if (foundProduct.quantity <= 100) {
             cons.quantityLabel.innerText = `Nombre d'article(s) (1-${100 - foundProduct.quantity}) :`;
             cons.inputElt.setAttribute("max", 100 - foundProduct.quantity);
             saveCart(cart);
@@ -88,8 +88,7 @@ const changeQuantity = (product, quant) => {
     console.log(product);
     console.log(foundProduct);
     console.log(quant);
-    if (foundProduct != undefined && quant <= 100 - parseInt(foundProduct.quantity)) {
-    // if (foundProduct != undefined && quant <= 100) {
+    if (foundProduct != undefined && quant <= 100) {
         foundProduct.quantity = parseInt(quant);
         console.log(typeof foundProduct.quantity);
         saveCart(cart);

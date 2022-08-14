@@ -37,18 +37,17 @@ window.onload = () => {
 
         }).then(tabArticle => {
 
-            let inputValue
 
             for (let i = 0; i < tabArticle.length; i++) {
 
-                inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
+                const inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
                 let datasetId = inputValue.closest(`.cart__item`).dataset.id;
                 let datasetColor = inputValue.closest(`.cart__item`).dataset.color;
                 console.log(`${datasetId}, ${datasetColor}`);
 
                 inputValue.addEventListener("change", () => {
                     if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
-                        
+
                         console.log("je suis dans le if !")
                         console.log(tabArticle[i])
                         // Changement de quantité dans le localstorage
@@ -85,11 +84,14 @@ window.onload = () => {
                 })
 
             }
-            return [tabArticle, inputValue];
+            return tabArticle;
 
-        }).then(([tabArticle, inputValue]) => {
+        }).then((tabArticle) => {
 
             for (let i = 0; i < tabArticle.length; i++) {
+
+                const inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
+
                 let deleteItem = document.querySelectorAll('p.deleteItem')[i];
                 console.log(tabArticle[i][0]);
                 console.log(tabArticle[i][1]);
