@@ -36,21 +36,20 @@ window.onload = () => {
             return tabArticle;
 
         }).then(tabArticle => {
-            
-            let inputValue
+
 
             for (let i = 0; i < tabArticle.length; i++) {
 
-                inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
+                const inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
                 let datasetId = inputValue.closest(`.cart__item`).dataset.id;
                 let datasetColor = inputValue.closest(`.cart__item`).dataset.color;
                 inputValue.setAttribute("data-color", tabArticle[i][1])
                 inputValue.addEventListener("change", () => {
-                    
+
                     console.log(`${datasetId}, ${datasetColor}`);
                     console.log(inputValue)
                     if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
-                        
+
                         console.log(tabArticle[i])
                         // Changement de quantité dans le localstorage
                         changeQuantity(tabArticle[i], inputValue.value);
@@ -58,7 +57,7 @@ window.onload = () => {
 
                         // Affichage de la nouvelle quantité sur la page
                         const displayValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) div.cart__item__content__settings__quantity > p`)
-                            
+
                         displayValue.innerText = `Qté : ${inputValue.value}`;
 
                         console.log(inputValue.value);
@@ -69,9 +68,9 @@ window.onload = () => {
                             displayValue.innerText = `Qté : ${inputValue.value}`;
 
                         }
-                        if(inputValue.value > 100){
+                        if (inputValue.value > 100) {
                             inputValue.value = "100"
-                            displayValue.innerText = `Qté : ${inputValue.value}`; 
+                            displayValue.innerText = `Qté : ${inputValue.value}`;
                             changeQuantity(tabArticle[i], inputValue.value);
                         }
 
@@ -86,11 +85,14 @@ window.onload = () => {
                 })
 
             }
-            return [tabArticle, inputValue];
+            return tabArticle;
 
-        }).then(([tabArticle, inputValue]) => {
+        }).then((tabArticle) => {
 
             for (let i = 0; i < tabArticle.length; i++) {
+
+                const inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
+
                 let deleteItem = document.querySelectorAll('p.deleteItem')[i];
                 console.log(tabArticle[i][0]);
                 console.log(tabArticle[i][1]);
