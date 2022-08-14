@@ -44,10 +44,11 @@ window.onload = () => {
                 inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
                 let datasetId = inputValue.closest(`.cart__item`).dataset.id;
                 let datasetColor = inputValue.closest(`.cart__item`).dataset.color;
-                console.log(`${datasetId}, ${datasetColor}`);
-
+                inputValue.setAttribute("data-color", tabArticle[i][1])
                 inputValue.addEventListener("change", () => {
-
+                    
+                    console.log(`${datasetId}, ${datasetColor}`);
+                    console.log(inputValue)
                     if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
                         
                         console.log(tabArticle[i])
