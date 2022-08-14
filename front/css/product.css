@@ -117,3 +117,9 @@
 		width: 90%;
 	}
 }
+
+.disabled{
+	background-color: #607d8b !important;
+	cursor: auto !important;
+	box-shadow: none !important;
+}

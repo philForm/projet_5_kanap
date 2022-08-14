@@ -144,7 +144,8 @@ const orderedVerifications = (cartObj, article) => {
 
 
     // Si les valeurs de dataset et les valeurs entrées sont differentes, on réinitialise dataConfirm
-    if (dataColor != (cons.selectElt.value).trim() ||
+    // if (dataColor != (cons.selectElt.value).trim() ||
+    if (dataColor != (cons.selectElt.value) ||
         dataQuantity != (cons.inputElt.value).trim()) {
         if (dataConfirm != 0) {
             cons.buttonCartElt.dataset.bool = "true";

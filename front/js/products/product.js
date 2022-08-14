@@ -80,6 +80,20 @@ window.onload = () => {
                     // })
                 }
 
+                if (foundProduct.quantity === 100) {
+                    quantityLabel.innerText = `Nombre d'article(s) (0) :`;
+                    inputElt.disabled = true;
+                    buttonCartElt.disabled = true;
+                    buttonCartElt.classList.add("disabled");
+                    
+                } else {
+                    inputElt.disabled = false;
+                    buttonCartElt.disabled = false;
+                    buttonCartElt.classList.remove("disabled");
+                }
+
+
+
                 // // Injection de la quantité choisie
                 // inputElt.addEventListener("change", (e) => {
                 //     console.log(foundProduct)
