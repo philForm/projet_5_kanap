@@ -37,7 +37,7 @@ window.onload = () => {
 
         }).then(tabArticle => {
 
-
+            
             for (let i = 0; i < tabArticle.length; i++) {
 
                 const inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
@@ -48,6 +48,7 @@ window.onload = () => {
 
                     console.log(`${datasetId}, ${datasetColor}`);
                     console.log(inputValue)
+                    console.log(typeof inputValue)
                     if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
 
                         console.log(tabArticle[i])
