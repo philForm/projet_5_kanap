@@ -19,10 +19,10 @@ window.onload = () => {
             recupEltDom(article);
 
             let cartObj = funCartObj(article);
-            let cart = getCart('cart');
+            // let cart = getCart('cart');
 
             console.log(cartObj);
-            console.log(cart);
+            // console.log(cart);
 
             buttonCartElt.dataset.confirm = "0";
             buttonCartElt.dataset.color = "";
@@ -33,11 +33,15 @@ window.onload = () => {
             let quantityMax
 
             // /////////////////////////////////////////////////
-            selectElt.addEventListener("input", () => {
+            selectElt.addEventListener("change", () => {
 
                 console.log(article._id);
                 console.log(article.name);
                 console.log(selectElt.value);
+
+                let cart = getCart('cart');
+                console.log(cart);
+
 
                 foundProduct = cart.find((p => p.id == article._id) && (col => col.color === selectElt.value));
                 console.log(foundProduct)
@@ -59,8 +63,20 @@ window.onload = () => {
                     //         alert(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
                     //     }
                     // })
+                    if (foundProduct.quantity === 100) {
+                        quantityLabel.innerText = `Nombre d'article(s) (0) :`;
+                        inputElt.disabled = true;
+                        buttonCartElt.disabled = true;
+                        buttonCartElt.classList.add("disabled");
+
+                    } else {
+                        inputElt.disabled = false;
+                        buttonCartElt.disabled = false;
+                        buttonCartElt.classList.remove("disabled");
+                    }
                 }
-                if (foundProduct == undefined) {
+                // if (foundProduct == undefined) {
+                else {
                     console.log("je suis dans le else")
                     quantityMax = 100;
                     quantityLabel.innerText = `Nombre d'article(s) (1-${quantityMax}) :`;
@@ -80,17 +96,17 @@ window.onload = () => {
                     // })
                 }
 
-                if (foundProduct.quantity === 100) {
-                    quantityLabel.innerText = `Nombre d'article(s) (0) :`;
-                    inputElt.disabled = true;
-                    buttonCartElt.disabled = true;
-                    buttonCartElt.classList.add("disabled");
-                    
-                } else {
-                    inputElt.disabled = false;
-                    buttonCartElt.disabled = false;
-                    buttonCartElt.classList.remove("disabled");
-                }
+                // if (foundProduct.quantity === 100) {
+                //     quantityLabel.innerText = `Nombre d'article(s) (0) :`;
+                //     inputElt.disabled = true;
+                //     buttonCartElt.disabled = true;
+                //     buttonCartElt.classList.add("disabled");
+
+                // } else {
+                //     inputElt.disabled = false;
+                //     buttonCartElt.disabled = false;
+                //     buttonCartElt.classList.remove("disabled");
+                // }
 
 
 
@@ -121,7 +137,7 @@ window.onload = () => {
                 //     }
                 // });
 
-                inputElt.addEventListener("input", (e) => {
+                inputElt.addEventListener("change", (e) => {
                     console.log(foundProduct)
                     if (foundProduct == undefined) {
                         quantityMax = 100;
@@ -154,15 +170,17 @@ window.onload = () => {
                     }
                 })
 
-                buttonCartElt.addEventListener("click", () => {
-                    // Impossibilité d'envoyer les articles dans le localstorage si la quantité dépasse la quantité maximum.
-                    if (inputElt.value <= quantityMax)
-                        orderedVerifications(cartObj, article);
-                    else {
-                        alert(`Veuillez indiquer une quantité comprise entre 1 et ${quantityMax} !`);
-                        inputElt.value = 0;
-                    }
-                });
+
+            });
+
+            buttonCartElt.addEventListener("click", () => {
+                // Impossibilité d'envoyer les articles dans le localstorage si la quantité dépasse la quantité maximum.
+                if (inputElt.value <= quantityMax)
+                    orderedVerifications(cartObj, article);
+                else {
+                    alert(`Veuillez indiquer une quantité comprise entre 1 et ${quantityMax} !`);
+                    inputElt.value = 0;
+                }
             });
 
             // /////////////////////////////////////////////////

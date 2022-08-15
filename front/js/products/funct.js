@@ -131,7 +131,6 @@ function sendArticleToCart(select, input, cart) {
  * @param {object} article article récupéré de l'API
  */
 const orderedVerifications = (cartObj, article) => {
-
     let confirmation = false;
     // récupère la valeur de data-confirm
     let dataConfirm = parseInt(cons.buttonCartElt.dataset.confirm);
