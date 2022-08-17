@@ -32,11 +32,14 @@ const getCart = (loc) => {
  */
 const addCart = (product) => {
     let cart = getCart("cart");
+    let message = "Pas assez de stock !"
     console.log(product);
     console.log(product.id);
     // recherche d'un produit par son id
-    let foundProduct = cart.find((p => p.id == product.id) && (col => col.color == product.color));
+    // let foundProduct = cart.find((p => p.id == product.id) && (col => col.color == product.color));
+    let foundProduct = cart.find(p => (p.id == product.id && p.color == product.color));
     console.log(foundProduct);
+
     if (foundProduct != undefined) {
         let quantity = parseInt(foundProduct.quantity);
         foundProduct.quantity = quantity + parseInt(cons.inputElt.value);
@@ -46,7 +49,7 @@ const addCart = (product) => {
             saveCart(cart);
 
         } else {
-            alert("Pas assez de stock !")
+            alert(message);
         }
 
     }
@@ -57,8 +60,9 @@ const addCart = (product) => {
             cons.inputElt.setAttribute("max", 100 - product.quantity);
             cart.push(product);
             saveCart(cart);
+
         } else {
-            alert("Pas assez de stock !")
+            alert(message);
 
         }
 

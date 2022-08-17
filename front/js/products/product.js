@@ -19,6 +19,7 @@ window.onload = () => {
             recupEltDom(article);
 
             let cartObj = funCartObj(article);
+            console.log(cartObj);
             // let cart = getCart('cart');
 
             console.log(cartObj);
@@ -29,23 +30,31 @@ window.onload = () => {
             buttonCartElt.dataset.quantity = "";
             buttonCartElt.dataset.bool = false;
 
-            let foundProduct
             let quantityMax
 
             // /////////////////////////////////////////////////
-            selectElt.addEventListener("change", () => {
+            selectElt.addEventListener("input", (e) => {
 
+                // let foundProduct
                 console.log(article._id);
+                console.log(cartObj.id);
                 console.log(article.name);
                 console.log(selectElt.value);
+                console.log(e.target.value);
 
-                let cart = getCart('cart');
+                const cart = getCart('cart');
                 console.log(cart);
 
+                // let foundProduct = cart.find(
+                //     (col => (col.color).trim() == (selectElt.value).trim())
+                //     && 
+                //     (p => (p.id).trim() == (cartObj.id).trim()));
 
-                foundProduct = cart.find((p => p.id == article._id) && (col => col.color === selectElt.value));
-                console.log(foundProduct)
-                // let quantityMax
+                let foundProduct = cart.find(el =>
+                (el.color == selectElt.value &&
+                    el.id == cartObj.id));
+
+                console.log(foundProduct);
 
                 if (foundProduct != undefined) {
                     console.log("je suis dans le if")
@@ -144,7 +153,6 @@ window.onload = () => {
                         console.log(quantityMax)
                         if (e.target.value > quantityMax) {
 
-
                             alert(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
                             console.log(`La quantité doit être comprise entre 1 et ${quantityMax} !`)
                             console.log(quantityMax)
@@ -170,9 +178,9 @@ window.onload = () => {
                     }
                 })
 
-
+                
             });
-
+            
             buttonCartElt.addEventListener("click", () => {
                 // Impossibilité d'envoyer les articles dans le localstorage si la quantité dépasse la quantité maximum.
                 if (inputElt.value <= quantityMax)
