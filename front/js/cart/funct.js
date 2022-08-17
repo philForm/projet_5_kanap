@@ -112,7 +112,7 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
  * @param {object[]} product 
  * @param {HTMLElement} children : enfant de cartItemsElt
  * @param {HTMLInputElement} inputValue : choix de la quantité de produit
- * @param {HTML} cartItemsElt : section contenant les articles
+ * @param {HTMLElement} cartItemsElt : section contenant les articles
  */
 const confirmRemoveProduct = (product, children, inputValue, cartItemsElt) => {
     let confirmation = false;

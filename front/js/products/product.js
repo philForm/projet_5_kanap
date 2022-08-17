@@ -1,6 +1,6 @@
 import { selectElt, inputElt, quantityLabel, buttonCartElt, url, promise } from "./const.js";
 
-import { recupEltDom, funCartObj, orderedVerifications } from "./funct.js";
+import { retrieveEltDom, funCartObj, orderedVerifications } from "./funct.js";
 
 import { recupId } from "../utils/funct_globale.js";
 
@@ -16,13 +16,11 @@ window.onload = () => {
         .then(article => {
             console.log(article);
 
-            recupEltDom(article);
+            retrieveEltDom(article);
 
             let cartObj = funCartObj(article);
             console.log(cartObj);
-            // let cart = getCart('cart');
 
-            console.log(cartObj);
             // console.log(cart);
 
             buttonCartElt.dataset.confirm = "0";
@@ -35,7 +33,6 @@ window.onload = () => {
             // /////////////////////////////////////////////////
             selectElt.addEventListener("input", (e) => {
 
-                // let foundProduct
                 console.log(article._id);
                 console.log(cartObj.id);
                 console.log(article.name);
@@ -44,11 +41,6 @@ window.onload = () => {
 
                 const cart = getCart('cart');
                 console.log(cart);
-
-                // let foundProduct = cart.find(
-                //     (col => (col.color).trim() == (selectElt.value).trim())
-                //     && 
-                //     (p => (p.id).trim() == (cartObj.id).trim()));
 
                 let foundProduct = cart.find(el =>
                 (el.color == selectElt.value &&
@@ -183,6 +175,9 @@ window.onload = () => {
             
             buttonCartElt.addEventListener("click", () => {
                 // Impossibilité d'envoyer les articles dans le localstorage si la quantité dépasse la quantité maximum.
+                
+                console.log(quantityMax)
+                
                 if (inputElt.value <= quantityMax)
                     orderedVerifications(cartObj, article);
                 else {

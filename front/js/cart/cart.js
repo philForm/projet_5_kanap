@@ -60,7 +60,7 @@ window.onload = () => {
                         displayValue.innerText = `Qté : ${inputValue.value}`;
 
                         console.log(inputValue.value);
-                        let confirmation
+                        
                         if (inputValue.value == 0) {
 
                             confirmRemoveProduct(tabArticle[i], cartItemsElt.children[i], inputValue, cartItemsElt);
