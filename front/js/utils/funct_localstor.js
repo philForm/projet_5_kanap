@@ -54,7 +54,7 @@ const addCart = (product) => {
 
     }
     else {
-        if (product.quantity < 100) {
+        if (product.quantity <= 100) {
 
             cons.quantityLabel.innerText = `Nombre d'article(s) (1-${100 - product.quantity}) :`;
             cons.inputElt.setAttribute("max", 100 - product.quantity);

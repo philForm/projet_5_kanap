@@ -81,7 +81,7 @@ const retrieveEltDom = (article) => {
             <img src="${imgURL}" alt="${textAlt2}">
         `;
     });
-    
+
     // // Injection de la quantité choisie
     // cons.inputElt.addEventListener("input", (e) => {
     //     if (e.target.value > 0 && e.target.value <= 100)
@@ -215,7 +215,17 @@ const orderedVerifications = (cartObj, article) => {
     }
 }
 
+const functMaxQuantity = (max, buttonElt, labelElt, inputElt) => {
+    let quantityMax = max;
+    buttonElt.dataset.quantitymax = quantityMax;
+    labelElt.innerText = `Nombre d'article(s) (1-${quantityMax}) :`;
+    inputElt.setAttribute("max", quantityMax);
+    // if (quantityMax == 100)
+        // inputElt.value = 0
+
+}
+
 // =======================================
 export {
-    retrieveEltDom, funCartObj, sendArticleToCart, orderedVerifications
+    retrieveEltDom, funCartObj, sendArticleToCart, orderedVerifications, functMaxQuantity
 };
