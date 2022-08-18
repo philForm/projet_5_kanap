@@ -225,7 +225,24 @@ const functMaxQuantity = (max, buttonElt, labelElt, inputElt) => {
 
 }
 
+// Désactivation de Input et Button si la quantité du produit est à son maximum.
+const functDisabled = (product, quantityLabel, inputElt, buttonCartElt)=>{
+    if (product.quantity === 100) {
+        console.log("désactivé")
+        quantityLabel.innerText = `Nombre d'article(s) (0) :`;
+        inputElt.disabled = true;
+        buttonCartElt.disabled = true;
+        buttonCartElt.classList.add("disabled");
+
+    } else {
+        console.log("activé")
+        inputElt.disabled = false;
+        buttonCartElt.disabled = false;
+        buttonCartElt.classList.remove("disabled");
+    }
+}
+
 // =======================================
 export {
-    retrieveEltDom, funCartObj, sendArticleToCart, orderedVerifications, functMaxQuantity
+    retrieveEltDom, funCartObj, sendArticleToCart, orderedVerifications, functMaxQuantity, functDisabled
 };

@@ -36,7 +36,6 @@ const addCart = (product) => {
     console.log(product);
     console.log(product.id);
     // recherche d'un produit par son id et sa couleur
-    // let foundProduct = cart.find((p => p.id == product.id) && (col => col.color == product.color));
     let foundProduct = cart.find(p => (p.id == product.id && p.color == product.color));
     console.log(foundProduct);
 
@@ -77,7 +76,7 @@ const removeProduct = (product) => {
     let cart = getCart("cart");
     // Cette ligne crée une erreur en ne tenant compte que de l'id et en ignorant la couleur !!
     // cart = cart.filter(prod => prod.id != product[0] && prod.color != product[1]);
-    
+
     cart = cart.filter((prod => prod.id != product[0]) && (prod => prod.color != product[1]));
     saveCart(cart);
 }
@@ -140,4 +139,15 @@ const changeTotalPrice = (tab) => {
     return total;
 }
 
-export { saveCart, getCart, addCart, removeProduct, changeQuantity, changeQuantityTotal, changeTotalPrice };
+
+const findArticle = (selectElt, cartObj) => {
+    let cart = getCart("cart");
+
+    let foundProduct = cart.find(el => (
+        el.color == selectElt.value &&
+        el.id == cartObj.id
+    ));
+    return foundProduct
+}
+
+export { saveCart, getCart, addCart, removeProduct, changeQuantity, changeQuantityTotal, changeTotalPrice, findArticle };

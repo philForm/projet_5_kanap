@@ -1,10 +1,10 @@
 import { selectElt, inputElt, quantityLabel, buttonCartElt, url, promise } from "./const.js";
 
-import { retrieveEltDom, funCartObj, orderedVerifications, functMaxQuantity } from "./funct.js";
+import { retrieveEltDom, funCartObj, orderedVerifications, functMaxQuantity, functDisabled } from "./funct.js";
 
 import { recupId } from "../utils/funct_globale.js";
 
-import { getCart } from "../utils/funct_localstor.js";
+import { getCart, findArticle } from "../utils/funct_localstor.js";
 
 console.log(recupId('id', url));
 console.log(promise);
@@ -40,12 +40,7 @@ window.onload = () => {
                 console.log(selectElt.value);
                 console.log(e.target.value);
 
-                const cart = getCart('cart');
-                console.log(cart);
-
-                let foundProduct = cart.find(el =>
-                (el.color == selectElt.value &&
-                    el.id == cartObj.id));
+                let foundProduct = findArticle(selectElt, cartObj);
 
                 // console.log(foundProduct);
 
@@ -63,19 +58,20 @@ window.onload = () => {
                     // functMaxQuantity(100 - foundProduct.quantity, buttonCartElt, quantityLabel, inputElt)
 
                     // Si la quantité de produit est à son maximum, on désactive l'input et le bouton.
-                    if (foundProduct.quantity === 100) {
-                        console.log("désactivé")
-                        quantityLabel.innerText = `Nombre d'article(s) (0) :`;
-                        inputElt.disabled = true;
-                        buttonCartElt.disabled = true;
-                        buttonCartElt.classList.add("disabled");
+                    functDisabled(foundProduct, quantityLabel, inputElt, buttonCartElt);
+                    // if (foundProduct.quantity === 100) {
+                    //     console.log("désactivé")
+                    //     quantityLabel.innerText = `Nombre d'article(s) (0) :`;
+                    //     inputElt.disabled = true;
+                    //     buttonCartElt.disabled = true;
+                    //     buttonCartElt.classList.add("disabled");
 
-                    } else {
-                        console.log("activé")
-                        inputElt.disabled = false;
-                        buttonCartElt.disabled = false;
-                        buttonCartElt.classList.remove("disabled");
-                    }
+                    // } else {
+                    //     console.log("activé")
+                    //     inputElt.disabled = false;
+                    //     buttonCartElt.disabled = false;
+                    //     buttonCartElt.classList.remove("disabled");
+                    // }
                 }
 
                 // Le produit n'est pas présent dans le localStorage.
@@ -96,12 +92,9 @@ window.onload = () => {
 
             inputElt.addEventListener("change", (e) => {
                 // ///////////////////////////////////////
-                const cart = getCart('cart');
-                console.log(cart);
 
-                let foundProduct = cart.find(el =>
-                (el.color == selectElt.value &&
-                    el.id == cartObj.id));
+                let foundProduct = findArticle(selectElt, cartObj);
+
                 // ///////////////////////////////////////
                 console.log(foundProduct)
                 if (foundProduct == undefined) {
@@ -147,16 +140,40 @@ window.onload = () => {
             })
 
             buttonCartElt.addEventListener("click", () => {
+
+                let foundProduct = findArticle(selectElt, cartObj);
+                console.log(foundProduct);
                 // Impossibilité d'envoyer les articles dans le localstorage si la quantité dépasse la quantité maximum.
 
                 quantityMax = parseInt(buttonCartElt.dataset.quantitymax);
-                console.log(typeof quantityMax);
-                if (inputElt.value <= quantityMax)
+                console.log(quantityMax);
+                if (inputElt.value <= quantityMax){
                     orderedVerifications(cartObj, article);
+                    foundProduct = findArticle(selectElt, cartObj);
+                    functDisabled(foundProduct, quantityLabel, inputElt, buttonCartElt);
+                    // if (foundProduct != undefined) {
+                    //     console.log(foundProduct.quantity)
+                    //     if (foundProduct.quantity === 100) {
+                    //         console.log("désactivé")
+                    //         quantityLabel.innerText = `Nombre d'article(s) (0) :`;
+                    //         inputElt.disabled = true;
+                    //         buttonCartElt.disabled = true;
+                    //         buttonCartElt.classList.add("disabled");
+
+                    //     } else {
+                    //         console.log("activé")
+                    //         inputElt.disabled = false;
+                    //         buttonCartElt.disabled = false;
+                    //         buttonCartElt.classList.remove("disabled");
+                    //     }
+                    // }
+                }
+                    
                 else {
                     alert(`Veuillez indiquer une quantité comprise entre 1 et ${quantityMax} !`);
                     console.log(`Veuillez indiquer une quantité comprise entre 1 et ${quantityMax} !`);
                     inputElt.value = 0;
+                    
                 }
 
             });
