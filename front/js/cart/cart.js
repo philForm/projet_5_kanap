@@ -9,6 +9,7 @@ import { formSubmit } from "./formulaire.js";
 import { listenValuesInputOfForm } from "./formulaire_funct.js";
 
 console.log(recupLocalStorage);
+console.log(typeof recupLocalStorage);
 console.log(recupIdLocalStorage(recupLocalStorage));
 console.log(regexName);
 

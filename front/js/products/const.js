@@ -60,6 +60,11 @@ const url = new URL(window.location.href);
  */
 const promise = `http://localhost:3000/api/products/${recupId('id', url)}`;
 
+/**
+ * Quantité de produits en stock.
+ */
+const stock = 100;
+
 export {
-    titleHead, divImgElt, titleElt, priceElt, descriptElt, selectElt, quantityLabel, inputElt, buttonCartElt, url, promise
+    titleHead, divImgElt, titleElt, priceElt, descriptElt, selectElt, quantityLabel, inputElt, buttonCartElt, url, promise, stock
 };

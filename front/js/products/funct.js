@@ -215,19 +215,35 @@ const orderedVerifications = (cartObj, article) => {
     }
 }
 
+/**
+ * Affichage de la quantité maximum de l'article sur la page et dans le dataset.
+ * @param {number} max : quantité maximum.
+ * @param {HTMLButtonElement} buttonElt : bouton de validation de la commande.
+ * @param {HTMLLabelElement} labelElt : affichage de la quantité d'articles disponibles.
+ * @param {HTMLInputElement} inputElt : input de type Number.
+ */
 const functMaxQuantity = (max, buttonElt, labelElt, inputElt) => {
+
     let quantityMax = max;
     buttonElt.dataset.quantitymax = quantityMax;
     labelElt.innerText = `Nombre d'article(s) (1-${quantityMax}) :`;
     inputElt.setAttribute("max", quantityMax);
-    // if (quantityMax == 100)
-        // inputElt.value = 0
 
 }
 
-// Désactivation de Input et Button si la quantité du produit est à son maximum.
-const functDisabled = (product, quantityLabel, inputElt, buttonCartElt)=>{
-    if (product.quantity === 100) {
+
+
+/**
+ * Désactivation de Input et Button si la quantité du produit est à son maximum.
+ * @param {number} max : quantité de produits en stock.
+ * @param {object} product : article récupéré du localStorage.
+ * @param {HTMLLabelElement} quantityLabel : affichage de la quantité d'articles disponibles.
+ * @param {HTMLInputElement} inputElt : input de type Number.
+ * @param {HTMLButtonElement} buttonCartElt : bouton de validation de la commande.
+ */
+const functDisabled = (max, product, quantityLabel, inputElt, buttonCartElt) => {
+
+    if (product != undefined && product.quantity === max) {
         console.log("désactivé")
         quantityLabel.innerText = `Nombre d'article(s) (0) :`;
         inputElt.disabled = true;
@@ -242,7 +258,27 @@ const functDisabled = (product, quantityLabel, inputElt, buttonCartElt)=>{
     }
 }
 
+/**
+ * Affichage le la quantité maximum dans le dataset, et affichage d'un message d'alerte si la quantité maximum est dépassée.
+ * @param {number} max : quantité maximum disponible.
+ * @param {String} target : écoute de l'événement de changement de quantité dans IntutElt.
+ * @param {HTMLInputElement} inputElt : Input de type number, affichant la quantité.
+ * @param {HTMLButtonElement} buttonCartElt : bouton de validation de la commande.
+ */
+const blockQuantityToMax = (max, target, inputElt, buttonCartElt) => {
+    let quantityMax = max;
+    let message = `La quantité doit être comprise entre 1 et ${quantityMax} !`;
+    console.log(quantityMax)
+    if (target > quantityMax) {
+        alert(message)
+        console.log(message)
+        console.log(quantityMax)
+        inputElt.value = 0;
+    }
+    buttonCartElt.dataset.quantitymax = quantityMax;
+}
+
 // =======================================
 export {
-    retrieveEltDom, funCartObj, sendArticleToCart, orderedVerifications, functMaxQuantity, functDisabled
+    retrieveEltDom, funCartObj, sendArticleToCart, orderedVerifications, functMaxQuantity, functDisabled, blockQuantityToMax
 };

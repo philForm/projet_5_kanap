@@ -5,22 +5,39 @@ const promise = `http://localhost:3000/api/products`;
 
 const promiseOrder = `http://localhost:3000/api/products/order`;
 
-// Articles du localstorage
+/**
+ * Articles du localStorage. 
+ * Contient la fonction getCart("cart")
+ * @type {object[]}
+ */
 const recupLocalStorage = getCart("cart");
 
-// Récupération de section id="cart__items"
+/**
+ * Récupération de section id="cart__items"
+ * @type {HTMLElement}
+ */
 const cartItemsElt = document.getElementById("cart__items");
 
-// Récupération de la span totalQuantity
+/**
+ * Récupération de la span totalQuantity.
+ * Contient la quantité totale des produits.
+ * @type {HTMLSpanElement}
+ */
 const totalQuantityElt = document.getElementById("totalQuantity");
 
-// Récupération de la span totalPrice
+/**
+ * Récupération de la span totalPrice.
+ * Contient le prix total des produits.
+ * @type {HTMLSpanElement}
+ */
 const totalPriceElt = document.getElementById("totalPrice");
 
-// Récupération de l'input de quantité
+/**
+ * Récupération de l'input de quantité.
+ * Permet de changer la quantité du produit dans le localStorage.
+ * @type {HTMLInputElement}
+ */
 const inputQuantityElt = document.querySelector("#cart__items article:nth-child(1)");
-
-console.log(inputQuantityElt);
 
 
 // =================================================================
@@ -38,13 +55,20 @@ const cityError = document.getElementById("cityErrorMsg");
 const emailInput = document.getElementById("email");
 const emailError = document.getElementById("emailErrorMsg");
 
-// Bouton de validation
+/**
+ * Bouton de validation de commande
+ * @type {HTMLButtonElement} : type : submit
+ */
 const orderForm = document.getElementById("order");
 
-// Récupération du form
+/**
+ * Récupération du form.
+ * Contient tous les champs du formulaire.
+ * @type {HTMLFormElement}
+ */
 const form = document.querySelector(".cart__order__form");
+console.log(form);
 console.log(form.elements);
-// console.log(form.firstName.value)
 
 // Expressions régulières
 const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
@@ -54,7 +78,7 @@ const regexName =
 
 const regexCity = /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ\s,\.'\-]+$/ ;
 // const regexCity =
-    /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+([\s,\.'\-]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+)?$/;
+    // /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+([\s,\.'\-]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+)?$/;
 
 const regexAdress = /^[a-z0-9éèëêîïâàûüùç\s,'\-]*$/i;
 

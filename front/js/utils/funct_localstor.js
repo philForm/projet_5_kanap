@@ -111,7 +111,7 @@ const changeQuantity = (product, quant) => {
 
 //
 /**
- * Calcule la quantité totale d'articles contenus dans le localstorage
+ * Calcule la quantité totale d'articles contenus dans le localStorage
  * @returns {Number}
  */
 const changeQuantityTotal = () => {
