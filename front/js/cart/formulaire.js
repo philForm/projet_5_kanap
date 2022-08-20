@@ -4,9 +4,6 @@ import { recupLocalStorage, formInputTab, promiseOrder, totalQuantityElt,totalPr
 
 import { validityOfFormOnSubmit, validFormBool, objectSend, sendOrderConfirm } from "./formulaire_funct.js";
 
-import { getCart } from "../utils/funct_localstor.js";
-
-console.log(getCart('cart'));
 const productsId = recupIdLocalStorage(recupLocalStorage);
 console.log(productsId);
 

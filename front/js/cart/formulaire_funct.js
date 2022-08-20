@@ -232,7 +232,7 @@ const sendOrderConfirm = (objValue, quantity, price) => {
     let cart = getCart("cart")
     console.log(cart)
     if (cart.length == 0)
-        return alert("Vous n'avez aucun article dans le panier !")
+        return alert("Votre panier ne contient aucun article !")
 
     let confirmation = false;
     let article = "";

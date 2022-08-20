@@ -13,8 +13,8 @@ const saveCart = (cart) => {
 }
 
 /**
- * Récupération du panier (localstorage)
- * @param {String} loc : clé de l'Objet enregistré dans le localstorage
+ * Récupération du panier (localStorage)
+ * @param {String} loc : clé de l'Objet enregistré dans le localStorage
  * @returns {object[]}
  */
 const getCart = (loc) => {
@@ -53,6 +53,7 @@ const addCart = (product) => {
 const removeProduct = (product) => {
     let cart = getCart("cart");
     cart = cart.filter((prod => prod.id != product[0]) && (prod => prod.color != product[1]));
+    // cart = cart.filter(prod => (prod.id != product[0] && prod.color != product[1]));
     saveCart(cart);
 }
 
@@ -84,7 +85,6 @@ const changeQuantity = (product, quant) => {
     }
 }
 
-//
 /**
  * Calcule la quantité totale d'articles contenus dans le localstorage
  * @returns {Number}
