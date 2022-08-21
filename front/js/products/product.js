@@ -1,4 +1,4 @@
-import { selectElt, inputElt, buttonCartElt, url, promise } from "./const.js";
+import { inputElt, buttonCartElt, url, promise } from "./const.js";
 
 import { recupEltDom, funCartObj, orderedVerifications } from "./funct.js";
 
@@ -20,10 +20,11 @@ window.onload = () => {
 
             let cartObj = funCartObj(article);
             let cart = getCart('cart');
-            
+
             console.log(cartObj);
             console.log(cart);
 
+            // Création de data-set
             buttonCartElt.dataset.confirm = "0";
             buttonCartElt.dataset.color = "";
             buttonCartElt.dataset.quantity = "";
@@ -31,7 +32,7 @@ window.onload = () => {
 
 
             buttonCartElt.addEventListener("click", () => {
-                // Impossibilité d'envoyer les articles dans le localstorage si la quantité dépasse 100
+                // Impossibilité d'envoyer les articles dans le localStorage si la quantité dépasse 100
                 if (inputElt.value <= 100)
                     orderedVerifications(cartObj, article);
                 else {

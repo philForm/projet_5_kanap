@@ -171,15 +171,15 @@ h2 {
 	}
 }
 
-/********************************/
+/* ******************************
 /*Classe injectées en JavaScript*/
 /********************************/
 
-.disabled{
+/* .disabled{
 	background-color: #607d8b!important;
 	color: #749aad!important;
 }
 
 .disabled:hover{
 	box-shadow: none!important;
-}
+} */

@@ -9,7 +9,6 @@ let sectionElt = document.getElementById("items");
         .then(reponse => reponse.json())
     console.log(reponse)
 
-    // for (let i = 0; i < reponse.length; i++) {
     for (let i in reponse) {
         // Création éléments HTML
         let aElt = document.createElement("a");
