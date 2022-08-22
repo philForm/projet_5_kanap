@@ -1,5 +1,7 @@
 import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, regexName, formInputTab, form } from "./const.js";
 
+import {stock} from "../products/const.js"
+
 import { recupIdLocalStorage, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct } from "./funct.js";
 
 import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js";
@@ -68,8 +70,8 @@ window.onload = () => {
                             displayValue.innerText = `Qté : ${inputValue.value}`;
 
                         }
-                        if (inputValue.value > 100) {
-                            inputValue.value = 100;
+                        if (inputValue.value > stock) {
+                            inputValue.value = stock;
                             displayValue.innerText = `Qté : ${inputValue.value}`;
                             changeQuantity(tabArticle[i], inputValue.value);
                         }

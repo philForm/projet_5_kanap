@@ -36,15 +36,15 @@ const addCart = (product) => {
     console.log(product);
     console.log(product.id);
     // recherche d'un produit par son id et sa couleur
-    let foundProduct = cart.find(p => (p.id == product.id && p.color == product.color));
+    let foundProduct = cart.find(p => (p.id == product.id) && (p.color == product.color));
     console.log(foundProduct);
 
     if (foundProduct != undefined) {
         let quantity = parseInt(foundProduct.quantity);
         foundProduct.quantity = quantity + parseInt(cons.inputElt.value);
-        if (foundProduct.quantity <= 100) {
-            cons.quantityLabel.innerText = `Nombre d'article(s) (1-${100 - foundProduct.quantity}) :`;
-            cons.inputElt.setAttribute("max", 100 - foundProduct.quantity);
+        if (foundProduct.quantity <= cons.stock) {
+            cons.quantityLabel.innerText = `Nombre d'article(s) (1-${cons.stock - foundProduct.quantity}) :`;
+            cons.inputElt.setAttribute("max", cons.stock - foundProduct.quantity);
             saveCart(cart);
 
         } else {
@@ -53,10 +53,10 @@ const addCart = (product) => {
 
     }
     else {
-        if (product.quantity <= 100) {
+        if (product.quantity <= cons.stock) {
 
-            cons.quantityLabel.innerText = `Nombre d'article(s) (1-${100 - product.quantity}) :`;
-            cons.inputElt.setAttribute("max", 100 - product.quantity);
+            cons.quantityLabel.innerText = `Nombre d'article(s) (1-${cons.stock - product.quantity}) :`;
+            cons.inputElt.setAttribute("max", cons.stock - product.quantity);
             cart.push(product);
             saveCart(cart);
 
@@ -77,7 +77,7 @@ const removeProduct = (product) => {
     // Cette ligne crée une erreur en ne tenant compte que de l'id et en ignorant la couleur !!
     // cart = cart.filter(prod => prod.id != product[0] && prod.color != product[1]);
 
-    cart = cart.filter((prod => prod.id != product[0]) && (prod => prod.color != product[1]));
+    cart = cart.filter(prod => (prod.id != product[0]) || (prod.color != product[1]));
     saveCart(cart);
 }
 
@@ -90,11 +90,11 @@ const changeQuantity = (product, quant) => {
     // récupère le localstorage
     let cart = getCart("cart");
     // récupération du produit ciblé dans le localstorage
-    let foundProduct = cart.find(p => (p.id == product[0] && p.color === product[1]));
+    let foundProduct = cart.find(p => (p.id == product[0]) && (p.color === product[1]));
     console.log(product);
     console.log(foundProduct);
     console.log(quant);
-    if (foundProduct != undefined && quant <= 100) {
+    if (foundProduct != undefined && quant <= cons.stock) {
         foundProduct.quantity = parseInt(quant);
         console.log(typeof foundProduct.quantity);
         saveCart(cart);
@@ -104,8 +104,8 @@ const changeQuantity = (product, quant) => {
         // }
 
     }
-    if (quant > 100) {
-        alert("La quantité de cet article ne peut excéder 100 !");
+    if (quant > cons.stock) {
+        alert(`La quantité de cet article ne peut excéder ${cons.stock} !`);
     }
 }
 
@@ -132,7 +132,7 @@ const changeTotalPrice = (tab) => {
     let cart = getCart("cart");
     let total = 0;
     for (let item of tab) {
-        let foundProduct = cart.find(p => (p.id == item[0] && p.color == item[1]));
+        let foundProduct = cart.find(p => (p.id == item[0]) && (p.color == item[1]));
         if (foundProduct != undefined)
             total += foundProduct.quantity * item[3].price;
     }
@@ -144,9 +144,10 @@ const findArticle = (selectElt, cartObj) => {
     let cart = getCart("cart");
 
     let foundProduct = cart.find(el => (
-        el.color == selectElt.value &&
-        el.id == cartObj.id
-    ));
+        el.color == selectElt.value
+    ) && (
+            el.id == cartObj.id
+        ));
     return foundProduct
 }
 

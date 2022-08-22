@@ -1,5 +1,7 @@
 import { activeButton, nameValid, nameValid2 } from "./formulaire_funct.js";
 
+import { stock } from "../products/const.js";
+
 import { form, recupLocalStorage, formInputTab } from "./const.js";
 
 import { getCart, removeProduct, changeQuantity } from "../utils/funct_localstor.js";
@@ -71,7 +73,7 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
     let totalQuantity = 0;
     let total = 0;
     for (let item of tab) {
-        
+
         console.log(item)
         console.log(displayImg(item));
 
@@ -93,7 +95,7 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
                             <div class="cart__item__content__settings">
                                 <div class="cart__item__content__settings__quantity">
                                     <p>Qté : ${item[2]}</p>
-                                    <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item[2]}">
+                                    <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="${stock}" value="${item[2]}">
                                 </div>
                                 <div class="cart__item__content__settings__delete">
                                     <p class="deleteItem">Supprimer</p>

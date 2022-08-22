@@ -84,10 +84,10 @@ const retrieveEltDom = (article) => {
 
     // // Injection de la quantité choisie
     // cons.inputElt.addEventListener("input", (e) => {
-    //     if (e.target.value > 0 && e.target.value <= 100)
+    //     if (e.target.value > 0 && e.target.value <= cons.stock)
     //         cons.inputElt.setAttribute("value", e.target.value);
     //     else 
-    //         alert("La quantité doit être comprise entre 1 et 100 !")
+    //         alert("La quantité doit être comprise entre 1 et cons.stock !")
     // });
 };
 
