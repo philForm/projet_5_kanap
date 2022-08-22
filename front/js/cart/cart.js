@@ -2,7 +2,7 @@ import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceE
 
 import { recupIdLocalStorage, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct } from "./funct.js";
 
-import { changeQuantity, removeProduct, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js";
+import { changeQuantity, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js";
 
 import { formSubmit } from "./formulaire.js";
 

@@ -36,11 +36,13 @@ const recupEltDom = (article) => {
 
         };
 
-
-        cons.selectElt.innerHTML += `
-        <option value="${colorHtml}">${colorHtml}</option>
         
-        `;
+        let option = document.createElement("option");
+        option.setAttribute("value", colorHtml);
+        option.innerText = colorHtml;
+        
+        cons.selectElt.appendChild(option);
+        
     };
 
     /**

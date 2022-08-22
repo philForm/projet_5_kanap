@@ -34,7 +34,8 @@ const addCart = (product) => {
     console.log(product);
     console.log(product.id);
     // recherche d'un produit par son id
-    let foundProduct = cart.find((p => p.id == product.id) && (col => col.color == product.color));
+    // let foundProduct = cart.find((p => p.id == product.id) && (col => col.color == product.color));
+    let foundProduct = cart.find(p => (p.id == product.id) && (p.color == product.color));
     console.log(foundProduct);
     if (foundProduct != undefined) {
         let quantity = parseInt(foundProduct.quantity);
@@ -52,8 +53,9 @@ const addCart = (product) => {
  */
 const removeProduct = (product) => {
     let cart = getCart("cart");
-    cart = cart.filter((prod => prod.id != product[0]) && (prod => prod.color != product[1]));
-    // cart = cart.filter(prod => (prod.id != product[0] && prod.color != product[1]));
+    // cart = cart.filter((prod => prod.id != product[0]) && (prod => prod.color != product[1]));
+
+    cart = cart.filter(prod => (prod.id !== product[0]) || ((prod.color).trim() !== (product[1]).trim()));
     saveCart(cart);
 }
 
@@ -66,21 +68,21 @@ const changeQuantity = (product, quant) => {
     // récupère le localstorage
     let cart = getCart("cart");
     // récupération du produit ciblé dans le localstorage
-    let foundProduct = cart.find((p => p.id == product[0]) && (col => col.color == product[1]));
+    let foundProduct = cart.find(p => (p.id == product[0]) && (p.color == product[1]));
     console.log(product);
     console.log(foundProduct);
     console.log(quant);
-    if (foundProduct != undefined && quant <= 100) {
+    if ((foundProduct != undefined) && (quant > 0 && quant <= 100)) {
         foundProduct.quantity = parseInt(quant);
         console.log(typeof foundProduct.quantity);
         saveCart(cart);
         // if (foundProduct.quantity <= 0) {
-            // removeProduct(product);
+        // removeProduct(product);
 
         // }
 
     }
-    if (quant > 100){
+    if (quant > 100) {
         alert("La quantité de cet article ne peut excéder 100 !");
     }
 }
@@ -107,7 +109,7 @@ const changeTotalPrice = (tab) => {
     let cart = getCart("cart");
     let total = 0;
     for (let item of tab) {
-        let foundProduct = cart.find((i => i.id == item[0]) && (col => col.color == item[1]));
+        let foundProduct = cart.find(p => (p.id == item[0]) && (p.color == item[1]));
         if (foundProduct != undefined)
             total += foundProduct.quantity * item[3].price;
     }

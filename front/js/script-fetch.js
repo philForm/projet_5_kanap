@@ -21,15 +21,19 @@ window.onload = () => {
             console.log(jsonArticle);
 
             for (let article of jsonArticle) {
-                console.log(article.name);
-                sectionElt.innerHTML += `
-                    <a class="lien" href="./product.html?id=${article._id}">
+                
+                let a = document.createElement("a");
+                a.className = "lien";
+                a.href = `./product.html?id=${article._id}`;
+                a.innerHTML = `
                         <article>
                             <img src="${article.imageUrl}" alt="${article.altTxt}">
                             <h3 class="productName">${article.name}</h3>
                             <p class="productDescription">${article.description}</p>
                         </article>
-                    </a>    `;
+                
+                `;
+                sectionElt.appendChild(a);
             };
 
         }).catch((err) => {

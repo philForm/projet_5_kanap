@@ -17,10 +17,7 @@ const confirmClearLocalStorage = (elt, url, urlConfirm) => {
 window.onload = () => {
 
     const orderIdElt = document.getElementById("orderId");
-
     const urlConfirm = new URL(window.location.href);
-    console.log(urlConfirm);
-    console.log(urlConfirm.search);
     const urlId = recupId('orderid', urlConfirm)
 
     confirmClearLocalStorage(orderIdElt, urlId, urlConfirm)
