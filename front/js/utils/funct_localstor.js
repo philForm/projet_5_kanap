@@ -14,8 +14,8 @@ const saveCart = (cart) => {
 }
 
 /**
- * Récupération du panier (localstorage)
- * @param {String} loc : clé de l'Objet enregistré dans le localstorage
+ * Récupération du panier (localStorage)
+ * @param {String} loc : clé de l'Objet enregistré dans le localStorage
  * @returns {object[]}
  */
 const getCart = (loc) => {

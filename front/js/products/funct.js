@@ -1,7 +1,7 @@
 import * as cons from "./const.js";
 import { colorsKanap, regexColors } from "../utils/array_colors.js";
 import { displayImgIndex, engNameColor, splitUrl, urlImagRestitute, replaceColor, valueReplace } from "../utils/funct_globale.js";
-import { addCart, getCart } from "../utils/funct_localstor.js";
+import { addCart } from "../utils/funct_localstor.js";
 
 
 /**
@@ -16,6 +16,8 @@ const retrieveEltDom = (article) => {
     cons.titleElt.innerText = article.name;
     cons.priceElt.innerText = article.price;
     cons.descriptElt.innerText = article.description;
+    cons.quantityLabel.innerText = `Nombre d'article(s) (1-${cons.stock}) :`;
+    cons.inputElt.setAttribute("max", cons.stock);
 
 
     let colorHtml = ""
@@ -36,11 +38,12 @@ const retrieveEltDom = (article) => {
 
         };
 
+        let option = document.createElement("option");
+        option.setAttribute("value", colorHtml);
+        option.innerText = colorHtml;
 
-        cons.selectElt.innerHTML += `
-        <option value="${colorHtml}">${colorHtml}</option>
-        
-        `;
+        cons.selectElt.appendChild(option);
+
     };
 
     /**
@@ -78,8 +81,8 @@ const retrieveEltDom = (article) => {
         console.log(textAlt2);
 
         cons.divImgElt.innerHTML = `
-            <img src="${imgURL}" alt="${textAlt2}">
-        `;
+            < img src = "${imgURL}" alt = "${textAlt2}" >
+                `;
     });
 
     // // Injection de la quantité choisie
@@ -108,7 +111,7 @@ const funCartObj = (art) => {
 
 
 /**
- * Envoie l'Objet cart dans le localStorage après lui avoir rajouter la couleur et la quantité
+ * Envoie l'Objet cart dans le localStorage après lui avoir ajouté la couleur et la quantité.
  * @param {HTMLSelectElement} select 
  * @param {HTMLInputElement} input 
  * @param {object} cart === funCartObj(article), Objet contenant :
@@ -142,7 +145,7 @@ const orderedVerifications = (cartObj, article) => {
     let pluralCanap = "";
 
 
-    // Si les valeurs de dataset et les valeurs entrées sont differentes, on réinitialise dataConfirm
+    // Si les valeurs de dataset et les valeurs entrées sont différentes, on réinitialise dataConfirm
     // if (dataColor != (cons.selectElt.value).trim() ||
     if (dataColor != (cons.selectElt.value).trim() ||
         dataQuantity != (cons.inputElt.value).trim()) {
@@ -173,7 +176,7 @@ const orderedVerifications = (cartObj, article) => {
 
     if (cons.selectElt.value == "" && cons.inputElt.value == 0)
         alert(
-            `Veuillez choisir la couleur du canapé ${article.name} et la quantité désirée !`
+            `Veuillez choisir la couleur du canapé ${article.name} et la quantité désirée!`
         );
     else if (cons.selectElt.value == "")
         alert(
@@ -181,12 +184,12 @@ const orderedVerifications = (cartObj, article) => {
         );
     else if (cons.inputElt.value == 0)
         alert(
-            `Veuillez choisir le nombre de canapé(s) ${article.name} que vous souhaitez !`
+            `Veuillez choisir le nombre de canapé(s) ${article.name} que vous souhaitez!`
         );
     else if (dataBool == "false") {
         if (dataConfirm <= 1) {
             confirmation = confirm(
-                `${cons.inputElt.value} ${pluralCanap} ${article.name} en ${cons.selectElt.value}.\n Confirmez-vous l'ajout de ${pluralArt} à votre panier !`
+                `${cons.inputElt.value} ${pluralCanap} ${article.name} en ${cons.selectElt.value}.\n Confirmez - vous l'ajout de ${pluralArt} à votre panier !`
             );
         } else {
             confirmation = confirm(
@@ -244,19 +247,19 @@ const functMaxQuantity = (max, buttonElt, labelElt, inputElt) => {
 const functDisabled = (max, product, quantityLabel, inputElt, buttonCartElt) => {
 
     if (product != undefined && product.quantity === max) {
-        console.log("désactivé")
+        console.log("désactivé");
         quantityLabel.innerText = `Nombre d'article(s) (0) :`;
         inputElt.disabled = true;
         buttonCartElt.disabled = true;
         buttonCartElt.classList.add("disabled");
 
     } else {
-        console.log("activé")
+        console.log("activé");
         inputElt.disabled = false;
         buttonCartElt.disabled = false;
         buttonCartElt.classList.remove("disabled");
-    }
-}
+    };
+};
 
 /**
  * Affichage le la quantité maximum dans le dataset, et affichage d'un message d'alerte si la quantité maximum est dépassée.
@@ -268,13 +271,13 @@ const functDisabled = (max, product, quantityLabel, inputElt, buttonCartElt) => 
 const blockQuantityToMax = (max, target, inputElt, buttonCartElt) => {
     let quantityMax = max;
     let message = `La quantité doit être comprise entre 1 et ${quantityMax} !`;
-    console.log(quantityMax)
+    console.log(quantityMax);
     if (target > quantityMax) {
-        alert(message)
-        console.log(message)
-        console.log(quantityMax)
+        alert(message);
+        console.log(message);
+        console.log(quantityMax);
         inputElt.value = 0;
-    }
+    };
     buttonCartElt.dataset.quantitymax = quantityMax;
 }
 

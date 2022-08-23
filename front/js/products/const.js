@@ -63,7 +63,7 @@ const promise = `http://localhost:3000/api/products/${recupId('id', url)}`;
 /**
  * Quantité de produits en stock.
  */
-const stock = 100;
+const stock = 120;
 
 export {
     titleHead, divImgElt, titleElt, priceElt, descriptElt, selectElt, quantityLabel, inputElt, buttonCartElt, url, promise, stock

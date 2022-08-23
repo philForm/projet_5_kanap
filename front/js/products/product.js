@@ -81,7 +81,7 @@ window.onload = () => {
                     functDisabled(stock, foundProduct, quantityLabel, inputElt, buttonCartElt);
                 }
 
-                // Impossibilité d'envoyer les articles dans le localstorage si la quantité dépasse la quantité maximum.
+                // Impossibilité d'envoyer les articles dans le localStorage si la quantité dépasse la quantité maximum.
                 else {
                     alert(message);
                     inputElt.value = 0;

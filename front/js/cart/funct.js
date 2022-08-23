@@ -81,8 +81,12 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
         total += cumul;
         totalQuantity += parseInt(item[2]);
 
-        cartItem.innerHTML += `
-                    <article class="cart__item" data-id="${item[0]}" data-color="${item[1]}">
+        let articleElt = document.createElement("article");
+        articleElt.className = "cart__item";
+        articleElt.setAttribute("data-id", item[0]);
+        articleElt.setAttribute("data-color", item[1])
+
+        articleElt.innerHTML = `
                         <div class="cart__item__img">
                             <img src="${displayImg(item)[0]}" alt="${displayImg(item)[1]}">
                         </div>
@@ -102,8 +106,10 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
                                 </div>
                             </div>
                         </div>
-                    </article>
-                `;
+                        `;
+
+        cartItem.appendChild(articleElt);
+        
         totalElt.innerHTML = totalQuantity;
         totalPriceElt.innerText = total;
     }
