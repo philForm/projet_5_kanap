@@ -81,7 +81,7 @@ const retrieveEltDom = (article) => {
         console.log(textAlt2);
 
         cons.divImgElt.innerHTML = `
-            < img src = "${imgURL}" alt = "${textAlt2}" >
+            <img src = "${imgURL}" alt = "${textAlt2}">
                 `;
     });
 

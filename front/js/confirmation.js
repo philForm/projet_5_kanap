@@ -7,10 +7,11 @@ import { recupId } from "./utils/funct_globale.js";
  * Efface le localStorage
  * @param {HTMLElement} elt 
  * @param {String} url 
+ * @param {object} urlConfirm
  */
 const confirmClearLocalStorage = (elt, url, urlConfirm) => {
     elt.innerText = url;
-    // localStorage.clear();
+    localStorage.clear();
     urlConfirm.search = ""
 }
 

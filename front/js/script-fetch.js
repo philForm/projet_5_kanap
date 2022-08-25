@@ -15,10 +15,9 @@ window.onload = () => {
         .then(data => data.json())
         .catch((err) => {
             console.error(err);
-            alert("La page des produits ne peut pas être affichée !")
+            alert("La page des produits ne peut pas être affichée !");
         })
         .then(jsonArticle => {
-            console.log(jsonArticle);
 
             for (let article of jsonArticle) {
                 
@@ -37,7 +36,7 @@ window.onload = () => {
 
         }).catch((err) => {
             console.error(err);
-            alert("Une erreur indéfinie est survenue !")
+            alert("Une erreur indéfinie est survenue !");
         });
 
 };

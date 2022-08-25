@@ -1,6 +1,6 @@
 import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, regexName, formInputTab, form } from "./const.js";
 
-import {stock} from "../products/const.js"
+import { stock } from "../products/const.js"
 
 import { recupIdLocalStorage, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct } from "./funct.js";
 
@@ -53,7 +53,7 @@ window.onload = () => {
 
                         console.log("je suis dans le if !")
                         console.log(tabArticle[i])
-                        // Changement de quantité dans le localstorage
+                        // Changement de quantité dans le localStorage
                         changeQuantity(tabArticle[i], inputValue.value);
                         console.log(`Quantité de l'élément au chargement de la page : ${tabArticle[i][2]}`);
 
@@ -63,7 +63,7 @@ window.onload = () => {
                         displayValue.innerText = `Qté : ${inputValue.value}`;
 
                         console.log(inputValue.value);
-                        
+
                         if (inputValue.value == 0) {
 
                             confirmRemoveProduct(tabArticle[i], cartItemsElt.children[i], inputValue, cartItemsElt);
