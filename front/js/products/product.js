@@ -30,7 +30,6 @@ window.onload = () => {
             buttonCartElt.dataset.quantity = "";
             buttonCartElt.dataset.bool = false;
 
-
             buttonCartElt.addEventListener("click", () => {
                 // Impossibilité d'envoyer les articles dans le localStorage si la quantité dépasse 100
                 if (inputElt.value <= 100)

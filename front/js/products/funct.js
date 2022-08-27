@@ -17,32 +17,37 @@ const recupEltDom = (article) => {
     cons.priceElt.innerText = article.price;
     cons.descriptElt.innerText = article.description;
 
-
+    // 
     let colorHtml = ""
+    // Boucle pour injecter les couleurs dans les éléments <options> de <select>
     for (let color of article.colors) {
 
-        let colorTab = color.split("/")
+        let colorTab = color.split("/");
         console.log(colorTab);
+        // réinitialisation de colorHtml
         colorHtml = '';
         for (let color of colorTab) {
 
-            // cherche la couleur color dans colorsKanap
+            // cherche la traduction en français de color dans le tableau colorsKanap
             let color2 = (colorsKanap.find((col => col[0] == color.toLowerCase())))[1];
             console.log(color2);
-            if (colorTab.indexOf(color) != colorTab.length - 1)
+            // Les couleurs en anglais sont remplacées par leurs noms en français.
+            // Si l'index de color dans colorTab est différent de la longueur du tableau colorTab - 1
+            if (colorTab.length > 1 && colorTab.indexOf(color) != colorTab.length - 1)
                 colorHtml += `${color2} et`;
-            else
+            else if (colorTab.length > 1 && colorTab.indexOf(color) == colorTab.length - 1)
                 colorHtml += ` ${color2}`;
+            else
+                colorHtml = `${color2}`;
+
 
         };
 
-        
         let option = document.createElement("option");
         option.setAttribute("value", colorHtml);
         option.innerText = colorHtml;
-        
+
         cons.selectElt.appendChild(option);
-        
     };
 
     /**
@@ -50,45 +55,44 @@ const recupEltDom = (article) => {
     */
     cons.selectElt.addEventListener("input", (e) => {
         cons.selectElt.setAttribute("value", e.target.value);
-
+        // récuperation dans value de la valeur de l'élément <select>
         let value = (cons.selectElt.value).trim();
-        value = value.split(' ');
-        console.log(typeof value);
         console.log(value);
+        // on coupe le string et on obtient un array.
+        let valueTab = value.split(' ');
+        console.log(typeof valueTab);
+        console.log(valueTab);
 
-
-        // Récupère la valeur de la couleur
-        let colorEng = engNameColor(value[value.length - 1]);
+        // Récupère la valeur de la couleur en anglais.
+        let colorEng = engNameColor(valueTab[valueTab.length - 1]);
         console.log(colorEng);
-
+        
+        // coupe l'url de l'image pour supprimer l'extension de l'image.
         let urlSplit = splitUrl(article);
         console.log(urlSplit);
-        console.log(typeof urlSplit);
-
+        
+        // on reconstitue l'url de l'image correspondant dans le backend.
         let imgURL = urlImagRestitute(urlSplit, colorEng);
         console.log(imgURL);
 
-
-        let color = '';
-        for (let val of value) {
-            color += `${val} `;
-        }
-
-        color = valueReplace(value, color);
-
+        let color = valueReplace(valueTab, value);
+        console.log(color)
+        
+        // texte alternatif de l'image.
         let textAlt2 = replaceColor(article.altTxt, color, regexColors);
         console.log(textAlt2);
-
+        
+        // on injecte dans le DOM l'image de l'article sélectionné ainsi que le texte alternatif.
         cons.divImgElt.innerHTML = `
             <img src="${imgURL}" alt="${textAlt2}">
         `;
     });
 
-    // Injection de la quantité choisie
+    // Injection de la quantité choisie.
     cons.inputElt.addEventListener("input", (e) => {
         if (e.target.value > 0 && e.target.value <= 100)
             cons.inputElt.setAttribute("value", e.target.value);
-        else 
+        else
             alert("La quantité doit être comprise entre 1 et 100 !")
     });
 };

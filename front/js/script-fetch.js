@@ -12,16 +12,20 @@ const sectionElt = document.getElementById("items");
 window.onload = () => {
 
     fetch(promise)
-        .then(data => data.json())
+        .then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+        })
         .catch((err) => {
             console.error(err);
-            alert("La page des produits ne peut pas être affichée !")
+            alert("La page des produits ne peut pas être affichée !");
         })
         .then(jsonArticle => {
             console.log(jsonArticle);
 
             for (let article of jsonArticle) {
-                
+
                 let a = document.createElement("a");
                 a.className = "lien";
                 a.href = `./product.html?id=${article._id}`;
@@ -31,7 +35,6 @@ window.onload = () => {
                             <h3 class="productName">${article.name}</h3>
                             <p class="productDescription">${article.description}</p>
                         </article>
-                
                 `;
                 sectionElt.appendChild(a);
             };
