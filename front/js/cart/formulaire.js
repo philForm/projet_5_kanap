@@ -52,7 +52,7 @@ const formSubmit = () => {
                 
             }).catch((err)=>{
                 console.error(err);
-                alert("Le serveur est dans l'incapacité d'afficher ces informations !")
+                alert(`Le serveur est dans l'incapacité d'afficher ces informations ! ${err}`)
             });
 
         }

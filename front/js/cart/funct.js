@@ -67,19 +67,26 @@ function funcTabArticle(jsonArticle, recupLocalStorage) {
  * @param {HTMLSpanElement} totalPriceElt : span contenant le prix total
  */
 const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
-
+    
+    /**
+     * quantité totale d'article(s)
+     */
     let totalQuantity = 0;
+    
+    /**
+     * prix total
+     */
     let total = 0;
+    
+    // itération sur le tableau pour afficher lea articles sur la page.
     for (let item of tab) {
 
         console.log(item)
         console.log(displayImg(item));
 
-        let cumul = priceCumul(item[2], item[3].price);
-        total += cumul;
+        total += priceCumul(item[2], item[3].price);
         totalQuantity += parseInt(item[2]);
 
-        // ////////////////////////////////////////////
         let articleElt = document.createElement("article");
         articleElt.className = "cart__item";
         articleElt.setAttribute("data-id", item[0]);
@@ -108,9 +115,6 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
                         `;
                         
         cartItem.appendChild(articleElt);
-
-
-        // ////////////////////////////////////////////
         
         totalElt.innerHTML = totalQuantity;
         totalPriceElt.innerText = total;

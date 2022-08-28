@@ -29,7 +29,8 @@ window.onload = () => {
 
         }).catch((err) => {
             console.error(err);
-            alert("Les details de votre panier ne peuvent être affichés !")
+            alert(`Les details de votre panier ne peuvent être affichés ! ${err}`)
+            
         }).then(tabArticle => {
 
             displayArticlesOnPage(tabArticle, cartItemsElt, totalQuantityElt, totalPriceElt);
@@ -52,7 +53,7 @@ window.onload = () => {
                     if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
 
                         console.log(tabArticle[i])
-                        // Changement de quantité dans le localstorage
+                        // Changement de quantité dans le localStorage
                         changeQuantity(tabArticle[i], inputValue.value);
                         console.log(`Quantité de l'élément au chargement de la page : ${tabArticle[i][2]}`);
 
@@ -114,6 +115,7 @@ window.onload = () => {
                 })
             }
         }).catch((err) => {
+            alert(err);
             console.error(err);
         })
 

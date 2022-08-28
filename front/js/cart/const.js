@@ -5,23 +5,32 @@ const promise = `http://localhost:3000/api/products`;
 
 const promiseOrder = `http://localhost:3000/api/products/order`;
 
-// Articles du localstorage
+/**
+ * Articles du localstorage
+ */
 const recupLocalStorage = getCart("cart");
 
-// Récupération de section id="cart__items"
+/**
+ * Récupération de section id="cart__items"
+ */
 const cartItemsElt = document.getElementById("cart__items");
 
-// Récupération de la span totalQuantity
+/**
+ * Récupération de la span totalQuantity
+ */
 const totalQuantityElt = document.getElementById("totalQuantity");
 
-// Récupération de la span totalPrice
+/**
+ * Récupération de la span totalPrice
+ */
 const totalPriceElt = document.getElementById("totalPrice");
 
-// Récupération de l'input de quantité
+/**
+ * Récupération de l'input de quantité
+ */
 const inputQuantityElt = document.querySelector("#cart__items article:nth-child(1)");
 
 console.log(inputQuantityElt);
-
 
 // =================================================================
 // FORMULAIRE
@@ -38,13 +47,16 @@ const cityError = document.getElementById("cityErrorMsg");
 const emailInput = document.getElementById("email");
 const emailError = document.getElementById("emailErrorMsg");
 
-// Bouton de validation
+/**
+ * Bouton de validation
+ */
 const orderForm = document.getElementById("order");
 
-// Récupération du form
+/**
+ * Récupération du form
+ */
 const form = document.querySelector(".cart__order__form");
 console.log(form.elements);
-// console.log(form.firstName.value)
 
 // Expressions régulières
 const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
@@ -52,9 +64,9 @@ const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
 const regexName =
     /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+([\-'\.\s]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+)?$/;
 
-const regexCity = /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ\s,\.'\-]+$/ ;
+const regexCity = /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ\s,\.'\-]+$/;
 // const regexCity =
-    /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+([\s,\.'\-]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+)?$/;
+// /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+([\s,\.'\-]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+)?$/;
 
 const regexAdress = /^[a-z0-9éèëêîïâàûüùç\s,'\-]*$/i;
 
@@ -72,7 +84,7 @@ let addressMsg = [
 ];
 let cityMsg = [
     "Cette ville n'existe pas !",
-    "Ville valide."
+    "Nom de la ville valide."
 ];
 let emmaiMsg = [
     "Cette adresse email n'est pas valide !",

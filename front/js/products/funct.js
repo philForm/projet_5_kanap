@@ -114,7 +114,7 @@ const funCartObj = (art) => {
 
 
 /**
- * Envoie l'Objet cart dans le localStorage après lui avoir rajouter la couleur et la quantité
+ * Envoie l'Objet cart dans le localStorage après lui avoir ajouté la couleur et la quantité
  * @param {HTMLSelectElement} select 
  * @param {HTMLInputElement} input 
  * @param {object} cart === funCartObj(article), Objet contenant :
@@ -140,33 +140,39 @@ const orderedVerifications = (cartObj, article) => {
 
     let confirmation = false;
     // récupère la valeur de data-confirm
+    // dataConfirm est itéré de 1 à chaque nouvelle commande avec la même quantité et la même couleur.
+    // dataConfirm est réinitialisée à 0 à chaque commande avec une quantité ou une couleur différente.
     let dataConfirm = parseInt(cons.buttonCartElt.dataset.confirm);
     let dataColor = cons.buttonCartElt.dataset.color;
     let dataQuantity = cons.buttonCartElt.dataset.quantity;
+    // dataBool est à false si la commande passée une nouvelle fois concerne la même couleur et la même quantité d'articles.
+    // dataBool est à true si la commande passée une nouvelle fois concerne une autre couleur ou une quantité différente.
     let dataBool = cons.buttonCartElt.dataset.bool;
     console.log(dataBool);
     let pluralArt = "";
     let pluralCanap = "";
 
 
-    // Si les valeurs de dataset et les valeurs entrées sont differentes, on réinitialise dataConfirm
+    // Si les valeurs de dataset et les valeurs entrées sont différentes, on réinitialise dataConfirm
     if (dataColor != (cons.selectElt.value).trim() ||
         dataQuantity != (cons.inputElt.value).trim()) {
         if (dataConfirm != 0) {
+            // dataBool est initialisé à true
             cons.buttonCartElt.dataset.bool = "true";
             dataBool = cons.buttonCartElt.dataset.bool;
+            // data-confirm = 0
             cons.buttonCartElt.dataset.confirm = 0;
         }
         dataConfirm = 0;
         console.log(dataConfirm);
-    }
+    };
 
-    // Si dataconfirm = 0, la couleur et la quantité choisies sont enregistrées dans les dataset
+    // Si dataConfirm = 0, la couleur et la quantité choisies sont enregistrées dans les dataset
     if (dataConfirm == 0) {
         cons.buttonCartElt.dataset.color = (cons.selectElt.value).trim();
         cons.buttonCartElt.dataset.quantity = (cons.inputElt.value).trim();
         dataConfirm = 1;
-    }
+    };
 
     // Singulier ou pluriel
     cons.inputElt.value == 1 ? (
@@ -198,7 +204,7 @@ const orderedVerifications = (cartObj, article) => {
             confirmation = confirm(
                 `${cons.inputElt.value} ${pluralCanap} ${article.name} en ${cons.selectElt.value}.\n Voulez vous réellement ajouter ${pluralArt} à votre panier une ${dataConfirm}ème fois !!`
             );
-        }
+        };
     }
     else if (dataBool == "true") {
 
