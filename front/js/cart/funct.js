@@ -2,7 +2,7 @@ import { activeButton, nameValid, nameValid2 } from "./formulaire_funct.js";
 
 import { form, recupLocalStorage, formInputTab } from "./const.js";
 
-import { getCart, removeProduct, changeQuantity } from "../utils/funct_localstor.js";
+import { getCart, removeProduct, changeQuantity, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js";
 
 import { regexColors } from "../utils/array_colors.js";
 
@@ -67,17 +67,17 @@ function funcTabArticle(jsonArticle, recupLocalStorage) {
  * @param {HTMLSpanElement} totalPriceElt : span contenant le prix total
  */
 const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
-    
+
     /**
      * quantité totale d'article(s)
      */
     let totalQuantity = 0;
-    
+
     /**
      * prix total
      */
     let total = 0;
-    
+
     // itération sur le tableau pour afficher lea articles sur la page.
     for (let item of tab) {
 
@@ -89,9 +89,10 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
 
         let articleElt = document.createElement("article");
         articleElt.className = "cart__item";
+        articleElt.id = `art-${tab.indexOf(item) + 1}`
         articleElt.setAttribute("data-id", item[0]);
         articleElt.setAttribute("data-color", item[1])
-        
+
         articleElt.innerHTML = `
                         <div class="cart__item__img">
                             <img src="${displayImg(item)[0]}" alt="${displayImg(item)[1]}">
@@ -104,18 +105,18 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
                             </div>
                             <div class="cart__item__content__settings">
                                 <div class="cart__item__content__settings__quantity">
-                                    <p>Qté : ${item[2]}</p>
+                                    <p id=quantity-${tab.indexOf(item) + 1}>Qté : ${item[2]}</p>
                                     <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item[2]}">
                                 </div>
                                 <div class="cart__item__content__settings__delete">
-                                    <p class="deleteItem">Supprimer</p>
+                                    <p class="deleteItem" id=delete-${tab.indexOf(item) + 1}>Supprimer</p>
                                 </div>
                             </div>
                         </div>
                         `;
-                        
+
         cartItem.appendChild(articleElt);
-        
+
         totalElt.innerHTML = totalQuantity;
         totalPriceElt.innerText = total;
     }
@@ -123,10 +124,10 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
 
 /**
  * Confirmation de suppression d'un article.
- * @param {object[]} product 
- * @param {HTMLElement} children : enfant de cartItemsElt
+ * @param {object[]} product : article attendant une confirmation de suppression du localStorage et du DOM
+ * @param {HTMLElement} children : enfant de cartItemsElt (article dans le dom en attente de confirmation de suppression)
  * @param {HTMLInputElement} inputValue : choix de la quantité de produit
- * @param {HTML} cartItemsElt : section contenant les articles
+ * @param {HTMLElement} cartItemsElt : section contenant les articles
  */
 const confirmRemoveProduct = (product, children, inputValue, cartItemsElt) => {
     let confirmation = false;
@@ -134,14 +135,27 @@ const confirmRemoveProduct = (product, children, inputValue, cartItemsElt) => {
         "Voulez-vous vraiment supprimer ce produit du panier ?"
     );
     if (confirmation) {
+        console.log(children)
         removeProduct(product);
         cartItemsElt.removeChild(children);
 
     }
-    else if (inputValue.value == 0) {
+    else if (inputValue.value <= 0) {
         inputValue.value = "1";
         changeQuantity(product, inputValue.value);
+
     }
 }
 
-export { recupIdLocalStorage, priceCumul, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct };
+/**
+ * Injection sur la page panier de la quantité et du prix total
+ * @param {HTMLSpanElement} quantity 
+ * @param {HTMLSpanElement} price 
+ * @param {object[]} tab : tableau contenant les articles injectés sur la page panier
+ */
+const quantityAndPrice = (quantity, price, tab)=>{
+    quantity.innerHTML = changeQuantityTotal();
+    price.innerText = changeTotalPrice(tab);
+}
+
+export { recupIdLocalStorage, priceCumul, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct, quantityAndPrice };

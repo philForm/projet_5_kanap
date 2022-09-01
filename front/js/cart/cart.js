@@ -1,8 +1,8 @@
 import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, regexName, formInputTab, form } from "./const.js";
 
-import { recupIdLocalStorage, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct } from "./funct.js";
+import { recupIdLocalStorage, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct, quantityAndPrice } from "./funct.js";
 
-import { changeQuantity, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js";
+import { changeQuantity } from "../utils/funct_localstor.js";
 
 import { formSubmit } from "./formulaire.js";
 
@@ -25,95 +25,80 @@ window.onload = () => {
              */
             const tabArticle = funcTabArticle(jsonArticle, recupLocalStorage);
             console.log(tabArticle);
+
             return tabArticle;
 
         }).catch((err) => {
             console.error(err);
             alert(`Les details de votre panier ne peuvent être affichés ! ${err}`)
-            
+
         }).then(tabArticle => {
 
+            // Affichage des articles sur la page
             displayArticlesOnPage(tabArticle, cartItemsElt, totalQuantityElt, totalPriceElt);
-            return tabArticle;
 
-        }).then(tabArticle => {
+            for (let item of tabArticle) {
 
-            
-            for (let i = 0; i < tabArticle.length; i++) {
+                // index de item
+                let indexItem = tabArticle.indexOf(item);
 
-                const inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
+                // Sélection de l'input indiquant la quantité
+                const inputValue = document.querySelector(`#cart__items > article:nth-child(${indexItem + 1}) input`);
+
+                // sélection de la balise <p> de quantité
+                const displayValue = document.querySelector(`#quantity-${indexItem + 1}`)
+
+                // bouton de suppression d'un élément
+                let deleteItem = document.getElementById(`delete-${indexItem + 1}`);
+                console.log(deleteItem);
+                console.log(item[0]);
+                console.log(item[1]);
+
+
+                // dataset correspondant à l'item
                 let datasetId = inputValue.closest(`.cart__item`).dataset.id;
                 let datasetColor = inputValue.closest(`.cart__item`).dataset.color;
-                inputValue.setAttribute("data-color", tabArticle[i][1])
-                inputValue.addEventListener("change", () => {
+                inputValue.setAttribute("data-color", item[1]);
 
-                    console.log(`${datasetId}, ${datasetColor}`);
-                    console.log(inputValue)
-                    console.log(typeof inputValue)
-                    if (tabArticle[i][0] == datasetId && tabArticle[i][1] == datasetColor) {
+                inputValue.addEventListener("change", (e) => {
 
-                        console.log(tabArticle[i])
-                        // Changement de quantité dans le localStorage
-                        changeQuantity(tabArticle[i], inputValue.value);
-                        console.log(`Quantité de l'élément au chargement de la page : ${tabArticle[i][2]}`);
+                    // recherche de l'article dans tabArticle
+                    let art = tabArticle.find(el => el[0] == datasetId && el[1] == datasetColor)
+                    console.log(art)
 
-                        // Affichage de la nouvelle quantité sur la page
-                        const displayValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) div.cart__item__content__settings__quantity > p`)
+                    // Changement de quantité dans le localStorage
+                    changeQuantity(art, e.target.value);
 
-                        displayValue.innerText = `Qté : ${inputValue.value}`;
+                    if (e.target.value <= 0) {
 
-                        console.log(inputValue.value);
-                        if (inputValue.value == 0) {
+                        let children = document.getElementById(`art-${indexItem + 1}`);
+                        console.log(children);
 
-                            confirmRemoveProduct(tabArticle[i], cartItemsElt.children[i], inputValue, cartItemsElt);
-                            displayValue.innerText = `Qté : ${inputValue.value}`;
-
-                        }
-                        if (inputValue.value > 100) {
-                            inputValue.value = "100"
-                            displayValue.innerText = `Qté : ${inputValue.value}`;
-                            changeQuantity(tabArticle[i], inputValue.value);
-                        }
+                        confirmRemoveProduct(art, children, inputValue, cartItemsElt);
 
                     }
-
-                    console.log(changeQuantityTotal());
-                    totalQuantityElt.innerHTML = changeQuantityTotal();
-
-                    console.log(changeTotalPrice(tabArticle));
-                    totalPriceElt.innerText = changeTotalPrice(tabArticle);
-
-                })
-
-            }
-            return tabArticle;
-
-        }).then((tabArticle) => {
-
-            for (let i = 0; i < tabArticle.length; i++) {
-
-                const inputValue = document.querySelector(`#cart__items > article:nth-child(${i + 1}) input`);
-
-                let deleteItem = document.querySelectorAll('p.deleteItem')[i];
-                console.log(tabArticle[i][0]);
-                console.log(tabArticle[i][1]);
-                let dataId = deleteItem.closest(`.cart__item`).dataset.id;
-                let dataColor = deleteItem.closest(`.cart__item`).dataset.color;
-                console.log(dataId);
-                console.log(dataColor);
-                deleteItem.addEventListener('click', function () {
-                    if (tabArticle[i][0] == dataId && tabArticle[i][1] == dataColor) {
-                        confirmRemoveProduct(tabArticle[i], deleteItem.closest(`.cart__item`), inputValue, cartItemsElt)
-                        console.log(deleteItem.closest(`.cart__item`));
-                        console.log(tabArticle[i][0]);
-                        console.log(tabArticle[i][1]);
-
-                        totalQuantityElt.innerHTML = changeQuantityTotal();
-                        totalPriceElt.innerText = changeTotalPrice(tabArticle);
-
+                    if (e.target.value > 100) {
+                        e.target.value = "100"
+                        changeQuantity(art, e.target.value);
                     }
+
+                    // Affichage de la nouvelle quantité sur la page
+                    displayValue.innerText = `Qté : ${e.target.value}`;
+
+                    quantityAndPrice(totalQuantityElt, totalPriceElt, tabArticle)
+                })
+
+
+                deleteItem.addEventListener('click', () => {
+
+                    confirmRemoveProduct(item, deleteItem.closest(`.cart__item`), inputValue, cartItemsElt)
+                    console.log(deleteItem.closest(`.cart__item`));
+
+                    quantityAndPrice(totalQuantityElt, totalPriceElt, tabArticle)
+
                 })
             }
+
         }).catch((err) => {
             alert(err);
             console.error(err);

@@ -67,7 +67,7 @@ const removeProduct = (product) => {
 const changeQuantity = (product, quant) => {
     // récupère le localstorage
     let cart = getCart("cart");
-    // récupération du produit ciblé dans le localstorage
+    // récupération du produit ciblé dans le localStorage
     let foundProduct = cart.find(p => (p.id == product[0]) && (p.color == product[1]));
     console.log(product);
     console.log(foundProduct);
@@ -78,17 +78,23 @@ const changeQuantity = (product, quant) => {
         saveCart(cart);
         // if (foundProduct.quantity <= 0) {
         // removeProduct(product);
-
         // }
+        // ////////////////////
+        product[2] = quant;
+        return product;
+        // ////////////////////
 
     }
     if (quant > 100) {
         alert("La quantité de cet article ne peut excéder 100 !");
+        quant = 100;
+        product[2] = quant;
+        return product;
     }
 }
 
 /**
- * Calcule la quantité totale d'articles contenus dans le localstorage
+ * Calcule la quantité totale d'articles contenus dans le localStorage
  * @returns {Number}
  */
 const changeQuantityTotal = () => {
