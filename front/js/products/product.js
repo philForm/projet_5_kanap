@@ -1,6 +1,6 @@
 import { inputElt, buttonCartElt, url, promise } from "./const.js";
 
-import { recupEltDom, funCartObj, orderedVerifications } from "./funct.js";
+import { retrieveEltDom, funCartObj, orderedVerifications } from "./funct.js";
 
 import { recupId } from "../utils/funct_globale.js";
 
@@ -16,7 +16,7 @@ window.onload = () => {
             console.log(article);
             
             // Les éléments de l'article récupéré par fetch sont injectés dans le DOM.
-            recupEltDom(article);
+            retrieveEltDom(article);
 
             /**
              * objet contenant l'id et le nom de l'article.

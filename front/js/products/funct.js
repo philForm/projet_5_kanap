@@ -8,7 +8,7 @@ import { addCart } from "../utils/funct_localstor.js";
  * Injection des éléments de l'article récupéré de l'api dans le DOM
  * @param {object} article 
  */
-const recupEltDom = (article) => {
+const retrieveEltDom = (article) => {
     cons.titleHead.innerHTML = article.name;
     cons.divImgElt.innerHTML = `
             <img src="${displayImgIndex(article)}" alt="${article.altTxt}">
@@ -229,5 +229,5 @@ const orderedVerifications = (cartObj, article) => {
 
 // =======================================
 export {
-    recupEltDom, funCartObj, sendArticleToCart, orderedVerifications
+    retrieveEltDom, funCartObj, sendArticleToCart, orderedVerifications
 };
