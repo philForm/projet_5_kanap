@@ -139,16 +139,20 @@ const changeTotalPrice = (tab) => {
     return total;
 }
 
-
+/**
+ * cherche un article dans le localStorage
+ * @param {HTMLSelectElement} selectElt : balise \<select\> contenant la valeur de couleur à rechercher dans le localStorage
+ * @param {object} cartObj : objet contenant l'id du produit à rechercher dans le localStorage
+ * @returns {object} : objet contenant l'article récupéré dans le localStorage
+ */
 const findArticle = (selectElt, cartObj) => {
     let cart = getCart("cart");
 
-    let foundProduct = cart.find(el => (
+    return cart.find(el => (
         el.color == selectElt.value
     ) && (
             el.id == cartObj.id
         ));
-    return foundProduct
 }
 
 export { saveCart, getCart, addCart, removeProduct, changeQuantity, changeQuantityTotal, changeTotalPrice, findArticle };

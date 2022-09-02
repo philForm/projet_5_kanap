@@ -15,14 +15,18 @@ window.onload = () => {
         .then(data => data.json())
         .then(article => {
             console.log(article);
-
+            
+            // Les éléments de l'article récupéré par fetch sont injectés dans le DOM.
             retrieveEltDom(article);
-
+            
+            /**
+             * objet contenant l'id et le nom de l'article.
+             * @type {object}
+             */
             let cartObj = funCartObj(article);
             console.log(cartObj);
 
-            // console.log(cart);
-
+            // Création des data-set qui vont servir à valider les différentes commandes grâce à des messages d'alert et de confirmations.
             buttonCartElt.dataset.confirm = "0";
             buttonCartElt.dataset.color = "";
             buttonCartElt.dataset.quantity = "";
@@ -37,7 +41,7 @@ window.onload = () => {
                 console.log(article.name);
                 console.log(selectElt.value);
                 console.log(e.target.value);
-
+                
                 let foundProduct = findArticle(selectElt, cartObj);
 
                 let quantityMax = 0;
@@ -75,7 +79,7 @@ window.onload = () => {
                 
                 let message = `Veuillez indiquer une quantité comprise entre 1 et ${quantityMax} !`;
 
-                if (inputElt.value <= quantityMax) {
+                if (inputElt.value > 0 && inputElt.value <= quantityMax) {
                     orderedVerifications(cartObj, article);
                     foundProduct = findArticle(selectElt, cartObj);
                     functDisabled(stock, foundProduct, quantityLabel, inputElt, buttonCartElt);
