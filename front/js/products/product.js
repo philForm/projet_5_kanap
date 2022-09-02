@@ -14,10 +14,14 @@ window.onload = () => {
         .then(data => data.json())
         .then(article => {
             console.log(article);
+            
             // Les éléments de l'article récupéré par fetch sont injectés dans le DOM.
             recupEltDom(article);
 
-            // objet contenant l'id et le nom de l'article.
+            /**
+             * objet contenant l'id et le nom de l'article.
+             * @type {object}
+             */
             let cartObj = funCartObj(article);
 
             console.log(cartObj);

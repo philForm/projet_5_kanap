@@ -100,7 +100,7 @@ window.onload = () => {
                     displayValue.innerText = `Qté : ${e.target.value}`;
 
                     quantityAndPrice(totalQuantityElt, totalPriceElt, tabArticle);
-                })
+                });
 
 
                 deleteItem.addEventListener('click', () => {
@@ -110,8 +110,8 @@ window.onload = () => {
 
                     quantityAndPrice(totalQuantityElt, totalPriceElt, tabArticle);
 
-                })
-            }
+                });
+            };
 
         }).catch((err) => {
             alert(err);
@@ -125,4 +125,4 @@ window.onload = () => {
         formSubmit();
     });
 
-}
+};
