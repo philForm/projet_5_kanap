@@ -1,8 +1,15 @@
 import { getCart } from "../utils/funct_localstor.js";
 
-// Appel API
+/**
+ * URL des produits de l'api
+ * @type {(URL|String)}
+ */
 const promise = `http://localhost:3000/api/products`;
 
+/**
+ * URL de l'api pour la requête POST
+ * @type {(URL|String)}
+ */
 const promiseOrder = `http://localhost:3000/api/products/order`;
 
 /**
@@ -12,25 +19,28 @@ const recupLocalStorage = getCart("cart");
 
 /**
  * Récupération de section id="cart__items"
+ * @type {HTMLElement} : \<section\>
  */
 const cartItemsElt = document.getElementById("cart__items");
 
 /**
  * Récupération de la span totalQuantity
+ * @type {HTMLSpanElement}
  */
 const totalQuantityElt = document.getElementById("totalQuantity");
 
 /**
  * Récupération de la span totalPrice
+ * @type {HTMLSpanElement}
  */
 const totalPriceElt = document.getElementById("totalPrice");
 
-/**
- * Récupération de l'input de quantité
- */
-const inputQuantityElt = document.querySelector("#cart__items article:nth-child(1)");
+// /**
+//  * Récupération de l'input de quantité
+//  */
+// const inputQuantityElt = document.querySelector("#cart__items article:nth-child(1)");
 
-console.log(inputQuantityElt);
+// console.log(inputQuantityElt);
 
 // =================================================================
 // FORMULAIRE
@@ -48,12 +58,14 @@ const emailInput = document.getElementById("email");
 const emailError = document.getElementById("emailErrorMsg");
 
 /**
- * Bouton de validation
+ * Bouton de validation du formulaire
+ * @type {HTMLButtonElement}
  */
 const orderForm = document.getElementById("order");
 
 /**
  * Récupération du form
+ * @type {HTMLFormElement}
  */
 const form = document.querySelector(".cart__order__form");
 console.log(form.elements);
@@ -125,5 +137,5 @@ const formObjs = {
 
 
 export {
-    promise, promiseOrder, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, inputQuantityElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, formObjs
+    promise, promiseOrder, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, formObjs
 };

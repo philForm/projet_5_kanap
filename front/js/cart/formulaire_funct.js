@@ -130,7 +130,7 @@ const nameValid2 = (errorElt, objKey, formValue) => {
  * @param {object[]} tab tableau de tableaux contenant chacun :
  * @type {HTMLInputElement} exemple : \<input type="text" name="firstName" id="firstName" required=""\>
  * @type {RegExp}
- * @type {HTMLParagraphElement} exemple : <p id="firstNameErrorMsg">
+ * @type {HTMLParagraphElement} exemple : \<p id="firstNameErrorMsg"\>
  * @type {object[]} contient deux strings : textes de validation
  * @type {String} correspond à la valeur de l'Id de l'\<input\>
  */

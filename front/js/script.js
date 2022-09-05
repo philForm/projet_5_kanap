@@ -3,9 +3,9 @@ let sectionElt = document.getElementById("items");
 
 (async function main() {
 
-    const promesse = "http://localhost:3000/api/products";
+    const promise = "http://localhost:3000/api/products";
 
-    let reponse = await fetch(promesse)
+    let reponse = await fetch(promise)
         .then(reponse => reponse.json());
     console.log(reponse);
 

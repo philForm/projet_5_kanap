@@ -78,18 +78,23 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
      */
     let total = 0;
 
-    // itération sur le tableau pour afficher lea articles sur la page.
+    // itération sur le tableau pour afficher les articles sur la page.
     for (let item of tab) {
 
         console.log(item)
         console.log(displayImg(item));
+        
+        /**
+         * Index de item dans tab + 1
+         */
+        let indexOfItem = tab.indexOf(item) + 1;
 
         total += priceCumul(item[2], item[3].price);
         totalQuantity += parseInt(item[2]);
 
         let articleElt = document.createElement("article");
         articleElt.className = "cart__item";
-        articleElt.id = `art-${tab.indexOf(item) + 1}`
+        articleElt.id = `art-${indexOfItem}`
         articleElt.setAttribute("data-id", item[0]);
         articleElt.setAttribute("data-color", item[1])
 
@@ -105,11 +110,11 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
                             </div>
                             <div class="cart__item__content__settings">
                                 <div class="cart__item__content__settings__quantity">
-                                    <p id=quantity-${tab.indexOf(item) + 1}>Qté : ${item[2]}</p>
+                                    <p id='quantity-${indexOfItem}'>Qté : ${item[2]}</p>
                                     <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item[2]}">
                                 </div>
                                 <div class="cart__item__content__settings__delete">
-                                    <p class="deleteItem" id=delete-${tab.indexOf(item) + 1}>Supprimer</p>
+                                    <p class="deleteItem" id='delete-${indexOfItem}'>Supprimer</p>
                                 </div>
                             </div>
                         </div>

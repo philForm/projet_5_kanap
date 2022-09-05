@@ -26,7 +26,7 @@ window.onload = () => {
 
             console.log(cartObj);
 
-            // Création des data-set qui vont servir à valider les différentes commandes grâce à des messages d'alert et de confirmations.
+            // Création des data-set qui vont servir à valider les différentes commandes grâce à des messages d'alerte et de confirmation.
             buttonCartElt.dataset.confirm = "0";
             buttonCartElt.dataset.color = "";
             buttonCartElt.dataset.quantity = "";

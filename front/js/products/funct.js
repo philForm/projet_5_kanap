@@ -9,50 +9,53 @@ import { addCart } from "../utils/funct_localstor.js";
  * @param {object} article 
  */
 const retrieveEltDom = (article) => {
+    
     cons.titleHead.innerHTML = article.name;
     cons.divImgElt.innerHTML = `
-            <img src="${displayImgIndex(article)}" alt="${article.altTxt}">
+            <img src="${article.imageUrl}" alt="${article.altTxt}">
             `;
     cons.titleElt.innerText = article.name;
     cons.priceElt.innerText = article.price;
     cons.descriptElt.innerText = article.description;
 
-    // 
-    let colorHtml = ""
+    let colorHtml = "";
     // Boucle pour injecter les couleurs dans les éléments <options> de <select>
-    for (let color of article.colors) {
+    for (let col of article.colors) {
 
-        let colorTab = color.split("/");
+        let colorTab = col.split("/");
+        console.log(col)
         console.log(colorTab);
         // réinitialisation de colorHtml
         colorHtml = '';
+
         for (let color of colorTab) {
 
             // cherche la traduction en français de color dans le tableau colorsKanap
-            let color2 = (colorsKanap.find((col => col[0] == color.toLowerCase())))[1];
-            console.log(color2);
+            let colorFr = (colorsKanap.find((col => col[0] == color.toLowerCase())))[1];
+            console.log(colorFr);
+
+
             // Les couleurs en anglais sont remplacées par leurs noms en français.
             // Si l'index de color dans colorTab est différent de la longueur du tableau colorTab - 1
             if (colorTab.length > 1 && colorTab.indexOf(color) != colorTab.length - 1)
-                colorHtml += `${color2} et`;
+                colorHtml += `${colorFr} et`;
             else if (colorTab.length > 1 && colorTab.indexOf(color) == colorTab.length - 1)
-                colorHtml += ` ${color2}`;
+                colorHtml += ` ${colorFr}`;
             else
-                colorHtml = `${color2}`;
-
-
-        };
-
+                colorHtml = `${colorFr}`;
+        }
+        
+        // création de l'élément HTML <option>
         let option = document.createElement("option");
+        // ajout à <option> de l'attribut "value"
         option.setAttribute("value", colorHtml);
         option.innerText = colorHtml;
 
         cons.selectElt.appendChild(option);
     };
 
-    /**
-    * injection de la couleur choisie dans <select>
-    */
+    
+    // injection de la couleur choisie dans <select>
     cons.selectElt.addEventListener("input", (e) => {
         cons.selectElt.setAttribute("value", e.target.value);
         // récuperation dans value de la valeur de l'élément <select>
@@ -66,26 +69,26 @@ const retrieveEltDom = (article) => {
         // Récupère la valeur de la couleur en anglais.
         let colorEng = engNameColor(valueTab[valueTab.length - 1]);
         console.log(colorEng);
-        
+
         // coupe l'url de l'image pour supprimer l'extension de l'image.
         let urlSplit = splitUrl(article);
         console.log(urlSplit);
-        
+
         // on reconstitue l'url de l'image correspondant dans le backend.
         let imgURL = urlImagRestitute(urlSplit, colorEng);
         console.log(imgURL);
 
         let color = valueReplace(valueTab, value);
         console.log(color)
-        
+
         // texte alternatif de l'image.
         let textAlt2 = replaceColor(article.altTxt, color, regexColors);
         console.log(textAlt2);
-        
+
         // on injecte dans le DOM l'image de l'article sélectionné ainsi que le texte alternatif.
         cons.divImgElt.innerHTML = `
-            <img src="${imgURL}" alt="${textAlt2}">
-        `;
+                <img src="${imgURL}" alt="${textAlt2}">
+            `;
     });
 
     // Injection de la quantité choisie.
@@ -96,6 +99,7 @@ const retrieveEltDom = (article) => {
             alert("La quantité doit être comprise entre 1 et 100 !")
     });
 };
+
 
 
 /**
@@ -139,6 +143,7 @@ function sendArticleToCart(select, input, cart) {
 const orderedVerifications = (cartObj, article) => {
 
     let confirmation = false;
+
     // récupère la valeur de data-confirm
     // dataConfirm est itéré de 1 à chaque nouvelle commande avec la même quantité et la même couleur.
     // dataConfirm est réinitialisée à 0 à chaque commande avec une quantité ou une couleur différente.

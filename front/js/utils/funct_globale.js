@@ -45,7 +45,7 @@ const urlImagRestitute = (imgUrl, colorImg) => {
 const engNameColor = (colorImg) => {
     if (colorImg)
         return (colorsKanap.find(col => col[1] == colorImg))[0];
-        
+
     console.error("La couleur n'existe pas !");
 }
 
@@ -128,17 +128,21 @@ const displayImg = (item) => {
 
 /**
  * Récupère l'identifiant (id) dans l'url
- * @param {String} id key of identifier
+ * @param {String} id clé de l'identifiant
  * @param {object} url new URL(window.location.href)
- * @returns {String} identifiant passé dans l'url
+ * @returns {String} identifiant que l'on passe dans l'url
  */
 const recupId = (id, url) => {
-    // return window.location.search.split("=")[1]
+    
     console.log(url);
-    let searchParams = new URLSearchParams(url.search);
-    console.log(searchParams);
-    if (searchParams.has(id))
-        return url.searchParams.get(id);
+    // instance de l'API URLSearchParams utilisant en paramètre la valeur correspondant à la clé search de l'objet url.
+    // URLSearchParams fournit un moyen d'obtenir les données dans les paramètres de requête d'URL.
+    let params = new URLSearchParams(url.search);
+    console.log(params);
+    // La méthode has() vérifie si le paramètre "id" existe dans l’URL.
+    if (params.has(id))
+        // sa valeur peut être trouvée via la méthode get.
+        return params.get(id);
 }
 
 export { displayImg, displayImgIndex, engNameColor, splitColors, splitUrl, urlImagRestitute, replaceColor, valueReplace, recupId };
