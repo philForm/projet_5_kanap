@@ -1,16 +1,11 @@
-import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, regexName, formInputTab, form } from "./const.js";
+import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, formInputTab, form } from "./const.js";
 
-import { recupIdLocalStorage, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct, quantityAndPrice } from "./funct.js";
-
-import { changeQuantity } from "../utils/funct_localstor.js";
+import { funcTabArticle, displayArticlesOnPage, changeQuantityAndRemoveProduct } from "./funct.js";
 
 import { formSubmit } from "./formulaire.js";
 
 import { listenValuesInputOfForm } from "./formulaire_funct.js";
 
-console.log(recupLocalStorage);
-console.log(recupIdLocalStorage(recupLocalStorage));
-console.log(regexName);
 
 window.onload = () => {
 
@@ -33,85 +28,7 @@ window.onload = () => {
             // Affichage des articles sur la page
             displayArticlesOnPage(tabArticle, cartItemsElt, totalQuantityElt, totalPriceElt);
 
-            for (let item of tabArticle) {
-
-                /**
-                 * index de l'article dans tabArticle
-                 */
-                const indexItem = tabArticle.indexOf(item);
-
-                /**
-                 * Sélection de l'input indiquant la quantité
-                 * @type {HTMLInputElement} type number
-                 */
-                const inputValue = document.querySelector(`#cart__items > article:nth-child(${indexItem + 1}) input`);
-
-                /**
-                 * sélection de la balise \<p\> de quantité
-                 * @type {HTMLParagraphElement}
-                 */
-                const displayValue = document.querySelector(`#quantity-${indexItem + 1}`);
-
-                /**
-                 * sélection de la balise \<article\>
-                 * @type {HTMLElement}
-                 */
-                const children = document.getElementById(`art-${indexItem + 1}`);
-                console.log(children);
-
-                /**
-                 * bouton de suppression d'un élément
-                 * @type {HTMLButtonElement}
-                 */
-                const deleteItem = document.getElementById(`delete-${indexItem + 1}`);
-                
-                /**
-                 * id de l'article contenu dans data-id de la balise \<article\>
-                 */
-                const datasetId = inputValue.closest(`.cart__item`).dataset.id;
-
-                /**
-                 * couleur de l'article contenu dans data-color de la balise \<article\>
-                 */
-                const datasetColor = inputValue.closest(`.cart__item`).dataset.color;
-
-                inputValue.setAttribute("data-color", item[1]);
-
-                /**
-                 * recherche de l'article dans tabArticle
-                 */
-                const art = tabArticle.find(el => el[0] == datasetId && el[1] == datasetColor)
-                console.log(art)
-
-                inputValue.addEventListener("change", (e) => {
-
-                    // Changement de quantité dans le localStorage
-                    changeQuantity(art, e.target.value);
-
-                    if (e.target.value <= 0) 
-                        confirmRemoveProduct(art, children, inputValue, cartItemsElt);
-
-                    if (e.target.value > 100) {
-                        e.target.value = "100";
-                        changeQuantity(art, e.target.value);
-                    }
-
-                    // Affichage de la nouvelle quantité sur la page
-                    displayValue.innerText = `Qté : ${e.target.value}`;
-
-                    quantityAndPrice(totalQuantityElt, totalPriceElt, tabArticle);
-                });
-
-
-                deleteItem.addEventListener('click', () => {
-
-                    confirmRemoveProduct(item, deleteItem.closest(`.cart__item`), inputValue, cartItemsElt);
-                    console.log(deleteItem.closest(`.cart__item`));
-
-                    quantityAndPrice(totalQuantityElt, totalPriceElt, tabArticle);
-
-                });
-            };
+            changeQuantityAndRemoveProduct(tabArticle, cartItemsElt, totalQuantityElt, totalPriceElt);
 
         }).catch((err) => {
             alert(err);

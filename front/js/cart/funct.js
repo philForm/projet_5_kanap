@@ -33,7 +33,7 @@ let priceCumul = (nbArticle, price) => {
 }
 
 /**
- * Tableau d'articles du localstorage
+ * Tableau d'articles du localStorage
  * @param {object} jsonArticle Objet contenant tous les articles de la base de données 
  * @param {object} recupLocalStorage Objet contenant tous les articles du localStorage
  * @returns {object[]} tabArticle : tableau de tableaux contenant :
@@ -61,7 +61,7 @@ function funcTabArticle(jsonArticle, recupLocalStorage) {
 
 /**
  * Affiche les articles provenant de l'API sur la page cart
- * @param {object[]} tab 
+ * @param {object[]} tab : tableau contenant les articles du localStorage
  * @param {HTMLElement} cartItem : section contenant toutes les catégories d'articles.
  * @param {HTMLSpanElement} totalElt : span contenant le nombre total d'articles
  * @param {HTMLSpanElement} totalPriceElt : span contenant le prix total
@@ -83,7 +83,7 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
 
         console.log(item)
         console.log(displayImg(item));
-        
+
         /**
          * Index de item dans tab + 1
          */
@@ -111,7 +111,7 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
                             <div class="cart__item__content__settings">
                                 <div class="cart__item__content__settings__quantity">
                                     <p id='quantity-${indexOfItem}'>Qté : ${item[2]}</p>
-                                    <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item[2]}">
+                                    <input  id='input-quantity-${indexOfItem}' type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item[2]}">
                                 </div>
                                 <div class="cart__item__content__settings__delete">
                                     <p class="deleteItem" id='delete-${indexOfItem}'>Supprimer</p>
@@ -126,6 +126,96 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
         totalPriceElt.innerText = total;
     }
 }
+
+/**
+ * Modifie la quantité d'un article ou le supprime lors d'un événement.
+ * @param {object[]} tabArticle : tableau contenant les articles du localStorage
+ * @param {HTMLElement} cartItemsElt : section contenant toutes les catégories d'articles. 
+ * @param {HTMLSpanElement} totalQuantityElt : span indiquant la quantité totale d'articles.
+ * @param {HTMLSpanElement} totalPriceElt : span indiquant le prix total.
+ */
+const changeQuantityAndRemoveProduct = (tabArticle, cartItemsElt, totalQuantityElt, totalPriceElt) => {
+
+    for (let item of tabArticle) {
+
+        /**
+         * index de l'article dans tabArticle
+         */
+        const indexItem = tabArticle.indexOf(item);
+
+        /**
+         * Sélection de l'input indiquant la quantité
+         * @type {HTMLInputElement} type number
+         */
+        const inputValue = document.querySelector(`#input-quantity-${indexItem + 1}`);
+
+        /**
+         * sélection de la balise \<p\> de quantité
+         * @type {HTMLParagraphElement}
+         */
+        const displayValue = document.querySelector(`#quantity-${indexItem + 1}`);
+
+        /**
+         * sélection de la balise \<article\>
+         * @type {HTMLElement}
+         */
+        const children = document.getElementById(`art-${indexItem + 1}`);
+        console.log(children);
+
+        /**
+         * bouton de suppression d'un élément
+         * @type {HTMLButtonElement}
+         */
+        const deleteItem = document.getElementById(`delete-${indexItem + 1}`);
+
+        /**
+         * id de l'article contenu dans data-id de la balise \<article\>
+         */
+        const datasetId = inputValue.closest(`.cart__item`).dataset.id;
+
+        /**
+         * couleur de l'article contenu dans data-color de la balise \<article\>
+         */
+        const datasetColor = inputValue.closest(`.cart__item`).dataset.color;
+
+        inputValue.setAttribute("data-color", item[1]);
+
+        /**
+         * recherche de l'article dans tabArticle
+         */
+        const art = tabArticle.find(el => el[0] == datasetId && el[1] == datasetColor)
+        console.log(art)
+
+        inputValue.addEventListener("change", (e) => {
+
+            // Changement de quantité dans le localStorage
+            changeQuantity(art, e.target.value);
+
+            if (e.target.value <= 0)
+                confirmRemoveProduct(art, children, inputValue, cartItemsElt);
+
+            if (e.target.value > 100) {
+                e.target.value = "100";
+                changeQuantity(art, e.target.value);
+            }
+
+            // Affichage de la nouvelle quantité sur la page
+            displayValue.innerText = `Qté : ${e.target.value}`;
+
+            quantityAndPrice(totalQuantityElt, totalPriceElt, tabArticle);
+        });
+
+        deleteItem.addEventListener('click', () => {
+
+            confirmRemoveProduct(item, deleteItem.closest(`.cart__item`), inputValue, cartItemsElt);
+            console.log(deleteItem.closest(`.cart__item`));
+
+            quantityAndPrice(totalQuantityElt, totalPriceElt, tabArticle);
+
+        });
+
+    }
+};
 
 /**
  * Confirmation de suppression d'un article.
@@ -150,7 +240,7 @@ const confirmRemoveProduct = (product, children, inputValue, cartItemsElt) => {
         changeQuantity(product, inputValue.value);
 
     }
-} 
+}
 
 /**
  * Injection sur la page panier de la quantité et du prix total
@@ -158,9 +248,9 @@ const confirmRemoveProduct = (product, children, inputValue, cartItemsElt) => {
  * @param {HTMLSpanElement} price 
  * @param {object[]} tab : tableau contenant les articles injectés sur la page panier
  */
-const quantityAndPrice = (quantity, price, tab)=>{
+const quantityAndPrice = (quantity, price, tab) => {
     quantity.innerHTML = changeQuantityTotal();
     price.innerText = changeTotalPrice(tab);
 }
 
-export { recupIdLocalStorage, priceCumul, funcTabArticle, displayArticlesOnPage, confirmRemoveProduct, quantityAndPrice };
+export { recupIdLocalStorage, priceCumul, funcTabArticle, displayArticlesOnPage, changeQuantityAndRemoveProduct, confirmRemoveProduct, quantityAndPrice };
