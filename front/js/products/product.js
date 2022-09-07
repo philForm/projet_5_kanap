@@ -34,7 +34,7 @@ window.onload = () => {
 
             buttonCartElt.addEventListener("click", () => {
                 // Impossibilité d'envoyer les articles dans le localStorage si la quantité dépasse 100
-                if (inputElt.value > 0 && inputElt.value <= 100)
+                if (inputElt.value >= 0 && inputElt.value <= 100)
                     orderedVerifications(cartObj, article);
                 else {
                     alert("Veuillez indiquer une quantité comprise entre 1 et 100 !");
@@ -42,7 +42,6 @@ window.onload = () => {
                     inputElt.value = 0;
                 }
             });
-
 
         }).catch((err) => {
             console.error(err);

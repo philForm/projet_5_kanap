@@ -9,7 +9,7 @@ import { addCart } from "../utils/funct_localstor.js";
  * @param {object} article 
  */
 const retrieveEltDom = (article) => {
-    
+
     cons.titleHead.innerHTML = article.name;
     cons.divImgElt.innerHTML = `
             <img src="${article.imageUrl}" alt="${article.altTxt}">
@@ -44,7 +44,7 @@ const retrieveEltDom = (article) => {
             else
                 colorHtml = `${colorFr}`;
         }
-        
+
         // création de l'élément HTML <option>
         let option = document.createElement("option");
         // ajout à <option> de l'attribut "value"
@@ -54,7 +54,7 @@ const retrieveEltDom = (article) => {
         cons.selectElt.appendChild(option);
     };
 
-    
+
     // injection de la couleur choisie dans <select>
     cons.selectElt.addEventListener("input", (e) => {
         cons.selectElt.setAttribute("value", e.target.value);
@@ -95,11 +95,13 @@ const retrieveEltDom = (article) => {
     cons.inputElt.addEventListener("input", (e) => {
         if (e.target.value > 0 && e.target.value <= 100)
             cons.inputElt.setAttribute("value", e.target.value);
-        else
-            alert("La quantité doit être comprise entre 1 et 100 !")
+        else {
+            alert("La quantité doit être comprise entre 1 et 100 !");
+            cons.inputElt.setAttribute("value", 0);
+            e.target.value = 0;
+        }
     });
 };
-
 
 
 /**
@@ -121,16 +123,16 @@ const funCartObj = (art) => {
  * Envoie l'Objet cart dans le localStorage après lui avoir ajouté la couleur et la quantité
  * @param {HTMLSelectElement} select 
  * @param {HTMLInputElement} input 
- * @param {object} cart === funCartObj(article), Objet contenant :
+ * @param {object} obj === funCartObj(article), Objet contenant :
  * @property {String} name : nom de l'article
  * @property {String} id : id de l'article
   */
-function sendArticleToCart(select, input, cart) {
+function sendArticleToCart(select, input, obj) {
     if (select.value != "" && input.value != 0) {
-        cart.color = select.value;
-        cart.quantity = input.value;
-        console.log(cart);
-        addCart(cart);
+        obj.color = select.value;
+        obj.quantity = input.value;
+        console.log(obj);
+        addCart(obj);
     };
 };
 
@@ -156,7 +158,6 @@ const orderedVerifications = (cartObj, article) => {
     console.log(dataBool);
     let pluralArt = "";
     let pluralCanap = "";
-
 
     // Si les valeurs de dataset et les valeurs entrées sont différentes, on réinitialise dataConfirm
     if (dataColor != (cons.selectElt.value).trim() ||

@@ -22,7 +22,6 @@ window.onload = () => {
             alert(`La page des produits ne peut pas être affichée !", ${err}`);
         })
         .then(jsonArticle => {
-
             for (let article of jsonArticle) {
 
                 let a = document.createElement("a");

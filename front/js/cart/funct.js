@@ -62,7 +62,7 @@ function funcTabArticle(jsonArticle, recupLocalStorage) {
 /**
  * Affiche les articles provenant de l'API sur la page cart
  * @param {object[]} tab 
- * @param {HTMLElement} cartItem : section contenant tous les catégories d'articles.
+ * @param {HTMLElement} cartItem : section contenant toutes les catégories d'articles.
  * @param {HTMLSpanElement} totalElt : span contenant le nombre total d'articles
  * @param {HTMLSpanElement} totalPriceElt : span contenant le prix total
  */
@@ -130,7 +130,7 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
 /**
  * Confirmation de suppression d'un article.
  * @param {object[]} product : article attendant une confirmation de suppression du localStorage et du DOM
- * @param {HTMLElement} children : enfant de cartItemsElt (article dans le dom en attente de confirmation de suppression)
+ * @param {HTMLElement} children : enfant de cartItemsElt (article dans le DOM en attente de confirmation de suppression)
  * @param {HTMLInputElement} inputValue : choix de la quantité de produit
  * @param {HTMLElement} cartItemsElt : section contenant les articles
  */
@@ -150,7 +150,7 @@ const confirmRemoveProduct = (product, children, inputValue, cartItemsElt) => {
         changeQuantity(product, inputValue.value);
 
     }
-}
+} 
 
 /**
  * Injection sur la page panier de la quantité et du prix total

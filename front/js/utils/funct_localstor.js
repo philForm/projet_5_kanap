@@ -31,12 +31,9 @@ const getCart = (loc) => {
  */
 const addCart = (product) => {
     let cart = getCart("cart");
-    console.log(product);
-    console.log(product.id);
-    // recherche d'un produit par son id
-    // let foundProduct = cart.find((p => p.id == product.id) && (col => col.color == product.color));
+    console.log(cart)
+    // recherche d'un produit par son id et sa couleur dans le localStorage
     let foundProduct = cart.find(p => (p.id == product.id) && (p.color == product.color));
-    console.log(foundProduct);
     if (foundProduct != undefined) {
         let quantity = parseInt(foundProduct.quantity);
         foundProduct.quantity = quantity + parseInt(cons.inputElt.value);

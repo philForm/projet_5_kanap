@@ -134,8 +134,7 @@ const displayImg = (item) => {
  */
 const recupId = (id, url) => {
     
-    console.log(url);
-    // instance de l'API URLSearchParams utilisant en paramètre la valeur correspondant à la clé search de l'objet url.
+    // instance de l'API URLSearchParams utilisant en argument la valeur correspondant à la propriété search de l'objet url.
     // URLSearchParams fournit un moyen d'obtenir les données dans les paramètres de requête d'URL.
     let params = new URLSearchParams(url.search);
     console.log(params);
