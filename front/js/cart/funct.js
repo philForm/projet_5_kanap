@@ -1,22 +1,17 @@
-import { activeButton, nameValid, nameValid2 } from "./formulaire_funct.js";
-
-import { form, recupLocalStorage, formInputTab } from "./const.js";
-
-import { getCart, removeProduct, changeQuantity, changeQuantityTotal, changeTotalPrice } from "../utils/funct_localstor.js";
-
-import { regexColors } from "../utils/array_colors.js";
+import { removeProduct, changeQuantity, changeQuantityTotal, changeTotalPrice, getCart } from "../utils/funct_localstor.js";
 
 import { displayImg } from "../utils/funct_globale.js";
 
 
 /**
  * Récupération des Ids du localStorage
- * @param {object} items Articles du localStorage
+//  * @param {object} items Articles du localStorage
  * @returns {object[]} tabId : Tableau des Ids du localStorage
  */
-const recupIdLocalStorage = (items) => {
+const recupIdLocalStorage = () => {
     let tabId = [];
-    for (let item of items)
+    const cart = getCart("cart");
+    for (let item of cart)
         tabId.push(item.id);
 
     return tabId;
@@ -34,25 +29,25 @@ let priceCumul = (nbArticle, price) => {
 
 /**
  * Tableau d'articles du localStorage
- * @param {object} jsonArticle Objet contenant tous les articles de la base de données 
- * @param {object} recupLocalStorage Objet contenant tous les articles du localStorage
+ * @param {object[]} articles tableau d'objets contenant tous les articles de la base de données 
  * @returns {object[]} tabArticle : tableau de tableaux contenant :
  * @type {(number|string)} id article du localStorage
  * @type {String} couleur article du localStorage
  * @type {(number|string)} quantité d'article(s) du localStorage
  * @type {Object} article de la base de données
  */
-function funcTabArticle(jsonArticle, recupLocalStorage) {
+function funcTabArticle(articles) {
     const tabArticle = [];
-    for (let article of jsonArticle) {
-        for (let loc of recupLocalStorage) {
-            if (loc.id == article._id) {
-                let test = [];
-                test.push(loc.id);
-                test.push(loc.color);
-                test.push(loc.quantity);
-                test.push(article);
-                tabArticle.push(test);
+    const cart = getCart("cart");
+    for (let article of articles) {
+        for (let art of cart) {
+            if (art.id == article._id) {
+                let tab = [];
+                tab.push(art.id);
+                tab.push(art.color);
+                tab.push(art.quantity);
+                tab.push(article);
+                tabArticle.push(tab);
             }
         }
     }
@@ -77,6 +72,8 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
      * prix total
      */
     let total = 0;
+
+    const fragment = new DocumentFragment()
 
     // itération sur le tableau pour afficher les articles sur la page.
     for (let item of tab) {
@@ -120,11 +117,13 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
                         </div>
                         `;
 
-        cartItem.appendChild(articleElt);
+        fragment.appendChild(articleElt);
 
         totalElt.innerHTML = totalQuantity;
         totalPriceElt.innerText = total;
     }
+
+    cartItem.appendChild(fragment);
 }
 
 /**

@@ -1,6 +1,6 @@
 import * as cons from "./const.js";
 import { colorsKanap, regexColors } from "../utils/array_colors.js";
-import { displayImgIndex, engNameColor, splitUrl, urlImagRestitute, replaceColor, valueReplace } from "../utils/funct_globale.js";
+import { engNameColor, splitUrl, urlImagRestitute, replaceColor, valueReplace } from "../utils/funct_globale.js";
 import { addCart } from "../utils/funct_localstor.js";
 
 
@@ -19,6 +19,9 @@ const retrieveEltDom = (article) => {
     cons.descriptElt.innerText = article.description;
 
     let colorHtml = "";
+    
+    const colFrag = new DocumentFragment();
+    
     // Boucle pour injecter les couleurs dans les éléments <options> de <select>
     for (let col of article.colors) {
 
@@ -51,8 +54,9 @@ const retrieveEltDom = (article) => {
         option.setAttribute("value", colorHtml);
         option.innerText = colorHtml;
 
-        cons.selectElt.appendChild(option);
+        colFrag.appendChild(option);
     };
+    cons.selectElt.appendChild(colFrag);
 
 
     // injection de la couleur choisie dans <select>

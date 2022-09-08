@@ -1,10 +1,10 @@
 import { recupIdLocalStorage } from "./funct.js";
 
-import { recupLocalStorage, formInputTab, promiseOrder, totalQuantityElt,totalPriceElt, form } from "./const.js";
+import { formInputTab, promiseOrder, totalQuantityElt,totalPriceElt, form } from "./const.js";
 
 import { validityOfFormOnSubmit, validFormBool, objectSend, sendOrderConfirm } from "./formulaire_funct.js";
 
-const productsId = recupIdLocalStorage(recupLocalStorage);
+const productsId = recupIdLocalStorage();
 console.log(productsId);
 
 const formSubmit = () => {

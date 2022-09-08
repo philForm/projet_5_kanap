@@ -1,4 +1,4 @@
-import { promise, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, formInputTab, form } from "./const.js";
+import { promise, cartItemsElt, totalQuantityElt, totalPriceElt, formInputTab, form } from "./const.js";
 
 import { funcTabArticle, displayArticlesOnPage, changeQuantityAndRemoveProduct } from "./funct.js";
 
@@ -22,7 +22,7 @@ window.onload = () => {
              * Tableau d'articles du localstorage
              * @type {object[]}
              */
-            const tabArticle = funcTabArticle(jsonArticle, recupLocalStorage);
+            const tabArticle = funcTabArticle(jsonArticle);
             console.log(tabArticle);
 
             // Affichage des articles sur la page

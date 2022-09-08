@@ -1,5 +1,3 @@
-import { getCart } from "../utils/funct_localstor.js";
-
 /**
  * URL des produits de l'api
  * @type {(URL|String)}
@@ -11,11 +9,6 @@ const promise = `http://localhost:3000/api/products`;
  * @type {(URL|String)}
  */
 const promiseOrder = `http://localhost:3000/api/products/order`;
-
-/**
- * Articles du localstorage
- */
-const recupLocalStorage = getCart("cart");
 
 /**
  * Récupération de section id="cart__items"
@@ -137,5 +130,5 @@ const formObjs = {
 
 
 export {
-    promise, promiseOrder, recupLocalStorage, cartItemsElt, totalQuantityElt, totalPriceElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, formObjs
+    promise, promiseOrder, cartItemsElt, totalQuantityElt, totalPriceElt, firstNameInput, firstNameError, lastNameInput, lastNameError, addressInput, addressError, cityInput, cityError, emailInput, emailError, orderForm, form, regexEmail, regexName, regexAdress, regexCity, formInputTab, formObjs
 };

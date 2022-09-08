@@ -22,6 +22,9 @@ window.onload = () => {
             alert(`La page des produits ne peut pas être affichée !", ${err}`);
         })
         .then(jsonArticle => {
+
+            const fragment = new DocumentFragment();
+
             for (let article of jsonArticle) {
 
                 let a = document.createElement("a");
@@ -34,8 +37,9 @@ window.onload = () => {
                             <p class="productDescription">${article.description}</p>
                         </article>
                 `;
-                sectionElt.appendChild(a);
+                fragment.appendChild(a);
             };
+            sectionElt.appendChild(fragment);
 
         }).catch((err) => {
             console.error(err);

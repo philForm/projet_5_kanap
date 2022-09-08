@@ -1,5 +1,3 @@
-import { orderForm } from "./const.js"
-
 import { getCart } from "../utils/funct_localstor.js"
 
 /**
