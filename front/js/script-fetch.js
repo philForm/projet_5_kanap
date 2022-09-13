@@ -1,5 +1,5 @@
 /**
- * URL des produits de l'api
+ * URL des produits de l'API
  * @type {(URL|String)}
  */
 const promise = `http://localhost:3000/api/products`;

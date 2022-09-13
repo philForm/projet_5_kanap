@@ -7,7 +7,6 @@ let sectionElt = document.getElementById("items");
 
     let reponse = await fetch(promise)
         .then(reponse => reponse.json());
-    console.log(reponse);
 
     for (let i in reponse) {
         // Création éléments HTML

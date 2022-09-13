@@ -11,6 +11,10 @@ import { addCart } from "../utils/funct_localstor.js";
 const retrieveEltDom = (article) => {
 
     cons.titleHead.innerHTML = article.name;
+    
+    // création de dadaset
+    cons.divImgElt.setAttribute("data-exist", "");
+    
     cons.divImgElt.innerHTML = `
             <img src="${article.imageUrl}" alt="${article.altTxt}">
             `;
@@ -19,15 +23,14 @@ const retrieveEltDom = (article) => {
     cons.descriptElt.innerText = article.description;
 
     let colorHtml = "";
-    
+
     const colFrag = new DocumentFragment();
-    
+
     // Boucle pour injecter les couleurs dans les éléments <options> de <select>
     for (let col of article.colors) {
 
         let colorTab = col.split("/");
-        console.log(col)
-        console.log(colorTab);
+
         // réinitialisation de colorHtml
         colorHtml = '';
 
@@ -35,7 +38,6 @@ const retrieveEltDom = (article) => {
 
             // cherche la traduction en français de color dans le tableau colorsKanap
             let colorFr = (colorsKanap.find((col => col[0] == color.toLowerCase())))[1];
-            console.log(colorFr);
 
 
             // Les couleurs en anglais sont remplacées par leurs noms en français.
@@ -64,35 +66,46 @@ const retrieveEltDom = (article) => {
         cons.selectElt.setAttribute("value", e.target.value);
         // récuperation dans value de la valeur de l'élément <select>
         let value = (cons.selectElt.value).trim();
-        console.log(value);
         // on coupe le string et on obtient un array.
         let valueTab = value.split(' ');
-        console.log(typeof valueTab);
-        console.log(valueTab);
 
         // Récupère la valeur de la couleur en anglais.
         let colorEng = engNameColor(valueTab[valueTab.length - 1]);
-        console.log(colorEng);
 
         // coupe l'url de l'image pour supprimer l'extension de l'image.
         let urlSplit = splitUrl(article);
-        console.log(urlSplit);
 
-        // on reconstitue l'url de l'image correspondant dans le backend.
+        // on reconstitue l'url de l'image.
         let imgURL = urlImagRestitute(urlSplit, colorEng);
-        console.log(imgURL);
+        
+        // vérification de l'existence de l'image pointée par imgURL
+        fetch(imgURL)
+            .then(data => {
+                // let color = valueReplace(valueTab, value);
+                let color = valueReplace(valueTab, value);
 
-        let color = valueReplace(valueTab, value);
-        console.log(color)
+                // texte alternatif de l'image.
+                let textAlt2 = replaceColor(article.altTxt, color, regexColors);
+                
+                if (data.status >= 200 && data.status < 300) {
+                    cons.divImgElt.dataset.exist = 1;
+                    imgURL = urlImagRestitute(urlSplit, colorEng);
+                    if (cons.selectElt.value == "") {
+                        textAlt2 = article.altTxt;
+                    }
+                }
+                else {
+                    cons.divImgElt.dataset.exist = 0;
+                    imgURL = article.imageUrl;
+                    textAlt2 = article.altTxt;
 
-        // texte alternatif de l'image.
-        let textAlt2 = replaceColor(article.altTxt, color, regexColors);
-        console.log(textAlt2);
+                }
 
-        // on injecte dans le DOM l'image de l'article sélectionné ainsi que le texte alternatif.
-        cons.divImgElt.innerHTML = `
-                <img src="${imgURL}" alt="${textAlt2}">
-            `;
+                cons.divImgElt.innerHTML = `
+                            <img src="${imgURL}" alt="${textAlt2}">
+                        `;
+            }).catch(err => console.error(err));
+
     });
 
     // Injection de la quantité choisie.
@@ -103,7 +116,7 @@ const retrieveEltDom = (article) => {
             alert("La quantité doit être comprise entre 1 et 100 !");
             cons.inputElt.setAttribute("value", 0);
             e.target.value = 0;
-        }
+        };
     });
 };
 
@@ -131,11 +144,11 @@ const funCartObj = (art) => {
  * @property {String} name : nom de l'article
  * @property {String} id : id de l'article
   */
-function sendArticleToCart(select, input, obj) {
+function sendArticleToCart(select, img, input, obj) {
     if (select.value != "" && input.value != 0) {
         obj.color = select.value;
         obj.quantity = input.value;
-        console.log(obj);
+        obj.exist = img.dataset.exist;
         addCart(obj);
     };
 };
@@ -151,7 +164,7 @@ const orderedVerifications = (cartObj, article) => {
     let confirmation = false;
 
     // récupère la valeur de data-confirm
-    // dataConfirm est itéré de 1 à chaque nouvelle commande avec la même quantité et la même couleur.
+    // dataConfirm est incrémenté de 1 à chaque nouvelle commande avec la même quantité et la même couleur.
     // dataConfirm est réinitialisée à 0 à chaque commande avec une quantité ou une couleur différente.
     let dataConfirm = parseInt(cons.buttonCartElt.dataset.confirm);
     let dataColor = cons.buttonCartElt.dataset.color;
@@ -159,7 +172,6 @@ const orderedVerifications = (cartObj, article) => {
     // dataBool est à false si la commande passée une nouvelle fois concerne la même couleur et la même quantité d'articles.
     // dataBool est à true si la commande passée une nouvelle fois concerne une autre couleur ou une quantité différente.
     let dataBool = cons.buttonCartElt.dataset.bool;
-    console.log(dataBool);
     let pluralArt = "";
     let pluralCanap = "";
 
@@ -174,7 +186,6 @@ const orderedVerifications = (cartObj, article) => {
             cons.buttonCartElt.dataset.confirm = 0;
         }
         dataConfirm = 0;
-        console.log(dataConfirm);
     };
 
     // Si dataConfirm = 0, la couleur et la quantité choisies sont enregistrées dans les dataset
@@ -233,7 +244,7 @@ const orderedVerifications = (cartObj, article) => {
     if (confirmation) {
         dataConfirm += 1;
         cons.buttonCartElt.dataset.confirm = dataConfirm;
-        sendArticleToCart(cons.selectElt, cons.inputElt, cartObj);
+        sendArticleToCart(cons.selectElt, cons.divImgElt, cons.inputElt, cartObj);
     }
 }
 

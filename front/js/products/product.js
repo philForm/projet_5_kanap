@@ -1,19 +1,13 @@
-import { inputElt, buttonCartElt, url, promise } from "./const.js";
+import { inputElt, buttonCartElt, promise } from "./const.js";
 
 import { retrieveEltDom, funCartObj, orderedVerifications } from "./funct.js";
 
-import { recupId } from "../utils/funct_globale.js";
-
-
-console.log(recupId('id', url));
-console.log(promise);
 
 window.onload = () => {
 
     fetch(promise)
         .then(data => data.json())
         .then(article => {
-            console.log(article);
             
             // Les éléments de l'article récupéré par fetch sont injectés dans le DOM.
             retrieveEltDom(article);
@@ -23,8 +17,6 @@ window.onload = () => {
              * @type {object}
              */
             let cartObj = funCartObj(article);
-
-            console.log(cartObj);
 
             // Création des data-set qui vont servir à valider les différentes commandes grâce à des messages d'alerte et de confirmation.
             buttonCartElt.dataset.confirm = "0";

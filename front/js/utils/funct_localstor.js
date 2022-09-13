@@ -5,7 +5,7 @@ import * as cons from "../products/const.js";
 // =======================================
 
 /**
- * Enregistrement dans le panier (localstorage)
+ * Enregistrement dans le panier (localStorage)
  * @param {object[]} cart 
  */
 const saveCart = (cart) => {
@@ -26,12 +26,11 @@ const getCart = (loc) => {
 }
 
 /**
- * Ajouter les produit dans le panier (localstorage)
+ * Ajouter les produits dans le panier (localStorage)
  * @param {object} product 
  */
 const addCart = (product) => {
     let cart = getCart("cart");
-    console.log(cart)
     // recherche d'un produit par son id et sa couleur dans le localStorage
     let foundProduct = cart.find(p => (p.id == product.id) && (p.color == product.color));
     if (foundProduct != undefined) {
@@ -45,7 +44,7 @@ const addCart = (product) => {
 }
 
 /**
- * Supprimer un produit du panier (localstorage)
+ * Supprimer un produit du panier (localStorage)
  * @param {object} product 
  */
 const removeProduct = (product) => {
@@ -56,29 +55,23 @@ const removeProduct = (product) => {
 }
 
 /**
- * Change la quantité du produit dans le localstorage.
+ * Change la quantité du produit dans le localStorage.
  * @param {object} product 
  * @param {String} quant : valeur de l'input de l'article
  */
 const changeQuantity = (product, quant) => {
-    // récupère le localstorage
+    // récupère le localStorage
     let cart = getCart("cart");
+    
     // récupération du produit ciblé dans le localStorage
     let foundProduct = cart.find(p => (p.id == product[0]) && (p.color == product[1]));
-    console.log(product);
-    console.log(foundProduct);
-    console.log(quant);
+    
     if ((foundProduct != undefined) && (quant > 0 && quant <= 100)) {
         foundProduct.quantity = parseInt(quant);
-        console.log(typeof foundProduct.quantity);
         saveCart(cart);
-        // if (foundProduct.quantity <= 0) {
-        // removeProduct(product);
-        // }
-        // ////////////////////
+        
         product[2] = quant;
         return product;
-        // ////////////////////
 
     }
     if (quant > 100) {

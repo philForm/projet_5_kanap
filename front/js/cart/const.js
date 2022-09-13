@@ -1,11 +1,11 @@
 /**
- * URL des produits de l'api
+ * URL des produits de l'API
  * @type {(URL|String)}
  */
 const promise = `http://localhost:3000/api/products`;
 
 /**
- * URL de l'api pour la requête POST
+ * URL de l'API pour la requête POST
  * @type {(URL|String)}
  */
 const promiseOrder = `http://localhost:3000/api/products/order`;
@@ -28,12 +28,6 @@ const totalQuantityElt = document.getElementById("totalQuantity");
  */
 const totalPriceElt = document.getElementById("totalPrice");
 
-// /**
-//  * Récupération de l'input de quantité
-//  */
-// const inputQuantityElt = document.querySelector("#cart__items article:nth-child(1)");
-
-// console.log(inputQuantityElt);
 
 // =================================================================
 // FORMULAIRE
@@ -61,7 +55,6 @@ const orderForm = document.getElementById("order");
  * @type {HTMLFormElement}
  */
 const form = document.querySelector(".cart__order__form");
-console.log(form.elements);
 
 // Expressions régulières
 const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,10})+$/;
@@ -70,8 +63,6 @@ const regexName =
     /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+([\-'\.\s]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ][a-zéèëêîïâàûüç]+)?$/;
 
 const regexCity = /^[a-zA-ZéèëêîïâàûüçÉÈËÊÎÏÂÀÛÜÇ\s,\.'\-]+$/;
-// const regexCity =
-// /^[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+([\s,\.'\-]+[a-zA-ZéèëêîïâàûüùçÉÈËÊÎÏÂÀÛÜÇ]+)?$/;
 
 const regexAdress = /^[a-z0-9éèëêîïâàûüùç\s,'\-]*$/i;
 

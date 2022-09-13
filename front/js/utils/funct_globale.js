@@ -24,7 +24,7 @@ const splitColors = (art, separ) => {
 
 //
 /**
- * Reconstitution de l'URL de l'image
+ * Reconstrution de l'URL de l'image
  * @param {(URL|String)} imgUrl URL de l'image coupée, exemple : http:\/\/localhost:3000/images/kanap08
  * @param {String} colorImg Couleur de l'image, exemple : pink
  * @returns {(URL|String)} URL de l'image, exemple : http:\/\/localhost:3000/images/kanap08_pink.jpg
@@ -37,6 +37,8 @@ const urlImagRestitute = (imgUrl, colorImg) => {
 
 }
 
+
+
 /**
  * Récupération du nom de la couleur en anglais, à partir du nom en français
  * @param {String} colorImg Couleur en français
@@ -46,7 +48,7 @@ const engNameColor = (colorImg) => {
     if (colorImg)
         return (colorsKanap.find(col => col[1] == colorImg))[0];
 
-    console.error("La couleur n'existe pas !");
+    // console.error("La couleur n'existe pas !");
 }
 
 /**
@@ -59,7 +61,6 @@ const engNameColor = (colorImg) => {
 const replaceColor = (test, color, regex) => {
     const testRegex = test.match(regex)
     if (testRegex) {
-        console.log(testRegex);
         for (let i = 0; i < testRegex.length; i++)
             test = test.replace(testRegex[i], color.trim());
     }
@@ -73,13 +74,9 @@ const replaceColor = (test, color, regex) => {
  * @returns {String} couleur unique (définie par un mot simple)
  */
 const valueReplace = (altTxt, color) => {
-    console.log(color);
-    console.log(altTxt)
-    console.log(altTxt.length);
     if (altTxt.length > 1 && altTxt.includes("noir") && altTxt.includes("et")) {
         color = color.replace("noir", "");
         color = color.replace("et", "");
-        console.log(color);
     }
     return color;
 }
@@ -105,23 +102,17 @@ const displayImg = (item) => {
 
     // Coupe l'URL de l'image au point de .jpg
     let imgUrlTab = splitUrl(item[3]);
-    console.log(imgUrlTab);
     // Coupe les couleurs multiples
     let colorImg = splitColors(item[1], ' ');
-    console.log(colorImg);
     // Récupération du nom de la couleur en anglais
     let color2 = engNameColor(colorImg);
-    console.log(color2);
     // Reconstitution de l'URL de l'image
     let imgUrl = urlImagRestitute(imgUrlTab, color2);
-    console.log(imgUrl);
 
     const color = valueReplace(item[3].altTxt, item[1])
 
     // Changement texte alternatif
     let textAlt = replaceColor(item[3].altTxt, color, regexColors);
-    console.log(item[3].altTxt);
-    console.log(textAlt);
 
     return [imgUrl, textAlt];
 }
@@ -133,11 +124,10 @@ const displayImg = (item) => {
  * @returns {String} identifiant que l'on passe dans l'url
  */
 const recupId = (id, url) => {
-    
+
     // instance de l'API URLSearchParams utilisant en argument la valeur correspondant à la propriété search de l'objet url.
     // URLSearchParams fournit un moyen d'obtenir les données dans les paramètres de requête d'URL.
     let params = new URLSearchParams(url.search);
-    console.log(params);
     // La méthode has() vérifie si le paramètre "id" existe dans l’URL.
     if (params.has(id))
         // sa valeur peut être trouvée via la méthode get.

@@ -1,7 +1,7 @@
 import { getCart } from "../utils/funct_localstor.js"
 
 /**
- * Validation des noms du formulaire en direct
+ * Validation des champs du formulaire en direct
  * @param { RegExp } regex 
  * @param {String} name 
  * @param {HTMLParagraphElement} error 
@@ -11,7 +11,6 @@ import { getCart } from "../utils/funct_localstor.js"
 const nameValid = (regex, name, error, msg) => {
 
     if (regex.test(name)) {
-        console.log("nom valide !")
         if (msg)
             error.innerText = msg[1]
         error.style.color = "#81ff81"
@@ -22,28 +21,12 @@ const nameValid = (regex, name, error, msg) => {
         error.innerText = ""
 
     } else {
-        console.log("nom invalide !")
         if (msg)
             error.innerText = msg[0]
         error.style.color = "red"
         regex.lastIndex = 0;
         return false
     }
-}
-
-/**
- * Active ou désactive le bouton de validation
- * @param {boolean} formInput 
- * @param {HTMLButtonElement} orderForm 
- */
-const activeButton = (formInput, orderForm) => {
-    !formInput ? (
-        orderForm.disabled = true,
-        orderForm.classList.add("disabled")
-    ) : (
-        orderForm.disabled = false,
-        orderForm.classList.remove("disabled")
-    )
 }
 
 /**
@@ -73,24 +56,16 @@ const nameValid2 = (errorElt, objKey, formValue) => {
             "Le livreur ne trouvera jamais !"
         ],
         [
-            /[@]/, [
-                "Un email sans arobase, c'est comme une choucroute sans saussice !!",
-                "Et l'arobase, il vient l'arobase !",
-                "Mon royaume pour un arobase !"
-            ],
-            [
-                "Il semblerait que cet email soit des plus fantaisiste !",
-                "On demande un email, pas les numéros du loto !",
-                "Ceci est un email de dernière génération !!!"
-            ]
+            "Il semblerait que cet email soit des plus fantaisiste !",
+            "On demande un email, pas les numéros du loto !",
+            "Ceci est un email de dernière génération !!!"
         ]
+
     ];
 
-    console.log(regex)
 
     // errorElt.style.color = "#ffed4d";
     errorElt.style.color = "orange";
-    console.log(`objKey == "firstName" : ${objKey == "firstName"}`)
 
     if (objKey == "firstName") {
         if (regex[0][0].test(formValue))
@@ -114,10 +89,7 @@ const nameValid2 = (errorElt, objKey, formValue) => {
 
     }
     if (objKey == "email") {
-        if ((!regex[3][0].test(formValue)))
-            errorElt.innerText = regex[3][1][Math.floor(Math.random() * regex[3][1].length)]
-        else
-            errorElt.innerText = regex[3][2][Math.floor(Math.random() * regex[3][2].length)]
+        errorElt.innerText = regex[3][Math.floor(Math.random() * regex[3].length)]
 
     }
 
@@ -135,8 +107,7 @@ const nameValid2 = (errorElt, objKey, formValue) => {
 function listenValuesInputOfForm(tab) {
     for (let item of tab) {
         item[0].addEventListener("input", () => {
-            let name = nameValid(item[1], item[0].value, item[2], item[3]);
-            // activeButton(name, orderForm);
+            nameValid(item[1], item[0].value, item[2], item[3]);
         });
     }
 }
@@ -160,14 +131,11 @@ function validityOfFormOnSubmit(tab, form) {
         if (typeof item[item.length - 1] === 'boolean')
             item.pop();
         item.push(boolValue);
-        console.log(boolValue);
-        console.log(form[item[4]].value);
         if (!boolValue) {
             tests.push(false);
             nameValid2(item[2], item[4], form[item[4]].value);
         }
     }
-    console.log(tests);
     return tests;
 
 }
@@ -189,7 +157,6 @@ function objectSend(validForm, tab, products, form) {
         validForm ? (
             objValue.contact[item[4]] = form[item[4]].value,
             form[item[4]].value = ""
-            , console.log(form[item[4]])
         ) :
             objValue = "";
     };
@@ -209,7 +176,6 @@ function objectSend(validForm, tab, products, form) {
 function validFormBool(tab) {
     let validForm = true;
     for (let item of tab) {
-        console.log(item[item.length - 1]);
         if (!item[item.length - 1]) {
             validForm = false;
         }
@@ -228,7 +194,6 @@ function validFormBool(tab) {
  */
 const sendOrderConfirm = (objValue, quantity, price) => {
     let cart = getCart("cart")
-    console.log(cart)
     if (cart.length == 0)
         return alert("Votre panier ne contient aucun article !")
 
@@ -244,6 +209,6 @@ const sendOrderConfirm = (objValue, quantity, price) => {
 
 
 export {
-    nameValid, nameValid2, activeButton, listenValuesInputOfForm,
+    nameValid, nameValid2, listenValuesInputOfForm,
     validityOfFormOnSubmit, objectSend, validFormBool, sendOrderConfirm
 }

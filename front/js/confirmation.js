@@ -2,7 +2,7 @@ import { recupId } from "./utils/funct_globale.js";
 
 
 /**
- * Charge l'url récupéré de l'url dans le DOM.
+ * Charge orderId récupéré de l'url dans le DOM.
  *
  * Efface le localStorage
  * @param {HTMLElement} elt 

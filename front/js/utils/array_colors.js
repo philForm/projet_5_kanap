@@ -49,10 +49,6 @@ const colorsKanap = [
     ]
 ];
 
-
-
-// const regexColors = /(?i)(\W|^)(bleu|jaune|vert|rose|gris|rouge)(\W|$)/;
-
 /**
  * Teste la présence de différents noms de couleur dans un string
  * @type {RegExp}

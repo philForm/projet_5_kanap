@@ -18,7 +18,7 @@ const recupIdLocalStorage = () => {
 }
 
 /**
- * Multiplication du prix par le nombre d'article
+ * Multiplication du prix par le nombre d'article(s)
  * @param {Number} nbArticle 
  * @param {Number} price 
  * @returns {Number}
@@ -47,6 +47,7 @@ function funcTabArticle(articles) {
                 tab.push(art.color);
                 tab.push(art.quantity);
                 tab.push(article);
+                tab.push(art.exist);
                 tabArticle.push(tab);
             }
         }
@@ -78,9 +79,6 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
     // itération sur le tableau pour afficher les articles sur la page.
     for (let item of tab) {
 
-        console.log(item)
-        console.log(displayImg(item));
-
         /**
          * Index de item dans tab + 1
          */
@@ -94,36 +92,50 @@ const displayArticlesOnPage = (tab, cartItem, totalElt, totalPriceElt) => {
         articleElt.id = `art-${indexOfItem}`
         articleElt.setAttribute("data-id", item[0]);
         articleElt.setAttribute("data-color", item[1])
+        
+        let color;
+        let altText;
+        
+        // pour l'affichage de l'image de la couleur choisie si elle existe
+        if (parseInt(item[4])) {
+            color = displayImg(item)[0];
+            altText = displayImg(item)[1];
+        }else{
+            color = item[3].imageUrl;
+            altText = item[3].altTxt;
+        }
 
         articleElt.innerHTML = `
-                        <div class="cart__item__img">
-                            <img src="${displayImg(item)[0]}" alt="${displayImg(item)[1]}">
-                        </div>
-                        <div class="cart__item__content">
-                            <div class="cart__item__content__description">
-                                <h2>${item[3].name}</h2>
-                                <p>${item[1]}</p>
-                                <p>${item[3].price},00 €</p>
-                            </div>
-                            <div class="cart__item__content__settings">
-                                <div class="cart__item__content__settings__quantity">
-                                    <p id='quantity-${indexOfItem}'>Qté : ${item[2]}</p>
-                                    <input  id='input-quantity-${indexOfItem}' type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item[2]}">
+                                <div class="cart__item__img">
+                                    <img src="${color}" alt="${altText}">
                                 </div>
-                                <div class="cart__item__content__settings__delete">
-                                    <p class="deleteItem" id='delete-${indexOfItem}'>Supprimer</p>
+                                <div class="cart__item__content">
+                                    <div class="cart__item__content__description">
+                                        <h2>${item[3].name}</h2>
+                                        <p>${item[1]}</p>
+                                        <p>${item[3].price},00 €</p>
+                                    </div>
+                                    <div class="cart__item__content__settings">
+                                        <div class="cart__item__content__settings__quantity">
+                                            <p id='quantity-${indexOfItem}'>Qté : ${item[2]}</p>
+                                            <input  id='input-quantity-${indexOfItem}' type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item[2]}">
+                                        </div>
+                                        <div class="cart__item__content__settings__delete">
+                                            <p class="deleteItem" id='delete-${indexOfItem}'>Supprimer</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        `;
+                                `;
 
         fragment.appendChild(articleElt);
 
         totalElt.innerHTML = totalQuantity;
         totalPriceElt.innerText = total;
-    }
 
+
+    }
     cartItem.appendChild(fragment);
+
 }
 
 /**
@@ -159,7 +171,6 @@ const changeQuantityAndRemoveProduct = (tabArticle, cartItemsElt, totalQuantityE
          * @type {HTMLElement}
          */
         const children = document.getElementById(`art-${indexItem + 1}`);
-        console.log(children);
 
         /**
          * bouton de suppression d'un élément
@@ -177,13 +188,10 @@ const changeQuantityAndRemoveProduct = (tabArticle, cartItemsElt, totalQuantityE
          */
         const datasetColor = inputValue.closest(`.cart__item`).dataset.color;
 
-        inputValue.setAttribute("data-color", item[1]);
-
         /**
          * recherche de l'article dans tabArticle
          */
         const art = tabArticle.find(el => el[0] == datasetId && el[1] == datasetColor)
-        console.log(art)
 
         inputValue.addEventListener("change", (e) => {
 
@@ -207,7 +215,6 @@ const changeQuantityAndRemoveProduct = (tabArticle, cartItemsElt, totalQuantityE
         deleteItem.addEventListener('click', () => {
 
             confirmRemoveProduct(item, deleteItem.closest(`.cart__item`), inputValue, cartItemsElt);
-            console.log(deleteItem.closest(`.cart__item`));
 
             quantityAndPrice(totalQuantityElt, totalPriceElt, tabArticle);
 
@@ -229,7 +236,6 @@ const confirmRemoveProduct = (product, children, inputValue, cartItemsElt) => {
         "Voulez-vous vraiment supprimer ce produit du panier ?"
     );
     if (confirmation) {
-        console.log(children)
         removeProduct(product);
         cartItemsElt.removeChild(children);
 

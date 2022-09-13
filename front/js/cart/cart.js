@@ -16,18 +16,19 @@ window.onload = () => {
             alert(`Les details de votre panier ne peuvent être affichés ! ${err}`)
         })
         .then(jsonArticle => {
-            console.log(jsonArticle);
 
             /**
-             * Tableau d'articles du localstorage
+             * Tableau d'articles du localStorage
              * @type {object[]}
              */
             const tabArticle = funcTabArticle(jsonArticle);
-            console.log(tabArticle);
+            console.log(tabArticle)
+            
 
             // Affichage des articles sur la page
             displayArticlesOnPage(tabArticle, cartItemsElt, totalQuantityElt, totalPriceElt);
-
+            
+            // Modifie la quantité d'un article ou le supprime lors d'un événement.
             changeQuantityAndRemoveProduct(tabArticle, cartItemsElt, totalQuantityElt, totalPriceElt);
 
         }).catch((err) => {

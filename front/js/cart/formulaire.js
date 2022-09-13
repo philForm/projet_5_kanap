@@ -5,20 +5,17 @@ import { formInputTab, promiseOrder, totalQuantityElt,totalPriceElt, form } from
 import { validityOfFormOnSubmit, validFormBool, objectSend, sendOrderConfirm } from "./formulaire_funct.js";
 
 const productsId = recupIdLocalStorage();
-console.log(productsId);
 
+/**
+ * Envoie la commande au backend après validation du formulaire et du message de confirmation
+ */
 const formSubmit = () => {
 
     let tests = validityOfFormOnSubmit(formInputTab, form)
-    console.log(formInputTab)
 
-    console.log(tests);
     if (tests.length === 0) {
 
         const validForm = validFormBool(formInputTab)
-
-        console.log("validForm" + validForm);
-        console.log(formInputTab);
 
         const objValue = objectSend(validForm, formInputTab, productsId, form)
         
@@ -35,20 +32,16 @@ const formSubmit = () => {
                 body: JSON.stringify(objValue)
 
             }).then((res) => {
-                console.log(res);
                 if (res.ok) {
                     return res.json();
                 };
 
             }).then((value) => {
-                console.log(value);
                 let orderId = value.orderId;
                 const url = new URL(window.location.href);
-                console.log(url.origin);
                 let route = '/front/html/confirmation.html';
                 let confirm = (`${url.origin}${route}?orderid=${orderId}`);
                 window.location.href = confirm ;
-                console.log(confirm);
                 
             }).catch((err)=>{
                 console.error(err);
